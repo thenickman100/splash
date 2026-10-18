@@ -44,9 +44,7 @@ button.sp-btn{height:36px;padding:0 14px;border-radius:999px;border:1px solid va
 .sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 20px}
 .sp-logo{background:#fff;border:2px solid transparent;border-radius:10px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;font:10px 'DM Mono',monospace;color:var(--muted)}
 .sp-logo img{width:100%;height:70px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
-.hero-win .shot{height:min(620px,62vw);overflow-y:auto;background:#000;scrollbar-width:thin}.hero-win .shot img{width:100%;display:block}
 .seg{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ink);background:transparent;font:12px 'DM Mono',monospace;cursor:pointer;color:var(--ink)}.seg.on{background:var(--ink);color:#fff}
-.sp-cmp{color:var(--ink)}.sp-cmp-box{border-radius:12px;box-shadow:0 24px 60px #16181a33}
 .next{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:60px}
 .next a{padding:34px 50px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
 .next a+a,.next span+a{border-left:1px solid var(--line);align-items:flex-end;text-align:right}
@@ -73,11 +71,10 @@ SP.boot(function (s, sp) {
       return Array.isArray(r[1]) ? r[1].map(function (a) { return '<span>' + e(a) + '</span>'; }).join('') : '<span>' + e(r[0]) + ' ' + e(r[1]) + '</span>';
     }).join('') + '</div></div>';
   h += '<div class="col lede"><p>' + e(s.lede) + '</p></div>';
-  // Opening window with a switch between the site's versions, from the AL export.
+  // Opening window, live, with a switch between the site's versions, from the AL export.
   var vers = s.sections.filter(function (x) { return x.embed; }).map(function (x) { return x.embed; });
   if (vers.length) {
-    h += '<div class="wide"><div class="sp-win hero-win"><div class="sp-chrome"><i></i><i></i><i></i><span class="sp-url">' + e(vers[0].addr) + '</span></div>' +
-      '<div class="shot"><img src="' + vers[0].img + '" alt="' + e(s.name) + '"></div></div>' +
+    h += '<div class="wide">' + sp.embedHtml(Object.assign({}, vers[0], { id: 'hero' })) +
       '<div class="sp-btns">' + (vers.length > 1 ? vers.map(function (v, k) { return '<button class="seg' + (k ? '' : ' on') + '" data-v="' + k + '">' + e(v.title) + '</button>'; }).join('') : '') +
       '<span style="flex-grow:1"></span><a class="sp-btn hero-open" href="' + vers[0].src + '" target="_blank" rel="noopener">Open full screen ↗</a></div></div>';
   }
@@ -86,7 +83,6 @@ SP.boot(function (s, sp) {
     var o = sp.parts(sec);
     h += '<div class="col"><h2 id="' + sp.slug(sec.h) + '">' + e(sec.h) + '</h2>' + o.text + o.media + (sec.embed ? '' : o.buttons + o.extra) + '</div>';
     if (sec.embed) h += '<div class="wide">' + o.embed + o.buttons + '</div>' + (o.extra ? '<div class="col">' + o.extra + '</div>' : '');
-    if (s.compare && s.compare.after === sec.h) h += '<div class="wide">' + sp.compareHtml(s.compare) + '</div>';
   });
   h += '<div class="next">' +
     (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← ' + e(sp.prev.range) + '</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +
@@ -97,8 +93,10 @@ SP.boot(function (s, sp) {
   document.querySelectorAll('.seg').forEach(function (b) {
     b.addEventListener('click', function () {
       var v = vers[+b.dataset.v];
-      document.querySelector('.hero-win img').src = v.img;
-      document.querySelector('.hero-win .sp-url').textContent = v.addr;
+      var w = document.querySelector('[data-embed="hero"]');
+      w.querySelector('iframe').src = v.src;
+      w.querySelector('.sp-url').textContent = v.addr;
+      w.querySelector('.sp-vp').style.backgroundImage = 'url(' + v.img + ')';
       document.querySelector('.hero-open').href = v.src;
       document.querySelectorAll('.seg').forEach(function (x) { x.classList.toggle('on', x === b); });
     });

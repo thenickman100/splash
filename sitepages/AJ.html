@@ -59,7 +59,6 @@ details[open] summary::after{content:'–'}
 .sp-logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 16px}
 .sp-logo{border:2px solid var(--line);background:#fff;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;align-items:center;font:9.5px 'DM Mono',monospace;color:var(--muted)}
 .sp-logo img{width:100%;height:46px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
-.sp-cmp{margin:12px 0 18px;color:var(--accent)}.sp-cmp-box{border-radius:8px}
 .dfoot{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:24px}
 .dfoot a{border:1px solid var(--line);border-radius:8px;padding:14px;text-decoration:none;display:flex;flex-direction:column;gap:2px;background:#fff}
 .dfoot a:last-child{text-align:right}.dfoot .mono{font-size:10px;color:var(--muted)}.dfoot b{font-size:17px}
@@ -89,7 +88,7 @@ SP.boot(function (s, sp) {
     // The first window is the stage, so its section keeps only the text and buttons.
     var win = x.embed === first ? '' : o.embed;
     h += '<details' + (k < 2 ? ' open' : '') + '><summary><span class="n">' + String(k + 1).padStart(2, '0') + '</span>' + e(x.h) + '</summary>' +
-      o.text + o.media + win + o.buttons + o.extra + (s.compare && s.compare.after === x.h ? sp.compareHtml(s.compare) : '') + '</details>';
+      o.text + o.media + win + o.buttons + o.extra + '</details>';
   });
   h += '<div class="dfoot">' +
     (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← Previous</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +

@@ -25,6 +25,8 @@ a{color:#f2f4ef}a:hover{color:#ccc}
 .c.on .body{overflow-y:auto;scrollbar-width:thin}
 .txt{animation:t .45s ease}
 @keyframes t{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
+.live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
 </style>
 </helmet>
 <div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,#2f4438,#1e2a24 60%);color:#f2f4ef;font-family:'Hanken Grotesk',sans-serif">
@@ -55,6 +57,7 @@ a{color:#f2f4ef}a:hover{color:#ccc}
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
+  <div class="live" key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;overflow:hidden;z-index:400;background:#000"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
@@ -63,20 +66,25 @@ var H = 'https://hackahobo.info';
 // splash test: fill the real browser window. The design is drawn for 1280×800; u scales it (CSS zoom) and
 // W×H is the canvas, in design pixels, that fills the window. Fixed pages fit both sides, scroll pages fit the width.
 function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math.min(w / 1280, h / 800) : Math.min(w / 1280, 1.25); return { u: u, W: Math.round(w / u), H: Math.round(h / u) }; }
+// splash test: big windows show the live site, scaled to fit, like v0.1. DIMS is the width and height each
+// site was built for (from v0.1's windows).
+var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
+function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
 var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
 var SITES = [
- {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',color:'#9bd23f',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
- {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',color:'#ff6a5a',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
- {key:'titans',name:'Titans Softball',yr:'2010',year:'c. 2010',tier:'Side project',color:'#ffc20e',addr:'softball.askthenickman.com',img:'./assets/d40d39122d302efabd22bab1dfba7d0b.jpg',link:H+'/projects/sites/titans/titans.html',blurb:'My dad coached my sister’s softball team and wanted a central hub for the parents. It was the first commissioned site I made.'},
- {key:'hobo',name:'Hack a HOBO',yr:'2011',year:'2011 – today · shown on Nov 6, 2012',tier:'Flagship',color:'#5be37c',addr:'hackahobo.info',img:'./assets/46e9fbc735e6f13e79add42bea6309f1.jpg',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school.'},
- {key:'bv',name:'BV Homework',yr:'2013',year:'2013',tier:'Side project',color:'#ff7b7b',addr:'BVHomework.html',img:'./assets/a5654f5475f2b4df8ec9f935b2936711.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html',blurb:'BV is for Blue Valley. I started it to share answers to homework problems at Blue Valley High School, and stopped working on it for fear of getting in trouble.'},
- {key:'engen',name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',color:'#86a8ff',addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
- {key:'home',name:'Home',yr:'2016',year:'2016',tier:'Personal',color:'#6fd3ec',addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
- {key:'spaceatlas',name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',color:'#b3c0ff',addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
- {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',color:'#5be37c',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
+ {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',color:'#adf084',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
+ {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',color:'#d50202',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {key:'titans',name:'Titans Softball',yr:'2010',year:'c. 2010',tier:'Side project',color:'#fec200',addr:'softball.askthenickman.com',img:'./assets/d40d39122d302efabd22bab1dfba7d0b.jpg',link:H+'/projects/sites/titans/titans.html',blurb:'My dad coached my sister’s softball team and wanted a central hub for the parents. It was the first commissioned site I made.'},
+ {key:'hobo',name:'Hack a HOBO',yr:'2011',year:'2011 – today · shown on Nov 6, 2012',tier:'Flagship',color:'#3fb0c8',addr:'hackahobo.info',img:'./assets/46e9fbc735e6f13e79add42bea6309f1.jpg',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school.'},
+ {key:'bv',name:'BV Homework',yr:'2013',year:'2013',tier:'Side project',color:'#df1c21',addr:'BVHomework.html',img:'./assets/a5654f5475f2b4df8ec9f935b2936711.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html',blurb:'BV is for Blue Valley. I started it to share answers to homework problems at Blue Valley High School, and stopped working on it for fear of getting in trouble.'},
+ {key:'engen',name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',color:'#206df1',addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
+ {key:'home',name:'Home',yr:'2016',year:'2016',tier:'Personal',color:'#46e7ff',addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
+ {key:'spaceatlas',name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',color:'#4ba9dd',addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
+ {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',color:'#3fb0c8',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
 ];
 var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140};
 class Component extends DCLogic {
@@ -86,7 +94,7 @@ class Component extends DCLogic {
     var i = this.state.i, n = SITES.length;
     var T = this.testVals();
     var F = this.state.fit;
-    return {
+    var R = {
       u: F.u, W: F.W, H: F.H, tx: 100 + 730 + Math.round((F.W - 1280) * 0.6),
       spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts,
       cur: SITES[i],
@@ -98,6 +106,8 @@ class Component extends DCLogic {
         return { name: s.name, yr: s.yr, color: s.color, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) };
       })
     };
+    R.live = liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 32);
+    return R;
   }
 }
 </script>

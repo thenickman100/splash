@@ -21,6 +21,8 @@ a{color:#111}a:hover{color:#555}
 .mini{border-radius:12px;overflow:hidden;background:#fff;border:1px solid #0001;display:flex;flex-direction:column;text-decoration:none;color:#111;transition:transform .2s}
 .mini:hover{transform:translateY(-4px)}
 .tagl{position:absolute;top:12px;padding:6px 10px;border-radius:6px;background:#111d;color:#fff;font-family:'Fragment Mono',monospace;font-size:12px}
+.live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
+.live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
 </style>
 </helmet>
 <div style="width:{{W}}px;zoom:{{u}};box-sizing:border-box;background:#fbfaf7;color:#111;font-family:'Rethink Sans',sans-serif">
@@ -35,25 +37,19 @@ a{color:#111}a:hover{color:#555}
     <img src="./assets/649aa6048879b7d826ea004c3c167303.jpg" alt="" style="position:absolute;right:-60px;top:-40px;width:720px;opacity:.28;transform:rotate(-4deg)">
     <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:#aaa">c. 2008 to today</div>
     <div style="font-size:120px;font-weight:800;line-height:.85;letter-spacing:-0.04em;position:relative">Old Sites</div>
-    <p style="margin:0;max-width:560px;font-size:19px;line-height:1.5;color:#ddd;position:relative">Websites I made, starting in middle school. Drag the slider under each of the main three to compare two versions of it.</p>
+    <p style="margin:0;max-width:560px;font-size:19px;line-height:1.5;color:#ddd;position:relative">Websites I made, starting in middle school. Each of the main three is shown in two versions.</p>
     <div style="display:flex;gap:12px;position:relative">
-      <a class="jump" href="#awesome" style="border-color:#9bc53d;color:#fbfaf7">Awesome Stuff</a>
-      <a class="jump" href="#ask" style="border-color:#ff4433;color:#fbfaf7">Askthenickman</a>
-      <a class="jump" href="#hobo" style="border-color:#46e06a;color:#fbfaf7">Hack a HOBO</a>
+      <a class="jump" href="#awesome" style="border-color:#adf084;color:#fbfaf7">Awesome Stuff</a>
+      <a class="jump" href="#ask" style="border-color:#d50202;color:#fbfaf7">Askthenickman</a>
+      <a class="jump" href="#hobo" style="border-color:#3fb0c8;color:#fbfaf7">Hack a HOBO</a>
     </div>
   </div>
 
   <sc-for list="{{flags}}" as="f" hint-placeholder-count="3">
-    <div id="{{f.id}}" style="height:600px;box-sizing:border-box;padding:56px 80px;display:flex;flex-direction:{{f.dir}};gap:56px;align-items:center;background:{{f.bg}};border-bottom:1px solid #0001">
+    <div id="{{f.id}}" style="box-sizing:border-box;padding:56px 80px;display:flex;flex-direction:{{f.dir}};gap:56px;align-items:center;background:{{f.bg}};border-bottom:1px solid #0001">
       <div style="flex:0 0 720px;display:flex;flex-direction:column;gap:10px">
-        <div style="position:relative;width:720px;height:450px;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px #0003;background:#000">
-          <img src="{{f.b}}" alt="{{f.bl}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top">
-          <img src="{{f.a}}" alt="{{f.al}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;clip-path:inset(0 {{f.clip}}% 0 0)">
-          <div style="position:absolute;top:0;bottom:0;left:{{f.pos}}%;width:3px;background:#fff;box-shadow:0 0 10px #000a"></div>
-          <span class="tagl" style="left:12px">{{f.al}}</span>
-          <span class="tagl" style="right:12px">{{f.bl}}</span>
-        </div>
-        <input class="rng" type="range" min="0" max="100" value="{{f.pos}}" onInput="{{f.slide}}" onChange="{{f.slide}}" aria-label="Compare {{f.al}} and {{f.bl}}">
+        <div style="width:720px;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px #0003;background:#1b1e24"><div style="height:30px;display:flex;align-items:center;gap:8px;padding:0 12px;color:#cfd4dc;font:12px 'Fragment Mono',monospace"><span style="width:8px;height:8px;border-radius:50%;background:{{f.ink}}"></span>{{f.al}}</div><div class="live" style="position:relative;height:330px;overflow:hidden;background:#000"><iframe src="{{f.as}}" title="{{f.name}}, {{f.al}}" style="width:{{f.af.fw}}px;height:{{f.af.fh}}px;transform:scale({{f.af.fs}})"></iframe></div></div>
+        <div style="width:720px;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px #0003;background:#1b1e24"><div style="height:30px;display:flex;align-items:center;gap:8px;padding:0 12px;color:#cfd4dc;font:12px 'Fragment Mono',monospace"><span style="width:8px;height:8px;border-radius:50%;background:{{f.ink}}"></span>{{f.bl}}</div><div class="live" style="position:relative;height:330px;overflow:hidden;background:#000"><iframe src="{{f.bs}}" title="{{f.name}}, {{f.bl}}" style="width:{{f.bf.fw}}px;height:{{f.bf.fh}}px;transform:scale({{f.bf.fs}})"></iframe></div></div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:14px">
         <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:{{f.ink}}">{{f.year}} · Flagship</div>
@@ -68,13 +64,13 @@ a{color:#111}a:hover{color:#555}
   </sc-for>
 
   <div style="height:320px;box-sizing:border-box;padding:48px 80px;display:flex;gap:44px;align-items:center;background:#0c0f1a;color:#eef1f8">
-    <img src="./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg" alt="Space Atlas" style="width:360px;height:225px;object-fit:cover;border-radius:10px">
+    <div style="flex:0 0 360px;border-radius:10px;overflow:hidden;background:#1b1e24"><div style="height:26px;display:flex;align-items:center;padding:0 10px;color:#cfd4dc;font:11px 'Fragment Mono',monospace">thespaceatlas.org</div><div class="live" style="position:relative;overflow:hidden;background:#000;height:225px"><iframe src="https://spaceatlas.hackahobo.info/" title="Space Atlas" style="width:1400px;height:876px;transform:scale(0.2571)"></iframe></div></div>
     <div style="flex:1;display:flex;flex-direction:column;gap:10px">
-      <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:#a9b8ff">2018 · Notable</div>
+      <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:#4ba9dd">2018 · Notable</div>
       <div style="font-size:40px;font-weight:800;letter-spacing:-0.02em">Space Atlas</div>
       <p style="margin:0;font-size:16px;line-height:1.55;color:#c9cfe0;max-width:560px">A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.</p>
     </div>
-    <a href="https://spaceatlas.hackahobo.info/" target="_blank" style="height:48px;padding:0 22px;display:flex;align-items:center;border:2px solid #a9b8ff;color:#eef1f8;text-decoration:none;border-radius:10px;font-weight:800">Open the site ↗</a>
+    <a href="https://spaceatlas.hackahobo.info/" target="_blank" style="height:48px;padding:0 22px;display:flex;align-items:center;border:2px solid #4ba9dd;color:#eef1f8;text-decoration:none;border-radius:10px;font-weight:800">Open the site ↗</a>
   </div>
 
   <div style="box-sizing:border-box;padding:44px 80px 30px;display:flex;flex-direction:column;gap:18px">
@@ -97,15 +93,21 @@ var H = 'https://hackahobo.info';
 // splash test: fill the real browser window. The design is drawn for 1280×800; u scales it (CSS zoom) and
 // W×H is the canvas, in design pixels, that fills the window. Fixed pages fit both sides, scroll pages fit the width.
 function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math.min(w / 1280, h / 800) : Math.min(w / 1280, 1.25); return { u: u, W: Math.round(w / u), H: Math.round(h / u) }; }
+// splash test: big windows show the live site, scaled to fit, like v0.1. DIMS is the width and height each
+// site was built for (from v0.1's windows).
+var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
+function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
 var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/AA-then-and-now/AA-ThenNow.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
 var FLAGS = [
- {id:'awesome',name:'Awesome Stuff',year:'c. 2008',bg:'#f1f6e6',ink:'#4d7a12',dir:'row',a:'./assets/92c737d215aa3c7d3b8154869fd508c4.jpg',al:'lawesomel.webs.com',b:'./assets/cf0bde60261edd16e5f023557327bb75.jpg',bl:'Webstarts section',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker. It was one site on two domains. The Webstarts section held the hacking pages and games, because Webstarts had more features, like password-protected pages.'},
- {id:'ask',name:'Askthenickman',year:'c. 2009',bg:'#fdecea',ink:'#b3261e',dir:'row-reverse',a:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',al:'Home page',b:'./assets/18f17b21248824ddff9debf0577ca075.jpg',bl:'Techno home page',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. It had flash games, secret phone numbers from the Hitchhiker’s Guide and a themed logo for each holiday. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
- {id:'hobo',name:'Hack a HOBO',year:'2011 – today',bg:'#e8f7ec',ink:'#16803a',dir:'row',a:'./assets/0c6e78e1fe9b6a24216761d235f3f769.jpg',al:'Golden age, Nov 6, 2012',b:'./assets/649aa6048879b7d826ea004c3c167303.jpg',bl:'2026 Edition',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. It went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul that finally fixed design issues I had for years.'}
+ {id:'awesome',name:'Awesome Stuff',year:'c. 2008',bg:'#e5edef',ink:'#738f20',dir:'row',a:'./assets/92c737d215aa3c7d3b8154869fd508c4.jpg',al:'lawesomel.webs.com',b:'./assets/cf0bde60261edd16e5f023557327bb75.jpg',bl:'Webstarts section',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker. It was one site on two domains. The Webstarts section held the hacking pages and games, because Webstarts had more features, like password-protected pages.'},
+ {id:'ask',name:'Askthenickman',year:'c. 2009',bg:'#e0d8ae',ink:'#d50202',dir:'row-reverse',a:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',al:'Home page',b:'./assets/18f17b21248824ddff9debf0577ca075.jpg',bl:'Techno home page',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. It had flash games, secret phone numbers from the Hitchhiker’s Guide and a themed logo for each holiday. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {id:'hobo',name:'Hack a HOBO',year:'2011 – today',bg:'#dff4f8',ink:'#2fa0bf',dir:'row',a:'./assets/0c6e78e1fe9b6a24216761d235f3f769.jpg',al:'Golden age, Nov 6, 2012',b:'./assets/649aa6048879b7d826ea004c3c167303.jpg',bl:'2026 Edition',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. It went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul that finally fixed design issues I had for years.'}
 ];
+var VERS = {awesome:[H+'/projects/sites/lawesomel/index.html',H+'/projects/sites/awesomestuff/index.html'],ask:[H+'/projects/sites/askthenickman/index.html',H+'/projects/sites/askthenickman/index-techno.html'],hobo:[H+'/files/v1/index-v1.html',H+'/?theme=original']};
 var SMALLS = [
  {name:'Titans Softball',year:'c. 2010',img:'./assets/b34913cd1ef92f183c5ebc5ffcbcc564.jpg',link:H+'/projects/sites/titans/titans.html'},
  {name:'BV Homework',year:'2013',img:'./assets/7d6912249875c520a43fa19146e42fb3.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html'},
@@ -121,7 +123,7 @@ class Component extends DCLogic {
     return {
       u: F.u, W: F.W, H: F.H, 
       spOpts: T.spOpts,
-      flags: FLAGS.map((f) => { var pos = this.state[f.id]; return Object.assign({}, f, { rm: spHref(T.sp, f.id), pos: pos, clip: 100 - pos, slide: (e) => { var o = {}; o[f.id] = Number(e.target.value); this.setState(o); } }); }),
+      flags: FLAGS.map((f) => { var pos = this.state[f.id]; return Object.assign({}, f, { rm: spHref(T.sp, f.id), as: VERS[f.id][0], bs: VERS[f.id][1], af: liveFit(f.id, 720, 330), bf: liveFit(f.id === 'hobo' ? 'hobo26' : f.id, 720, 330), pos: pos, clip: 100 - pos, slide: (e) => { var o = {}; o[f.id] = Number(e.target.value); this.setState(o); } }); }),
       smalls: SMALLS
     };
   }

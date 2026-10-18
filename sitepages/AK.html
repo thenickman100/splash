@@ -50,7 +50,6 @@ a{color:inherit}
 .sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:10px 0 18px}
 .sp-logo{border:1.5px solid var(--line);background:#fff;border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:6px;align-items:center;font:10px 'Fragment Mono',monospace;color:var(--muted)}
 .sp-logo img{width:100%;height:62px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
-.sp-cmp{margin:22px 0;color:var(--ink)}.sp-cmp-box{border-radius:6px}
 .end{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
 .end a{padding:36px 44px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
 .end a+a{border-left:1px solid var(--line);text-align:right}.end .mono{font-size:11px;color:var(--muted)}.end b{font-size:30px;font-weight:800;letter-spacing:-0.02em}
@@ -79,8 +78,7 @@ SP.boot(function (s, sp) {
     return '<a href="#' + sp.slug(x.h) + '"><span class="n">' + String(k + 1).padStart(2, '0') + '</span>' + e(x.h) + '</a>';
   }).join('') + '</nav><div>';
   s.sections.forEach(function (x, k) {
-    h += '<section class="ch" id="' + sp.slug(x.h) + '"><div class="num">' + String(k + 1).padStart(2, '0') + '</div><h2>' + e(x.h) + '</h2>' + sp.body(x) +
-      (s.compare && s.compare.after === x.h ? sp.compareHtml(s.compare) : '') + '</section>';
+    h += '<section class="ch" id="' + sp.slug(x.h) + '"><div class="num">' + String(k + 1).padStart(2, '0') + '</div><h2>' + e(x.h) + '</h2>' + sp.body(x) + '</section>';
   });
   h += '</div></div><div class="end">' +
     (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← ' + e(sp.prev.range) + '</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +

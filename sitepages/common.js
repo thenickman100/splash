@@ -99,13 +99,6 @@
     return o.text + o.media + o.embed + o.buttons + o.extra;
   }
 
-  // Before/after slider over two screenshots, from the AL candidate.
-  function compareHtml(c) {
-    return '<div class="sp-cmp"><div class="sp-cmp-box"><img src="' + c.b[0] + '" alt="' + esc(c.b[1]) + '"><img class="top" src="' + c.a[0] + '" alt="' + esc(c.a[1]) + '" style="clip-path:inset(0 50% 0 0)">' +
-      '<div class="bar" style="left:50%"></div><span class="tag l">' + esc(c.a[1]) + '</span><span class="tag r">' + esc(c.b[1]) + '</span></div>' +
-      '<input type="range" min="0" max="100" value="50" aria-label="Compare ' + esc(c.a[1]) + ' and ' + esc(c.b[1]) + '"></div>';
-  }
-
   // Text color that reads on top of a site's color.
   function onColor(hex) {
     var n = parseInt(hex.slice(1), 16), r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
@@ -145,10 +138,6 @@
     '.sp-viewer .x{top:12px;right:16px}.sp-viewer .l{left:12px;top:50%}.sp-viewer .r{right:12px;top:50%}' +
     '#sp-fx{position:fixed;inset:0;pointer-events:none;z-index:9000}' +
     '.sp-trail{position:fixed;pointer-events:none;z-index:9001;color:#ffd23f;font-size:16px;transform:translate(-50%,-50%);transition:opacity .7s,transform .7s}' +
-    '.sp-cmp-box{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}.sp-cmp-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}' +
-    '.sp-cmp-box .bar{position:absolute;top:0;bottom:0;width:3px;margin-left:-1px;background:#fff;box-shadow:0 0 8px #000a}' +
-    '.sp-cmp-box .tag{position:absolute;top:10px;padding:5px 9px;border-radius:5px;background:#000c;color:#fff;font:11px ui-monospace,monospace}.sp-cmp-box .tag.l{left:10px}.sp-cmp-box .tag.r{right:10px}' +
-    '.sp-cmp input{width:100%;height:26px;cursor:ew-resize;accent-color:currentColor}' +
     '.sp-btn.on{outline:2px solid currentColor;outline-offset:2px}';
 
   // Scale every live window to its column width.
@@ -162,10 +151,6 @@
   }
 
   function wire() {
-    document.querySelectorAll('.sp-cmp').forEach(function (c) {
-      var r = c.querySelector('input'), top = c.querySelector('.top'), bar = c.querySelector('.bar');
-      r.addEventListener('input', function () { top.style.clipPath = 'inset(0 ' + (100 - r.value) + '% 0 0)'; bar.style.left = r.value + '%'; });
-    });
     addEventListener('resize', fit);
     fit();
     if (window.ResizeObserver) { var ro = new ResizeObserver(fit); document.querySelectorAll('.sp-vp').forEach(function (v) { ro.observe(v); }); }
@@ -320,7 +305,7 @@
   window.SP = {
     site: site, sites: SITES, prev: prev, next: next, home: home, from: from, design: design,
     esc: esc, url: pageUrl, facts: facts, factsHtml: factsHtml, body: body, parts: parts, embedHtml: embedHtml,
-    figHtml: figHtml, galleryHtml: galleryHtml, slug: slug, firstEmbed: firstEmbed, fit: fit, compareHtml: compareHtml, onColor: onColor,
+    figHtml: figHtml, galleryHtml: galleryHtml, slug: slug, firstEmbed: firstEmbed, fit: fit, onColor: onColor,
     boot: function (render, after) {
       document.title = site.name + ' · Old Sites';
       document.documentElement.style.setProperty('--accent', site.color);
