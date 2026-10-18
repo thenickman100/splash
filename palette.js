@@ -530,6 +530,23 @@
     "edge": [
      false
     ]
+   },
+   {
+    "hex": "#000000",
+    "what": "Black text, like the Welcome Nick heading",
+    "src": "style.css\n.black { color: [[#000000]]; }",
+    "px": [
+     [
+      795,
+      32
+     ]
+    ],
+    "img": [
+     "home-4"
+    ],
+    "edge": [
+     false
+    ]
    }
   ],
   "extra": []
@@ -584,6 +601,40 @@
     ],
     "img": [
      "sa-3"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#f7f7f7",
+    "what": "Light gray planet names and menu button",
+    "src": "stylesheet.min.css\n.headerBody { color: [[#f7f7f7]]; }  .burgerLines { background-color: [[#f7f7f7]]; }",
+    "px": [
+     [
+      585,
+      41
+     ]
+    ],
+    "img": [
+     "sa-4"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#929292",
+    "what": "Gray underline below MOON, and the loading bar",
+    "src": "stylesheet.min.css\n[id='2headerBody'] { text-decoration-color: [[#929292]]; }  #loading { background-color: [[#929292]]; }",
+    "px": [
+     [
+      640,
+      57
+     ]
+    ],
+    "img": [
+     "sa-5"
     ],
     "edge": [
      false

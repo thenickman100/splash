@@ -30,7 +30,7 @@ a{color:#f2f4ef}a:hover{color:#ccc}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
 </style>
 </helmet>
-<div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,#2f4438,#1e2a24 60%);color:#f2f4ef;font-family:'Hanken Grotesk',sans-serif">
+<div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.on}} 45%,#1e2a24),#1e2a24 60%);color:#f2f4ef;font-family:'Hanken Grotesk',sans-serif">
   <div style="position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
@@ -43,18 +43,18 @@ a{color:#f2f4ef}a:hover{color:#ccc}
 
   <div class="txt" key="{{cur.key}}" style="position:absolute;left:{{tx}}px;top:70px;right:50px;height:440px;display:flex;flex-direction:column;gap:10px">
     <div style="font-size:88px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}}">{{cur.yr}}</div>
-    <div class="mono" style="font-size:11px;color:#a9b5ad">{{cur.year}} · {{cur.tier}}</div>
+    <div class="mono" style="font-size:11px;color:{{cur.c3}}">{{cur.year}} · {{cur.tier}}</div>
     <div style="font-size:30px;font-weight:800;line-height:1">{{cur.name}}</div>
     <p style="margin:0;font-size:14px;line-height:1.55;color:#d3dad5">{{cur.blurb}}</p>
     <div style="display:flex;gap:10px;margin-top:auto">
       <a href="{{spHref}}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.color}};color:{{cur.on}};text-decoration:none;font-weight:800">Read more →</a>
-      <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #4b5d52;text-decoration:none;font-weight:600">Open full screen ↗</a>
+      <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid {{cur.c3}};color:{{cur.c3}};text-decoration:none;font-weight:600">Open full screen ↗</a>
     </div>
   </div>
 
   <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
     <button class="c {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
-      <span class="bar"><span style="width:7px;height:7px;border-radius:50%;background:{{c.color}};flex:none"></span>{{c.addr}}</span>
+      <span class="bar" style="background:{{c.on}};color:{{c.c3}}"><span style="width:7px;height:7px;border-radius:50%;background:{{c.color}};flex:none"></span>{{c.addr}}</span>
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
@@ -88,7 +88,7 @@ var SITES = [
  {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
 ];
 // splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
-SITES.forEach((s) => { s.color = PALETTE.main(s.key); s.on = PALETTE.on(s.key); });
+SITES.forEach((s) => { s.color = PALETTE.main(s.key); s.on = PALETTE.on(s.key); s.c3 = PALETTE.third(s.key); });
 var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140};
 class Component extends DCLogic {
   testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
@@ -102,11 +102,11 @@ class Component extends DCLogic {
       spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts,
       cur: SITES[i],
       cards: SITES.map((s, k) => {
-        if (k === i) return { name: s.name, yr: s.yr, color: s.color, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', pick: () => {} };
+        if (k === i) return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', pick: () => {} };
         var a = -26 + k * (52 / (n - 1)), rad = a * Math.PI / 180, R = 1050, cx = this.state.fit.W / 2, cy = 1760 + (this.state.fit.H - 800);
         var w = CW[s.tier], h = Math.round(w * 0.64);
         var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
-        return { name: s.name, yr: s.yr, color: s.color, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) };
+        return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) };
       })
     };
     R.live = liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 32);
