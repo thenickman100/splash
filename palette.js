@@ -612,6 +612,28 @@
  }
 };
 
+  // Trial order: the palette page can reorder colors in this browser only. It is saved in localStorage as
+  // { site: { colors: [img keys], extra: [img keys] } } and applied here, so every page in this browser
+  // shows the trial order until it is reset. The published order above is untouched.
+  var KEY = 'splash-palette-order', PUBLISHED = {};
+  Object.keys(SITES).forEach(function (k) {
+    PUBLISHED[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) };
+  });
+  function arrange(order) {
+    Object.keys(SITES).forEach(function (k) {
+      var all = {}, o = order[k] || PUBLISHED[k];
+      SITES[k].colors.concat(SITES[k].extra).forEach(function (c) { all[c.img[0]] = c; });
+      var take = function (ids) { return ids.filter(function (id) { return all[id]; }).map(function (id) { var c = all[id]; delete all[id]; return c; }); };
+      var colors = take(o.colors), extra = take(o.extra);
+      Object.keys(all).forEach(function (id) { extra.push(all[id]); });
+      SITES[k].colors = colors.length ? colors : extra.splice(0, 1);
+      SITES[k].extra = extra;
+    });
+  }
+  var trial = null;
+  try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  if (trial) arrange(trial);
+
   function rgb(h) { var n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   function lum(h) {
     var c = rgb(h).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
@@ -635,6 +657,12 @@
   }
   window.PALETTE = {
     sites: SITES,
+    // Trial order controls, used by palette.html.
+    trial: !!trial,
+    published: PUBLISHED,
+    saveOrder: function (order) { arrange(order); try { localStorage.setItem(KEY, JSON.stringify(order)); } catch (e) {} this.trial = true; },
+    clearOrder: function () { arrange(PUBLISHED); try { localStorage.removeItem(KEY); } catch (e) {} this.trial = false; },
+    order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
     ranked: ranked,
     // Color 1, the site's main color, for fills such as bars and buttons.

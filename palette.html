@@ -32,40 +32,106 @@ a{color:inherit}
 .alt i{width:28px;height:28px;border-radius:6px;border:1px solid #0002;display:inline-block}
 .alt code{font:600 12.5px ui-monospace,monospace}
 @media (max-width:640px){.row{grid-template-columns:76px 1fr;gap:12px}.sw{height:76px}}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 14px;margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:14px}
+.bar .sp{flex:1}
+button{font:600 13px system-ui,sans-serif;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+button:disabled{opacity:.35;cursor:default}
+button.link{border:0;background:none;padding:0;text-decoration:underline;font-weight:500}
+.row .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.ctl{display:flex;gap:6px;flex-wrap:wrap}
+.ctl button{min-width:40px}
+.site h2 em{font:600 12px system-ui,sans-serif;font-style:normal;padding:3px 8px;border-radius:999px;background:#ffd23f;color:#111;vertical-align:middle}
+.strip{display:flex;gap:4px;margin:0 0 8px}.strip span{flex:1;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:700 12px ui-monospace,monospace;border:1px solid #0002}
+.links{font-size:13px;color:var(--muted);margin:0 0 6px}.links a{margin-right:6px}
+.dlg{position:fixed;inset:0;z-index:20;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px}
+.dlg[hidden]{display:none}
+.dlg .box{background:var(--card);color:var(--fg);border-radius:14px;padding:18px;width:min(720px,100%);box-sizing:border-box}
+.dlg h3{margin:0 0 4px}.dlg p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.dlg textarea{width:100%;height:46vh;box-sizing:border-box;font:12px/1.5 ui-monospace,monospace;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.dlg .btns{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
 </style>
 </head>
 <body>
 <main>
 <h1>Site palettes</h1>
-<p class="intro">The colors for each site, ranked, then any other colors found in its code. Every color is read from the site's own code on hackahobo.info: a CSS rule, or an original image file when the color only exists in a logo or background image. Under each color is the exact pixel it was read from: a 10× zoom with the pixel boxed, and the spot on the live page ringed. The captures are lossless and at the page's real size, so every pixel is the site's own color. <a href="index.html">← Back to the candidates</a></p>
+<p class="intro">The colors for each site, ranked, then any other colors found in its code. Use the arrows to try a different order: it is saved in this browser and every candidate and site page here follows it, so you can see it live. When you like it, Export order and send it to Claude. Every color is read from the site's own code on hackahobo.info: a CSS rule, or an original image file when the color only exists in a logo or background image. Under each color is the exact pixel it was read from: a 10× zoom with the pixel boxed, and the spot on the live page ringed. The captures are lossless and at the page's real size, so every pixel is the site's own color. <a href="index.html">← Back to the candidates</a></p>
+<div id="bar" class="bar"></div>
 <div id="list"></div>
+<div id="dlg" class="dlg" hidden><div class="box"><h3>Export order</h3><p>Copy this and send it to Claude to make it the published order.</p><textarea id="exp" readonly></textarea><div class="btns"><button id="copy">Copy</button><button id="close">Close</button></div></div></div>
 </main>
 <script src="palette.js"></script>
 <script>
 // Renders straight from palette.js, so this page always shows the palettes the site pages use.
+// The arrows try out a different order in this browser; every candidate and site page here follows it.
 (function () {
+  var P = PALETTE;
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function src(t) { return esc(t).replace(/\[\[/g, '<b>').replace(/\]\]/g, '</b>').replace(/\n/g, '<br>'); }
-  function on(h) { return PALETTE.contrast(h, '#000000') >= PALETTE.contrast(h, '#ffffff') ? '#111' : '#fff'; }
-  function row(label, c) {
-    var hx = Array.isArray(c.hex) ? c.hex : [c.hex];
-    var sw = hx.length > 1 ? 'repeating-linear-gradient(135deg,' + hx[0] + ' 0 6px,' + hx[1] + ' 6px 12px)' : hx[0];
-    return '<div class="row"><div class="sw" style="background:' + sw + ';color:' + on(hx[0]) + '">' + label + '</div><div>' +
-      '<div class="hex">' + hx.join(' + ') + '</div><div class="what">' + esc(c.what) + '</div><div class="src">' + src(c.src) + '</div>' +
-      hx.map(function (h, i) {
-        return '<div class="pix">' + (hx.length > 1 ? '<div class="sub"><i style="background:' + h + '"></i>' + h + '</div>' : '') +
-          '<figure><img src="palette/' + c.img[i] + '-px.png" alt="Pixel ' + h + ', zoomed"><figcaption>The pixel, boxed, zoomed 10×</figcaption></figure>' +
-          '<figure><img src="palette/' + c.img[i] + '-at.png" alt="Where the pixel is on the page"><figcaption>Pixel (' + c.px[i][0] + ', ' + c.px[i][1] + ') of the live page at 1280 wide, ringed' +
-          (c.edge && c.edge[i] ? '. The striped gray in the zoom is off the edge of the page.' : '') + '</figcaption></figure></div>';
-      }).join('') + '</div></div>';
+  function on(h) { return P.contrast(h, '#000000') >= P.contrast(h, '#ffffff') ? '#111' : '#fff'; }
+  function ctl(k, list, i, n) {
+    var b = function (act, txt, title, off) { return '<button data-k="' + k + '" data-l="' + list + '" data-i="' + i + '" data-a="' + act + '" title="' + title + '"' + (off ? ' disabled' : '') + '>' + txt + '</button>'; };
+    return '<div class="ctl">' + b('up', '↑', 'Move up', i === 0) + b('down', '↓', 'Move down', i === n - 1) +
+      (list === 'colors' ? b('out', 'To other colors', 'Take out of the ranking', n === 1) : b('in', 'Add to ranking', 'Add to the end of the ranking')) + '</div>';
   }
-  document.getElementById('list').innerHTML = Object.keys(PALETTE.sites).map(function (k) {
-    var s = PALETTE.sites[k];
-    return '<section class="site"><h2>' + esc(s.name) + '</h2><div class="page">' + esc(s.page) + '</div>' +
-      s.colors.map(function (c, i) { return row(i + 1, c); }).join('') +
-      (s.extra.length ? '<div class="alts"><h3>Other colors in the code</h3><p>Not in the ranking. Swap any in if one fits better.</p>' + s.extra.map(function (c) { return row('·', c); }).join('') + '</div>' : '') +
-      '</section>';
-  }).join('');
+  function row(k, list, i, n, c) {
+    var h = c.hex, label = list === 'colors' ? i + 1 : '·';
+    return '<div class="row"><div class="sw" style="background:' + h + ';color:' + on(h) + '">' + label + '</div><div>' +
+      '<div class="head"><div><div class="hex">' + h + '</div><div class="what">' + esc(c.what) + '</div></div>' + ctl(k, list, i, n) + '</div>' +
+      '<div class="src">' + src(c.src) + '</div>' +
+      '<div class="pix"><figure><img src="palette/' + c.img[0] + '-px.png" alt="Pixel ' + h + ', zoomed" loading="lazy"><figcaption>The pixel, boxed, zoomed 10×</figcaption></figure>' +
+      '<figure><img src="palette/' + c.img[0] + '-at.png" alt="Where the pixel is on the page" loading="lazy"><figcaption>Pixel (' + c.px[0][0] + ', ' + c.px[0][1] + ') of the live page at 1280 wide, ringed' +
+      (c.edge && c.edge[0] ? '. The striped gray in the zoom is off the edge of the page.' : '') + '</figcaption></figure></div></div></div>';
+  }
+  function strip(s) { return '<div class="strip">' + s.colors.map(function (c, i) { return '<span style="background:' + c.hex + ';color:' + on(c.hex) + '">' + (i + 1) + '</span>'; }).join('') + '</div>'; }
+  function section(k) {
+    var s = P.sites[k], changed = JSON.stringify(P.order()[k]) !== JSON.stringify(P.published[k]);
+    return '<h2>' + esc(s.name) + (changed ? ' <em>trial order</em>' : '') + '</h2><div class="page">' + esc(s.page) + '</div>' + strip(s) +
+      '<div class="links">See it: <a href="sitepages/AI.html?site=' + k + '">AI</a> <a href="sitepages/AK.html?site=' + k + '">AK</a> <a href="sitepages/AN.html?site=' + k + '">AN</a> <a href="candidates/AG-fanned-windows-main-page/R8-AG.dc.html">AG</a> <a href="candidates/I-weighted-scroll-page/Scroll.dc.html">I</a>' +
+      (changed ? ' · <button class="link" data-reset="' + k + '">Reset this site</button>' : '') + '</div>' +
+      s.colors.map(function (c, i) { return row(k, 'colors', i, s.colors.length, c); }).join('') +
+      (s.extra.length ? '<div class="alts"><h3>Other colors in the code</h3><p>Not in the ranking.</p>' + s.extra.map(function (c, i) { return row(k, 'extra', i, s.extra.length, c); }).join('') + '</div>' : '');
+  }
+  function bar() {
+    document.getElementById('bar').innerHTML = (P.trial ? '<b>Trial order on</b> in this browser. Every candidate and site page here uses it.' : 'Showing the published order.') +
+      '<span class="sp"></span><button id="export">Export order</button>' + (P.trial ? '<button id="resetall">Reset all</button>' : '');
+  }
+  function render() {
+    document.getElementById('list').innerHTML = Object.keys(P.sites).map(function (k) { return '<section class="site" id="site-' + k + '">' + section(k) + '</section>'; }).join('');
+    bar();
+  }
+  function redraw(k) { document.getElementById('site-' + k).innerHTML = section(k); bar(); }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.dataset.a) {
+      var k = t.dataset.k, l = t.dataset.l, i = +t.dataset.i, o = P.order(), a = o[k][l];
+      if (t.dataset.a === 'up') a.splice(i - 1, 0, a.splice(i, 1)[0]);
+      if (t.dataset.a === 'down') a.splice(i + 1, 0, a.splice(i, 1)[0]);
+      if (t.dataset.a === 'out') o[k].extra.unshift(a.splice(i, 1)[0]);
+      if (t.dataset.a === 'in') o[k].colors.push(a.splice(i, 1)[0]);
+      P.saveOrder(o); redraw(k);
+    } else if (t.dataset.reset) {
+      var o2 = P.order(); o2[t.dataset.reset] = JSON.parse(JSON.stringify(P.published[t.dataset.reset]));
+      P.saveOrder(o2); if (JSON.stringify(P.order()) === JSON.stringify(P.published)) P.clearOrder(); redraw(t.dataset.reset);
+    } else if (t.id === 'resetall') { P.clearOrder(); render(); }
+    else if (t.id === 'export') { openExport(); }
+    else if (t.id === 'copy') {
+      var ta = document.getElementById('exp');
+      (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { t.textContent = 'Copied'; }, function () { ta.select(); document.execCommand('copy'); t.textContent = 'Copied'; });
+    } else if (t.id === 'close' || t.id === 'dlg') document.getElementById('dlg').hidden = true;
+  });
+  function openExport() {
+    var lines = ['Palette order for Old Sites (from palette.html)', ''];
+    Object.keys(P.sites).forEach(function (k) {
+      var s = P.sites[k];
+      lines.push(s.name + ': ' + s.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
+      if (s.extra.length) lines.push('  other: ' + s.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
+    });
+    lines.push('', 'order: ' + JSON.stringify(P.order()));
+    document.getElementById('exp').value = lines.join('\n');
+    document.getElementById('copy').textContent = 'Copy';
+    document.getElementById('dlg').hidden = false;
+  }
+  render();
 })();
 </script>
 </body>
