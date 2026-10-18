@@ -7,11 +7,14 @@
 // lose "disabled" when they have somewhere to go. Pages that redraw their windows mark each window with a
 // data-bn attribute holding an iframe, a .bn-back and a .bn-fwd; those are found and wired automatically.
 (function () {
+  var CAP = 50;      // browsers stop counting history.length here
   var frames = [];   // { f, back, fwd, loads }
   var log = [];      // frame records in navigation order
-  var at = 0;        // entries in log that are behind the current point (log[at] is the next forward)
-  var stepping = 0;  // loads still expected from our own back/forward
-  var len = history.length; // history length after the last counted change
+  var at = 0;        // entries in log behind the current point (log[at] is the next forward)
+  var stepUntil = 0; // until then, changes are our own back/forward arriving
+  var len = history.length;
+  var active = null; // the window last clicked into
+  var polled = 0;    // when the history check last recorded an entry itself
 
   function state() {
     frames.forEach(function (r) {
@@ -21,23 +24,40 @@
     });
   }
   function find(f) { for (var i = 0; i < frames.length; i++) if (frames[i].f === f) return frames[i]; return null; }
+  function record(r) { log = log.slice(0, at); log.push(r); at = log.length; state(); }
+  function stepping() { return Date.now() < stepUntil; }
+
+  // A window's page loaded. Count it unless it was our own step, or a reload that added no history entry
+  // (history.length didn't change and nothing ahead was dropped; past the cap the length can't tell, so count it).
+  function loaded(r) {
+    r.loads++;
+    var L = history.length;
+    if (r.loads === 1) { len = L; return; }
+    if (stepping()) { len = L; return state(); }
+    // The history check already saw this step; make sure it is credited to this window.
+    if (Date.now() - polled < 1500 && at > 0) { log[at - 1] = r; polled = 0; len = L; return state(); }
+    var ahead = log.length - at;
+    if (L > len || (ahead > 0 && L === len - ahead + 1) || L >= CAP) record(r);
+    len = L;
+  }
+  // History grew without a load on one of our windows: a frame inside an old page navigated. Credit the
+  // window last clicked into, or the most recently added one.
+  setInterval(function () {
+    var L = history.length;
+    if (stepping()) { len = L; return; }
+    if (L > len) { var r = active && frames.indexOf(active) >= 0 ? active : frames[frames.length - 1]; if (r) { record(r); polled = Date.now(); } }
+    len = L;
+  }, 300);
+  addEventListener('blur', function () {
+    setTimeout(function () { var r = find(document.activeElement); if (r) active = r; }, 0);
+  });
 
   function attach(f, back, fwd) {
     var r = find(f);
     if (r) { r.back = back; r.fwd = fwd; state(); return; }
     r = { f: f, back: back, fwd: fwd, loads: 0 };
     frames.push(r);
-    f.addEventListener('load', function () {
-      r.loads++;
-      if (r.loads === 1) return;                       // the window's first page
-      if (stepping > 0) { stepping--; len = history.length; return state(); } // our own back or forward arriving
-      // Only count loads that added a history entry (a reload or a same-page link doesn't). A new entry drops
-      // any entries ahead of the current point and adds one.
-      var grew = history.length === len - (log.length - at) + 1 || history.length > len;
-      len = history.length;
-      if (!grew) return state();
-      log = log.slice(0, at); log.push(r); at = log.length; state();
-    });
+    f.addEventListener('load', function () { loaded(r); });
     state();
   }
   // Clicks are handled here, so buttons that a page redraws keep working.
@@ -51,7 +71,7 @@
   function go(r, d) {
     if (d < 0 && !(at > 0 && log[at - 1] === r)) return;
     if (d > 0 && !(at < log.length && log[at] === r)) return;
-    at += d; stepping++; state();
+    at += d; stepUntil = Date.now() + 1500; state();
     if (d < 0) history.back(); else history.forward();
   }
   // Windows that get replaced (a page swapping which site it shows) drop out of the record.

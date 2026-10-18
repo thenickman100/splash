@@ -41,12 +41,12 @@ a{color:#fff}a:hover{color:#ccc}
 
       <div style="flex:0 0 330px;display:flex;flex-direction:column;gap:14px">
         <div style="font-size:22px;font-weight:800">Old Sites</div>
-        <div style="margin-top:50px;font-size:150px;font-weight:800;line-height:.82;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}};transition:color .4s">{{cur.yr}}</div>
+        <div style="margin-top:50px;font-size:150px;font-weight:800;line-height:.82;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.p_year}};transition:color .4s">{{cur.yr}}</div>
         <div class="mono" style="font-size:12px;color:#9a9a9a">{{cur.year}} · {{cur.tier}}</div>
         <div style="font-size:{{cur.fs}}px;font-weight:800;line-height:1;letter-spacing:-0.02em">{{cur.name}}</div>
         <p style="margin:0;font-size:15px;line-height:1.55;color:#cfcfcf">{{cur.blurb}}</p>
         <div style="margin-top:auto;display:flex;gap:10px">
-          <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.color}};color:{{cur.on}};text-decoration:none;font-weight:800">Open full screen ↗</a>
+          <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.p_openFill}};color:{{cur.p_openText}};text-decoration:none;font-weight:800">Open full screen ↗</a>
           <a href="{{spHref}}" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #333333;text-decoration:none;font-weight:500">Read more →</a>
         </div>
       </div>
@@ -98,7 +98,8 @@ var SITES = [
  {name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',w:3,era:2,addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul with a new left sidebar and game containers that can take holiday themes. It is still running.'}
 ];
 // splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
-SITES.forEach((s) => { s.color = PALETTE.main(KEYS[s.name]); s.on = PALETTE.on(KEYS[s.name]); });
+function partsOf(page, key){ var o = PALETTE.partsFor(page, key), r = {}; for (var k in o) r['p_' + k] = o[k]; return r; }
+SITES.forEach((s) => { Object.assign(s, partsOf('K', KEYS[s.name])); });
 var TOT = SITES.reduce((a, s) => a + s.w, 0), PX = 900, TOTAL = Math.round(TOT * PX / 3 + 800);
 class Component extends DCLogic {
   testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
@@ -107,6 +108,7 @@ class Component extends DCLogic {
     var p = this.state.p, pos = p * TOT, acc = 0, i = 0;
     for (; i < SITES.length - 1; i++) { if (pos < acc + SITES[i].w) break; acc += SITES[i].w; }
     var s = SITES[i], local = Math.max(0, Math.min(100, (pos - acc) / s.w * 100)), a2 = 0;
+    PALETTE.showing(KEYS[s.name]);
     var T = this.testVals();
     var F = this.state.fit;
     var on = this.state.use === s.name;
@@ -116,7 +118,7 @@ class Component extends DCLogic {
       spHref: spHref(T.sp, KEYS[s.name]), spOpts: T.spOpts,
       total: TOTAL, cur: Object.assign({}, s, { fs: s.tier === 'Flagship' ? 44 : (s.tier === 'Notable' ? 34 : 26) }),
       local: Math.round(local), pct: (p * 100).toFixed(1), atStart: p < 0.02,
-      marks: SITES.map((x, k) => { var t = a2 / TOT * 100; a2 += x.w; var big = x.tier === 'Flagship'; return { top: t, h: x.w / TOT * 100 - 0.6, w: big ? 14 : (x.tier === 'Notable' ? 10 : 6), l: big ? 0 : (x.tier === 'Notable' ? 2 : 4), color: x.color, op: k === i ? 1 : 0.35 }; }),
+      marks: SITES.map((x, k) => { var t = a2 / TOT * 100; a2 += x.w; var big = x.tier === 'Flagship'; return { top: t, h: x.w / TOT * 100 - 0.6, w: big ? 14 : (x.tier === 'Notable' ? 10 : 6), l: big ? 0 : (x.tier === 'Notable' ? 2 : 4), color: x.p_marks, op: k === i ? 1 : 0.35 }; }),
       onScroll: (e) => { var el = e.target; var max = el.scrollHeight - el.clientHeight; this.setState({ p: max > 0 ? el.scrollTop / max : 0 }); }
     };
   }

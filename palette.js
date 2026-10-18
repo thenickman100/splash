@@ -839,6 +839,55 @@
       SITES[k].extra = extra;
     });
   }
+  // Parts: every place a page uses a site color, and which palette color (1 = color 1) it takes. A fill part
+  // can also take a pattern. These are the published choices; the Palette panel can try others in this browser.
+  var PARTS = {
+    K: { name: 'K · Scroll through time', parts: [
+      { id: 'year', label: 'Big year', slot: 1 },
+      { id: 'openFill', label: 'Open full screen button', slot: 1, fill: true },
+      { id: 'openText', label: 'Open full screen text', slot: 2 },
+      { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1 } ] },
+    AG: { name: 'AG · Fanned windows', parts: [
+      { id: 'year', label: 'Big year', slot: 1 },
+      { id: 'kicker', label: 'Year and tier line', slot: 3 },
+      { id: 'readFill', label: 'Read more button', slot: 1, fill: true },
+      { id: 'readText', label: 'Read more text', slot: 2 },
+      { id: 'open', label: 'Open full screen outline and text', slot: 3 },
+      { id: 'glow', label: 'Glow at the bottom of the page', slot: 2 } ] },
+    AE: { name: 'AE · Row of windows', parts: [
+      { id: 'year', label: 'Big year', slot: 1 } ] },
+    AI: { name: 'AI · Split screen', parts: [
+      { id: 'sideFill', label: 'Side panel', slot: 1, fill: true },
+      { id: 'sideText', label: 'Side panel text', slot: 2 },
+      { id: 'num', label: 'Section numbers', slot: 1 },
+      { id: 'mark', label: 'Selected logo and link underline', slot: 1 } ] },
+    AK: { name: 'AK · Chapters', parts: [
+      { id: 'kicker', label: 'Line above the site name', slot: 1 },
+      { id: 'num', label: 'Chapter numbers', slot: 1 },
+      { id: 'tocNum', label: 'Current chapter in the contents', slot: 1 },
+      { id: 'mark', label: 'Facts box line and selected logo', slot: 1 } ] },
+    AN: { name: 'AN · Fan page', parts: [
+      { id: 'glow', label: 'Glow behind the top section', slot: 1 },
+      { id: 'year', label: 'Big year', slot: 1 },
+      { id: 'btnFill', label: 'Buttons', slot: 1, fill: true },
+      { id: 'btnText', label: 'Button text', slot: 2 },
+      { id: 'bar', label: 'Bar above each section heading', slot: 1 },
+      { id: 'link', label: 'Link and contents hover', slot: 1 },
+      { id: 'mark', label: 'Selected logo', slot: 1 } ] }
+  };
+  var PKEY = 'splash-palette-parts', partTrial = null;
+  try { partTrial = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch (e) {}
+  function slotOf(page, id) {
+    if (partTrial && partTrial[page] && partTrial[page][id]) return partTrial[page][id];
+    var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
+    return d ? d.slot : 1;
+  }
+  // Which page this is, from its address.
+  var PAGE = (function () {
+    var f = location.pathname.split('/').pop();
+    return { 'Travel.dc.html': 'K', 'R8-AG.dc.html': 'AG', 'R8-AE.dc.html': 'AE', 'AI.html': 'AI', 'AK.html': 'AK', 'AN.html': 'AN' }[f] || null;
+  })();
+
   var trial = null;
   try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
   if (trial) arrange(trial);
@@ -878,9 +927,48 @@
         lines.push(t.name + ': ' + t.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
         if (t.extra.length) lines.push('  other: ' + t.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
       });
-      lines.push('', 'order: ' + JSON.stringify(this.order()));
+      lines.push('', 'Parts (which color each part of a page takes):');
+      var po = this.partOrder();
+      Object.keys(PARTS).forEach(function (pg) {
+        lines.push(PARTS[pg].name + ': ' + PARTS[pg].parts.map(function (d) { return d.label + ' ' + po[pg][d.id]; }).join(', '));
+      });
+      lines.push('', 'order: ' + JSON.stringify(this.order()), 'parts: ' + JSON.stringify(po));
       return lines.join('\n');
     },
+    // Markup for one page's parts: each part with a chip per palette number, shown in site key's colors.
+    partsHtml: function (page, key) {
+      var cs = site(key).colors, n = 0; Object.keys(SITES).forEach(function (k) { n = Math.max(n, SITES[k].colors.length); });
+      return PARTS[page].parts.map(function (d) {
+        var cur = slotOf(page, d.id), chips = '';
+        for (var i = 1; i <= n; i++) {
+          var c = cs[i - 1], bgc = c ? (d.fill ? css(c) : c.hex) : 'transparent';
+          var fg = c && contrast(c.hex, '#000000') < contrast(c.hex, '#ffffff') ? '#fff' : '#111';
+          chips += '<button class="pal-slot' + (i === cur ? ' on' : '') + (c ? '' : ' none') + '" data-page="' + page + '" data-part="' + d.id + '" data-slot="' + i + '" title="Color ' + i + (c ? ' ' + c.hex : ', not in this site\'s palette (uses its last color)') + '" style="background:' + bgc + ';color:' + fg + '">' + i + '</button>';
+        }
+        return '<div class="pal-part"><span class="pal-pl">' + d.label + '</span><span class="pal-slots">' + chips + '</span></div>';
+      }).join('');
+    },
+    partsCss: '.pal-part{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 14px;flex-wrap:wrap}.pal-pl{font-size:12.5px}' +
+      '.pal-slots{display:flex;gap:3px}.pal-slot{width:24px;height:24px;padding:0!important;border-radius:6px!important;border:1px solid #0003!important;font:700 11px ui-monospace,monospace!important;cursor:pointer}' +
+      '.pal-slot.on{outline:2px solid #111;outline-offset:1px}.pal-slot.none{border-style:dashed!important;color:#999!important}',
+    page: PAGE,
+    // Pages that switch sites in place say which one they show, so the panel shows that site's colors.
+    showing: function (key) { if (key === this.shown) return; this.shown = key; if (this.onShow) this.onShow(key); },
+    shown: null,
+    parts: PARTS,
+    partsTrial: !!partTrial,
+    slotOf: slotOf,
+    // The color (or for a fill part, the background) a page part takes for a site.
+    part: function (page, id, key) {
+      var cs = site(key).colors, c = cs[Math.min(slotOf(page, id), cs.length) - 1];
+      var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
+      return d && d.fill ? css(c) : c.hex;
+    },
+    // Every part of a page for a site, as { id: value }.
+    partsFor: function (page, key) { var o = {}, me = this; (PARTS[page] ? PARTS[page].parts : []).forEach(function (d) { o[d.id] = me.part(page, d.id, key); }); return o; },
+    partOrder: function () { var o = {}; Object.keys(PARTS).forEach(function (pg) { o[pg] = {}; PARTS[pg].parts.forEach(function (d) { o[pg][d.id] = slotOf(pg, d.id); }); }); return o; },
+    savePart: function (page, id, slot) { var o = partTrial || {}; o[page] = o[page] || {}; o[page][id] = slot; partTrial = o; try { localStorage.setItem(PKEY, JSON.stringify(o)); } catch (e) {} this.partsTrial = true; },
+    clearParts: function () { partTrial = null; try { localStorage.removeItem(PKEY); } catch (e) {} this.partsTrial = false; },
     order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
     ranked: ranked,
@@ -901,9 +989,9 @@
   // A change saves the trial order and reloads the page so it redraws in the new colors; the panel reopens.
   function panel() {
     if (window.PALETTE_NO_PANEL || document.getElementById('pal-btn')) return;
-    var P = window.PALETTE, here = new URLSearchParams(location.search).get('site');
-    var css = document.createElement('style');
-    css.textContent =
+    var P = window.PALETTE, here = new URLSearchParams(location.search).get('site') || P.shown;
+    var st = document.createElement('style');
+    st.textContent =
       '#pal-btn{position:fixed;right:14px;bottom:14px;z-index:100000;height:38px;padding:0 14px;border:0;border-radius:999px;background:#000000cc;color:#fff;font:700 12px ui-monospace,monospace;cursor:pointer;box-shadow:0 6px 20px #0005}' +
       '#pal-btn i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffd23f;margin-right:7px;vertical-align:-1px}' +
       '#pal{position:fixed;right:14px;bottom:62px;z-index:100000;width:min(380px,calc(100vw - 28px));max-height:min(72vh,640px);overflow:auto;background:#fff;color:#15181d;border-radius:14px;box-shadow:0 20px 60px #0007;font:13px/1.4 system-ui,sans-serif;text-align:left;zoom:1}' +
@@ -916,9 +1004,9 @@
       '#pal .pal-c{display:flex;align-items:center;gap:8px;padding:5px 14px}#pal .pal-c .pal-sw{flex:none;width:26px;height:26px;border-radius:6px;border:1px solid #0002;font:700 10px ui-monospace,monospace;display:flex;align-items:center;justify-content:center}' +
       '#pal .pal-c .pal-t{flex:1;min-width:0}#pal .pal-c code{font:600 12px ui-monospace,monospace}#pal .pal-c .pal-w{color:#5b6270;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
       '#pal .pal-c button{padding:4px 7px}#pal .pal-lbl{padding:6px 14px 2px;color:#5b6270;font-size:11px;text-transform:uppercase;letter-spacing:.05em}' +
-      '#pal textarea{width:calc(100% - 28px);margin:8px 14px;height:180px;font:11px/1.45 ui-monospace,monospace;border:1px solid #d6dbe1;border-radius:8px;padding:8px}';
-    document.head.appendChild(css);
-    var btn = document.createElement('button'); btn.id = 'pal-btn'; btn.innerHTML = '<i></i>Palette' + (P.trial ? ' · trial' : '');
+      P.partsCss + '#pal textarea{width:calc(100% - 28px);margin:8px 14px;height:180px;font:11px/1.45 ui-monospace,monospace;border:1px solid #d6dbe1;border-radius:8px;padding:8px}';
+    document.head.appendChild(st);
+    var btn = document.createElement('button'); btn.id = 'pal-btn'; btn.innerHTML = '<i></i>Palette' + (P.trial || P.partsTrial ? ' · trial' : '');
     var box = document.createElement('div'); box.id = 'pal'; box.hidden = true;
     document.body.appendChild(box); document.body.appendChild(btn);
     var open = {}; try { open = JSON.parse(sessionStorage.getItem('splash-pal-open') || '{}'); } catch (e) {}
@@ -932,8 +1020,12 @@
       var keys = Object.keys(SITES); if (here && SITES[here]) keys = [here].concat(keys.filter(function (k) { return k !== here; }));
       box.innerHTML = '<div class="pal-top"><b>Palette order</b><small>' + (P.trial ? 'Trial order on in this browser.' : 'Published order.') +
         ' ↑ ↓ reorder, − takes a color out of the ranking, + adds it back.</small><button data-x="export">Export</button>' +
-        (P.trial ? '<button data-x="reset">Reset all</button>' : '') + '<button data-x="full">All details</button><button data-x="close">Close</button></div>' +
+        (P.trial || P.partsTrial ? '<button data-x="reset">Reset all</button>' : '') + '<button data-x="full">All details</button><button data-x="close">Close</button></div>' +
         (open.exp ? '<textarea readonly>' + P.exportText().replace(/</g, '&lt;') + '</textarea><div style="padding:0 14px 10px"><button data-x="copy">Copy</button></div>' : '') +
+        (P.page && P.parts[P.page] ? (function () {
+          var pk = here && SITES[here] ? here : (open.page === location.pathname + location.search && open.site) || keys[0];
+          return '<div class="pal-lbl">Parts on this page · which color each uses (shown in ' + SITES[pk].name + '\'s colors)</div>' + P.partsHtml(P.page, pk) + '<div style="height:8px;border-bottom:1px solid #eef0f3"></div>';
+        })() : '') +
         keys.map(function (k) {
           var t = SITES[k];
           return '<details data-k="' + k + '"' + ((open.page === location.pathname + location.search && open.site ? open.site === k : k === keys[0]) ? ' open' : '') + '><summary>' + t.name +
@@ -955,13 +1047,15 @@
         if (t.dataset.a === 'in') o[k].colors.push(a.splice(i, 1)[0]);
         P.saveOrder(o); keep(k); location.reload();
       }
+      if (t.dataset.part) { P.savePart(t.dataset.page, t.dataset.part, +t.dataset.slot); keep(); location.reload(); return; }
       var x = t.dataset.x;
       if (x === 'close') { box.hidden = true; keep(); }
-      if (x === 'reset') { P.clearOrder(); keep(); location.reload(); }
+      if (x === 'reset') { P.clearOrder(); P.clearParts(); keep(); location.reload(); }
       if (x === 'export') { open.exp = !open.exp; keep(); draw(); }
       if (x === 'copy') { var ta = box.querySelector('textarea'); (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { t.textContent = 'Copied'; }, function () { ta.select(); document.execCommand('copy'); t.textContent = 'Copied'; }); }
       if (x === 'full') location.href = (location.pathname.indexOf('/candidates/') >= 0 ? '../../' : location.pathname.indexOf('/sitepages/') >= 0 ? '../' : '') + 'palette.html';
     });
+    P.onShow = function (key) { here = key; if (!box.hidden) draw(); };
     if (open.on) { box.hidden = false; draw(); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', panel); else panel();

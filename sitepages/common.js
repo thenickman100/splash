@@ -319,6 +319,8 @@
       root.style.setProperty('--accent-mark', r[0]);
       root.style.setProperty('--accent-2', r[1] || r[0]);
       root.style.setProperty('--accent-3', r[2] || r[1] || r[0]);
+      // This design's parts (palette.js PARTS), each from the palette color chosen for it.
+      var pt = P.partsFor(design, k); Object.keys(pt).forEach(function (id) { root.style.setProperty('--p-' + id, pt[id]); });
       var ic = document.createElement('link'); ic.rel = 'icon'; ic.type = 'image/x-icon'; ic.href = site.favicon; document.head.appendChild(ic);
       var st = document.createElement('style'); st.textContent = css; document.head.insertBefore(st, document.head.firstChild);
       document.getElementById('app').innerHTML = render(site, window.SP);
