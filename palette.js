@@ -648,13 +648,6 @@
   }
   function site(key) { return SITES[key === 'hobo26' ? 'hobo' : key]; }
   function ranked(key) { return site(key).colors.map(function (c) { return c.hex; }); }
-  // First ranked color that reads against bg at the given ratio; if none does, color 1 as it is.
-  function pick(key, bg, min) {
-    bg = toHex(bg); min = min || 4.5;
-    var r = ranked(key);
-    for (var i = 0; i < r.length; i++) if (contrast(r[i], bg) >= min) return r[i];
-    return r[0];
-  }
   window.PALETTE = {
     sites: SITES,
     // Trial order controls, used by palette.html.
@@ -677,19 +670,12 @@
     ranked: ranked,
     // Color 1, the site's main color, for fills such as bars and buttons.
     main: function (key) { return ranked(key)[0]; },
-    // A site color to use as text or a thin mark on a page background bg (any CSS color).
-    ink: function (key, bg, min) { return pick(key, bg, min); },
-    // Text color to put on top of a site color fill: the first ranked color that reads on it, or else the
-    // palette color with the most contrast against it (color 1 would vanish on its own fill).
-    on: function (key, fillHex, min) {
-      fillHex = toHex(fillHex); min = min || 4.5;
-      var r = ranked(key), best = null;
-      for (var i = 0; i < r.length; i++) {
-        if (contrast(r[i], fillHex) >= min) return r[i];
-        if (!best || contrast(r[i], fillHex) > contrast(best, fillHex)) best = r[i];
-      }
-      return best;
-    }
+    // Roles follow the order directly, so any reorder shows on every page:
+    // color 1 is site-colored text, big numbers, marks and fills; color 2 is text on a color-1 fill;
+    // color 3 is a third accent. (No contrast checks for now; bg and min are kept for later.)
+    ink: function (key, bg, min) { return ranked(key)[0]; },
+    on: function (key, fillHex, min) { var r = ranked(key); return r[1] || r[0]; },
+    third: function (key) { var r = ranked(key); return r[2] || r[1] || r[0]; }
   };
 
   // Palette panel: a Palette button on every page that loads this file, for trying a different order in place.

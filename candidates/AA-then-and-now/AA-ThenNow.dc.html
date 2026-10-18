@@ -108,10 +108,10 @@ var FLAGS = [
  {id:'ask',name:'Askthenickman',year:'c. 2009',dir:'row-reverse',a:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',al:'Home page',b:'./assets/18f17b21248824ddff9debf0577ca075.jpg',bl:'Techno home page',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. It had flash games, secret phone numbers from the Hitchhiker’s Guide and a themed logo for each holiday. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
  {id:'hobo',name:'Hack a HOBO',year:'2011 – today',dir:'row',a:'./assets/0c6e78e1fe9b6a24216761d235f3f769.jpg',al:'Golden age, Nov 6, 2012',b:'./assets/649aa6048879b7d826ea004c3c167303.jpg',bl:'2026 Edition',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. It went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul that finally fixed design issues I had for years.'}
 ];
-// splash test: site colors come from ../../palette.js, picked to read on this page's background.
-// Each flagship row sits on its site's lightest palette color, if it has a light one.
-FLAGS.forEach((f) => { var light = PALETTE.ranked(f.id).filter((h) => PALETTE.contrast(h, '#000000') >= 14).sort((a, b) => PALETTE.contrast(b, '#000000') - PALETTE.contrast(a, '#000000')); f.bg = light[0] || '#fbfaf7'; f.ink = PALETTE.ink(f.id, f.bg, 4.5); });
-var JUMP = { awesome: PALETTE.ink('awesome', '#111111', 3), ask: PALETTE.ink('ask', '#111111', 3), hobo: PALETTE.ink('hobo', '#111111', 3), sa: PALETTE.ink('spaceatlas', '#0c0f1a', 4.5) };
+// splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
+// Each flagship row is marked in its site's color 1.
+FLAGS.forEach((f) => { f.bg = '#fbfaf7'; f.ink = PALETTE.main(f.id); });
+var JUMP = { awesome: PALETTE.main('awesome'), ask: PALETTE.main('ask'), hobo: PALETTE.main('hobo'), sa: PALETTE.main('spaceatlas') };
 var VERS = {awesome:[H+'/projects/sites/lawesomel/index.html',H+'/projects/sites/awesomestuff/index.html'],ask:[H+'/projects/sites/askthenickman/index.html',H+'/projects/sites/askthenickman/index-techno.html'],hobo:[H+'/files/v1/index-v1.html',H+'/?theme=original']};
 var SMALLS = [
  {name:'Titans Softball',year:'c. 2010',img:'./assets/b34913cd1ef92f183c5ebc5ffcbcc564.jpg',link:H+'/projects/sites/titans/titans.html'},

@@ -302,17 +302,16 @@
     figHtml: figHtml, galleryHtml: galleryHtml, slug: slug, firstEmbed: firstEmbed, fit: fit,
     boot: function (render, after) {
       document.title = site.name + ' · Old Sites';
-      // Site colors from palette.js. --accent fills bars and buttons and --on-accent is text on it;
-      // --accent-ink is small text and --accent-ink-lg big type on the design's --surface; --accent-mark is thin marks.
+      // Site colors from palette.js, by position in the site's palette: --accent (color 1) is fills, marks and
+      // site-colored text; --on-accent (color 2) is text on a color-1 fill; --accent-2 and --accent-3 are colors 2 and 3.
       var root = document.documentElement, P = PALETTE, k = site.key, r = P.ranked(k);
-      var surf = getComputedStyle(root).getPropertyValue('--surface').trim() || '#ffffff';
-      root.style.setProperty('--accent', P.main(k));
-      root.style.setProperty('--on-accent', P.on(k, P.main(k)));
-      root.style.setProperty('--accent-ink', P.ink(k, surf, 4.5));
-      root.style.setProperty('--accent-ink-lg', P.ink(k, surf, 3));
-      root.style.setProperty('--accent-mark', P.ink(k, surf, 3));
-      root.style.setProperty('--accent-2', r[1] || P.main(k));
-      root.style.setProperty('--accent-3', r[2] || P.main(k));
+      root.style.setProperty('--accent', r[0]);
+      root.style.setProperty('--on-accent', r[1] || r[0]);
+      root.style.setProperty('--accent-ink', r[0]);
+      root.style.setProperty('--accent-ink-lg', r[0]);
+      root.style.setProperty('--accent-mark', r[0]);
+      root.style.setProperty('--accent-2', r[1] || r[0]);
+      root.style.setProperty('--accent-3', r[2] || r[1] || r[0]);
       var ic = document.createElement('link'); ic.rel = 'icon'; ic.type = 'image/x-icon'; ic.href = site.favicon; document.head.appendChild(ic);
       var st = document.createElement('style'); st.textContent = css; document.head.insertBefore(st, document.head.firstChild);
       document.getElementById('app').innerHTML = render(site, window.SP);

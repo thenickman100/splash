@@ -44,7 +44,7 @@ a{color:#fff}a:hover{color:#ccc}
         <div style="font-size:{{cur.fs}}px;font-weight:800;line-height:1;letter-spacing:-0.02em">{{cur.name}}</div>
         <p style="margin:0;font-size:15px;line-height:1.55;color:#c8c9cc">{{cur.blurb}}</p>
         <div style="margin-top:auto;display:flex;gap:10px">
-          <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.color}};color:#0f1012;text-decoration:none;font-weight:800">Open full screen ↗</a>
+          <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.color}};color:{{cur.on}};text-decoration:none;font-weight:800">Open full screen ↗</a>
           <a href="{{spHref}}" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #3a3b40;text-decoration:none;font-weight:500">Read more →</a>
         </div>
       </div>
@@ -98,8 +98,8 @@ var SITES = [
  {name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',w:2,era:2,addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
  {name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',w:3,era:2,addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul with a new left sidebar and game containers that can take holiday themes. It is still running.'}
 ];
-// splash test: site colors come from ../../palette.js, picked to read on this page's background.
-SITES.forEach((s) => { s.color = PALETTE.ink(KEYS[s.name], '#0f1012', 4.5); });
+// splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
+SITES.forEach((s) => { s.color = PALETTE.main(KEYS[s.name]); s.on = PALETTE.on(KEYS[s.name]); });
 var ERA = [
  {bar:'#c9ced6',dot:'#9aa1ac',url:'#fff',text:'#222',r:4,ur:2},
  {bar:'#e4e6ea',dot:'#c3c7ce',url:'#fff',text:'#222',r:8,ur:13},
