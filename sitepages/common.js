@@ -306,6 +306,7 @@
       // site-colored text; --on-accent (color 2) is text on a color-1 fill; --accent-2 and --accent-3 are colors 2 and 3.
       var root = document.documentElement, P = PALETTE, k = site.key, r = P.ranked(k);
       root.style.setProperty('--accent', r[0]);
+      root.style.setProperty('--accent-bg', P.bg(k, 0));
       root.style.setProperty('--on-accent', r[1] || r[0]);
       root.style.setProperty('--accent-ink', r[0]);
       root.style.setProperty('--accent-ink-lg', r[0]);

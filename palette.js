@@ -12,6 +12,23 @@
   "page": "https://hackahobo.info/projects/sites/lawesomel/index.html",
   "colors": [
    {
+    "hex": "#4c532d",
+    "what": "Footer, stripe 1 of 2",
+    "src": "green/style.css\n#fw-footer { background: [[#535a31]] url('html-bg.gif') repeat-x; }\nimage html-bg.gif gives the stripe its second color",
+    "px": [
+     [
+      19,
+      1044
+     ]
+    ],
+    "img": [
+     "awesome-x1a"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
     "hex": "#acf083",
     "what": "Box headings",
     "src": "green/style.css\n.fw-title { background: [[#acf083]] url('title-bg.gif') top repeat-x; }",
@@ -23,6 +40,40 @@
     ],
     "img": [
      "awesome-1"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#94a157",
+    "what": "Top of the header gradient behind the logo, stripe 1 of 2",
+    "src": "image green/container-bg.gif (#fw-container background), its top rows",
+    "px": [
+     [
+      10,
+      5
+     ]
+    ],
+    "img": [
+     "awesome-4a"
+    ],
+    "edge": [
+     true
+    ]
+   },
+   {
+    "hex": "#68a94f",
+    "what": "Underlines below the menu links",
+    "src": "green/style.css\n#fw-nav-menu a { border-bottom-color: [[#68a94f]]; }",
+    "px": [
+     [
+      183,
+      111
+     ]
+    ],
+    "img": [
+     "awesome-5"
     ],
     "edge": [
      false
@@ -63,23 +114,6 @@
     ]
    },
    {
-    "hex": "#94a157",
-    "what": "Top of the header gradient behind the logo, stripe 1 of 2",
-    "src": "image green/container-bg.gif (#fw-container background), its top rows",
-    "px": [
-     [
-      10,
-      5
-     ]
-    ],
-    "img": [
-     "awesome-4a"
-    ],
-    "edge": [
-     true
-    ]
-   },
-   {
     "hex": "#a0ac66",
     "what": "Top of the header gradient behind the logo, stripe 2 of 2",
     "src": "image green/container-bg.gif (#fw-container background), its top rows",
@@ -95,43 +129,9 @@
     "edge": [
      true
     ]
-   },
-   {
-    "hex": "#68a94f",
-    "what": "Underlines below the menu links",
-    "src": "green/style.css\n#fw-nav-menu a { border-bottom-color: [[#68a94f]]; }",
-    "px": [
-     [
-      183,
-      111
-     ]
-    ],
-    "img": [
-     "awesome-5"
-    ],
-    "edge": [
-     false
-    ]
    }
   ],
   "extra": [
-   {
-    "hex": "#4c532d",
-    "what": "Footer, stripe 1 of 2",
-    "src": "green/style.css\n#fw-footer { background: [[#535a31]] url('html-bg.gif') repeat-x; }\nimage html-bg.gif gives the stripe its second color",
-    "px": [
-     [
-      19,
-      1044
-     ]
-    ],
-    "img": [
-     "awesome-x1a"
-    ],
-    "edge": [
-     false
-    ]
-   },
    {
     "hex": "#535a31",
     "what": "Footer, stripe 2 of 2",
@@ -148,6 +148,50 @@
     "edge": [
      false
     ]
+   },
+   {
+    "hex": "#69723e",
+    "what": "Striped header gradient behind the logo",
+    "src": "green/style.css\n#fw-container { background: url([['container-bg.gif']]) repeat-x; }",
+    "px": [
+     [
+      0,
+      0
+     ]
+    ],
+    "img": [
+     "awesome-x2"
+    ],
+    "edge": [
+     false
+    ],
+    "pattern": {
+     "file": "palette/patterns/awesome-container-bg.gif",
+     "repeat": "repeat-x",
+     "base": "#30341d"
+    }
+   },
+   {
+    "hex": "#69723e",
+    "what": "Striped page and footer gradient",
+    "src": "green/style.css\nhtml { background: url([['html-bg.gif']]) repeat-x; }  #fw-footer { background: #535a31 url([['html-bg.gif']]) repeat-x; }",
+    "px": [
+     [
+      0,
+      940
+     ]
+    ],
+    "img": [
+     "awesome-x3"
+    ],
+    "edge": [
+     false
+    ],
+    "pattern": {
+     "file": "palette/patterns/awesome-html-bg.gif",
+     "repeat": "repeat-x",
+     "base": "#9ba85e"
+    }
    }
   ]
  },
@@ -365,23 +409,6 @@
   "page": "https://hackahobo.info/projects/sites/bv-homework/BVHomework.html",
   "colors": [
    {
-    "hex": "#f21411",
-    "what": "Red of the logo",
-    "src": "image BVHomeworkBigHanako.jpg (the logo), its most common red",
-    "px": [
-     [
-      891,
-      59
-     ]
-    ],
-    "img": [
-     "bv-1"
-    ],
-    "edge": [
-     false
-    ]
-   },
-   {
     "hex": "#81c8ff",
     "what": "Sky blue page",
     "src": "image background.jpg (body background), its main color\n(the nav hover in the HTML is nearly the same blue, [[#82c8ff]])",
@@ -393,6 +420,23 @@
     ],
     "img": [
      "bv-2"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#f21411",
+    "what": "Red of the logo",
+    "src": "image BVHomeworkBigHanako.jpg (the logo), its most common red",
+    "px": [
+     [
+      891,
+      59
+     ]
+    ],
+    "img": [
+     "bv-1"
     ],
     "edge": [
      false
@@ -422,6 +466,23 @@
   "name": "EnGen NextGen",
   "page": "https://hackahobo.info/projects/sites/engen/home.php",
   "colors": [
+   {
+    "hex": "#ffffff",
+    "what": "White paper",
+    "src": "image bg.png (graph-paper background), its main color; css.css .center { background-color: [[#FFFFFF]]; }",
+    "px": [
+     [
+      16,
+      208
+     ]
+    ],
+    "img": [
+     "engen-3"
+    ],
+    "edge": [
+     false
+    ]
+   },
    {
     "hex": "#e15252",
     "what": "Red text, under the logo and across the site",
@@ -457,46 +518,103 @@
     ]
    },
    {
-    "hex": "#ffffff",
-    "what": "White paper",
-    "src": "image bg.png (graph-paper background), its main color; css.css .center { background-color: [[#FFFFFF]]; }",
+    "hex": "#c7c7c7",
+    "what": "Gray gears in the logo",
+    "src": "image EnGenAlphaCrop.png (the logo), its gray",
     "px": [
      [
-      16,
-      208
+      267,
+      56
      ]
     ],
     "img": [
-     "engen-3"
+     "engen-4"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#e6e6e6",
+    "what": "Gray tabs",
+    "src": "css.css\n#tab2, #tab3, #tab4 { background-color: [[#E6E6E6]]; }",
+    "px": [
+     [
+      376,
+      164
+     ]
+    ],
+    "img": [
+     "engen-5"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#bababa",
+    "what": "Darker gray of the current tab",
+    "src": "home.php\n<div id=\"tab1\" class=\"tab\" style=\"background-color:[[#BABABA]];\">",
+    "px": [
+     [
+      260,
+      164
+     ]
+    ],
+    "img": [
+     "engen-6"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#8a8a8a",
+    "what": "Gray tab text",
+    "src": "css.css\n.tabs .tab { color: [[#8A8A8A]]; }",
+    "px": [
+     [
+      652,
+      173
+     ]
+    ],
+    "img": [
+     "engen-7"
     ],
     "edge": [
      false
     ]
    }
   ],
-  "extra": []
+  "extra": [
+   {
+    "hex": "#fafdfe",
+    "what": "Graph-paper background pattern",
+    "src": "css.css\nbody { background: linear-gradient(to right, white, transparent 15%, transparent 85%, white), url([['bg.png']]); background-repeat: repeat; }",
+    "px": [
+     [
+      0,
+      180
+     ]
+    ],
+    "img": [
+     "engen-x1"
+    ],
+    "edge": [
+     false
+    ],
+    "pattern": {
+     "file": "palette/patterns/engen-bg.png",
+     "repeat": "repeat",
+     "base": "#fafdfe"
+    }
+   }
+  ]
  },
  "home": {
   "name": "Home",
   "page": "https://hackahobo.info/projects/sites/home-original/index.php",
   "colors": [
-   {
-    "hex": "#45e8ff",
-    "what": "Cyan headers",
-    "src": "style.css\n.blue-background-0 { background-color: [[rgb(69,232,255)]]; }",
-    "px": [
-     [
-      153,
-      109
-     ]
-    ],
-    "img": [
-     "home-1"
-    ],
-    "edge": [
-     false
-    ]
-   },
    {
     "hex": "#c6f8ff",
     "what": "Light cyan boxes and borders",
@@ -509,23 +627,6 @@
     ],
     "img": [
      "home-2"
-    ],
-    "edge": [
-     false
-    ]
-   },
-   {
-    "hex": "#fefefe",
-    "what": "White patterned background",
-    "src": "style.css  html { background-image: url('pattern.png'); }  body { background: linear-gradient(to right, white, transparent, white); }\nthe most common pixel of the patterned margin",
-    "px": [
-     [
-      30,
-      14
-     ]
-    ],
-    "img": [
-     "home-3"
     ],
     "edge": [
      false
@@ -547,14 +648,88 @@
     "edge": [
      false
     ]
+   },
+   {
+    "hex": "#45e8ff",
+    "what": "Cyan headers",
+    "src": "style.css\n.blue-background-0 { background-color: [[rgb(69,232,255)]]; }",
+    "px": [
+     [
+      153,
+      109
+     ]
+    ],
+    "img": [
+     "home-1"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#fefefe",
+    "what": "White patterned background",
+    "src": "style.css  html { background-image: url('pattern.png'); }  body { background: linear-gradient(to right, white, transparent, white); }\nthe most common pixel of the patterned margin",
+    "px": [
+     [
+      30,
+      14
+     ]
+    ],
+    "img": [
+     "home-3"
+    ],
+    "edge": [
+     false
+    ]
    }
   ],
-  "extra": []
+  "extra": [
+   {
+    "hex": "#f0f0f0",
+    "what": "Patterned background",
+    "src": "style.css\nhtml { background-image: url([['pattern.png']]); }",
+    "px": [
+     [
+      0,
+      0
+     ]
+    ],
+    "img": [
+     "home-x1"
+    ],
+    "edge": [
+     false
+    ],
+    "pattern": {
+     "file": "palette/patterns/home-pattern.png",
+     "repeat": "repeat",
+     "base": "#f0f0f0"
+    }
+   }
+  ]
  },
  "spaceatlas": {
   "name": "Space Atlas",
   "page": "https://spaceatlas.hackahobo.info/",
   "colors": [
+   {
+    "hex": "#929292",
+    "what": "Gray underline below MOON, and the loading bar",
+    "src": "stylesheet.min.css\n[id='2headerBody'] { text-decoration-color: [[#929292]]; }  #loading { background-color: [[#929292]]; }",
+    "px": [
+     [
+      640,
+      57
+     ]
+    ],
+    "img": [
+     "sa-5"
+    ],
+    "edge": [
+     false
+    ]
+   },
    {
     "hex": "#2f2f2f",
     "what": "Gray menu bar",
@@ -605,40 +780,6 @@
     "edge": [
      false
     ]
-   },
-   {
-    "hex": "#f7f7f7",
-    "what": "Light gray planet names and menu button",
-    "src": "stylesheet.min.css\n.headerBody { color: [[#f7f7f7]]; }  .burgerLines { background-color: [[#f7f7f7]]; }",
-    "px": [
-     [
-      585,
-      41
-     ]
-    ],
-    "img": [
-     "sa-4"
-    ],
-    "edge": [
-     false
-    ]
-   },
-   {
-    "hex": "#929292",
-    "what": "Gray underline below MOON, and the loading bar",
-    "src": "stylesheet.min.css\n[id='2headerBody'] { text-decoration-color: [[#929292]]; }  #loading { background-color: [[#929292]]; }",
-    "px": [
-     [
-      640,
-      57
-     ]
-    ],
-    "img": [
-     "sa-5"
-    ],
-    "edge": [
-     false
-    ]
    }
   ],
   "extra": [
@@ -654,6 +795,23 @@
     ],
     "img": [
      "sa-x1"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#f7f7f7",
+    "what": "Light gray planet names and menu button",
+    "src": "stylesheet.min.css\n.headerBody { color: [[#f7f7f7]]; }  .burgerLines { background-color: [[#f7f7f7]]; }",
+    "px": [
+     [
+      585,
+      41
+     ]
+    ],
+    "img": [
+     "sa-4"
     ],
     "edge": [
      false
@@ -685,6 +843,13 @@
   try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
   if (trial) arrange(trial);
 
+  // Pattern files sit next to this script, so resolve them from its own address (pages load it from different folders).
+  var BASE = (document.currentScript && document.currentScript.src || '').replace(/palette\.js[^/]*$/, '');
+  // CSS background for a palette entry: its color, or for a pattern the tiled image over its base color.
+  function css(c) {
+    if (!c.pattern) return c.hex;
+    return c.pattern.base + " url('" + BASE + c.pattern.file + "') " + (c.pattern.repeat === 'repeat-x' ? 'repeat-x top' : 'repeat');
+  }
   function rgb(h) { var n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   function lum(h) {
     var c = rgb(h).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
@@ -719,6 +884,9 @@
     order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
     ranked: ranked,
+    css: css,
+    // Background for ranked slot i (0 is color 1): a solid color or a pattern. Use it for fills.
+    bg: function (key, i) { var c = site(key).colors[i || 0] || site(key).colors[0]; return css(c); },
     // Color 1, the site's main color, for fills such as bars and buttons.
     main: function (key) { return ranked(key)[0]; },
     // Roles follow the order directly, so any reorder shows on every page:
@@ -754,10 +922,10 @@
     var box = document.createElement('div'); box.id = 'pal'; box.hidden = true;
     document.body.appendChild(box); document.body.appendChild(btn);
     var open = {}; try { open = JSON.parse(sessionStorage.getItem('splash-pal-open') || '{}'); } catch (e) {}
-    function sw(h, label) { return '<span class="pal-sw" style="background:' + h + ';color:' + (contrast(h, '#000000') >= contrast(h, '#ffffff') ? '#111' : '#fff') + '">' + label + '</span>'; }
+    function sw(h, label, c) { return '<span class="pal-sw" style="background:' + (c ? css(c) : h) + ';color:' + (contrast(h, '#000000') >= contrast(h, '#ffffff') ? '#111' : '#fff') + '">' + label + '</span>'; }
     function line(k, l, i, n, c) {
       var b = function (a, t, off) { return '<button data-k="' + k + '" data-l="' + l + '" data-i="' + i + '" data-a="' + a + '"' + (off ? ' disabled' : '') + '>' + t + '</button>'; };
-      return '<div class="pal-c">' + sw(c.hex, l === 'colors' ? i + 1 : '·') + '<div class="pal-t"><code>' + c.hex + '</code><div class="pal-w">' + c.what + '</div></div>' +
+      return '<div class="pal-c">' + sw(c.hex, l === 'colors' ? i + 1 : '·', c) + '<div class="pal-t"><code>' + (c.pattern ? 'pattern' : c.hex) + '</code><div class="pal-w">' + c.what + '</div></div>' +
         b('up', '↑', i === 0) + b('down', '↓', i === n - 1) + (l === 'colors' ? b('out', '−', n === 1) : b('in', '+')) + '</div>';
     }
     function draw() {
@@ -769,7 +937,7 @@
         keys.map(function (k) {
           var t = SITES[k];
           return '<details data-k="' + k + '"' + ((open.page === location.pathname + location.search && open.site ? open.site === k : k === keys[0]) ? ' open' : '') + '><summary>' + t.name +
-            '<span class="pal-st">' + t.colors.map(function (c) { return '<span style="background:' + c.hex + '"></span>'; }).join('') + '</span></summary>' +
+            '<span class="pal-st">' + t.colors.map(function (c) { return '<span style="background:' + css(c) + '"></span>'; }).join('') + '</span></summary>' +
             t.colors.map(function (c, i) { return line(k, 'colors', i, t.colors.length, c); }).join('') +
             (t.extra.length ? '<div class="pal-lbl">Other colors</div>' + t.extra.map(function (c, i) { return line(k, 'extra', i, t.extra.length, c); }).join('') : '') + '</details>';
         }).join('');

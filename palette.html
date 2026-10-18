@@ -75,15 +75,15 @@ button.link{border:0;background:none;padding:0;text-decoration:underline;font-we
       (list === 'colors' ? b('out', 'To other colors', 'Take out of the ranking', n === 1) : b('in', 'Add to ranking', 'Add to the end of the ranking')) + '</div>';
   }
   function row(k, list, i, n, c) {
-    var h = c.hex, label = list === 'colors' ? i + 1 : '·';
-    return '<div class="row"><div class="sw" style="background:' + h + ';color:' + on(h) + '">' + label + '</div><div>' +
-      '<div class="head"><div><div class="hex">' + h + '</div><div class="what">' + esc(c.what) + '</div></div>' + ctl(k, list, i, n) + '</div>' +
+    var h = c.hex, label = list === 'colors' ? i + 1 : '·', pat = !!c.pattern;
+    return '<div class="row"><div class="sw" style="background:' + P.css(c) + ';color:' + on(h) + '">' + label + '</div><div>' +
+      '<div class="head"><div><div class="hex">' + (pat ? 'Pattern <small>(' + c.pattern.file.split('/').pop() + ', averages ' + h + ')</small>' : h) + '</div><div class="what">' + esc(c.what) + '</div></div>' + ctl(k, list, i, n) + '</div>' +
       '<div class="src">' + src(c.src) + '</div>' +
-      '<div class="pix"><figure><img src="palette/' + c.img[0] + '-px.png" alt="Pixel ' + h + ', zoomed" loading="lazy"><figcaption>The pixel, boxed, zoomed 10×</figcaption></figure>' +
-      '<figure><img src="palette/' + c.img[0] + '-at.png" alt="Where the pixel is on the page" loading="lazy"><figcaption>Pixel (' + c.px[0][0] + ', ' + c.px[0][1] + ') of the live page at 1280 wide, ringed' +
+      '<div class="pix"><figure><img src="palette/' + c.img[0] + '-px.png" alt="Pixel ' + h + ', zoomed" loading="lazy"><figcaption>' + (pat ? 'The pattern tile, repeated, zoomed 4×' : 'The pixel, boxed, zoomed 10×') + '</figcaption></figure>' +
+      '<figure><img src="palette/' + c.img[0] + '-at.png" alt="Where the pixel is on the page" loading="lazy"><figcaption>' + (pat ? 'Where it shows on the live page' : 'Pixel (' + c.px[0][0] + ', ' + c.px[0][1] + ') of the live page at 1280 wide, ringed') +
       (c.edge && c.edge[0] ? '. The striped gray in the zoom is off the edge of the page.' : '') + '</figcaption></figure></div></div></div>';
   }
-  function strip(s) { return '<div class="strip">' + s.colors.map(function (c, i) { return '<span style="background:' + c.hex + ';color:' + on(c.hex) + '">' + (i + 1) + '</span>'; }).join('') + '</div>'; }
+  function strip(s) { return '<div class="strip">' + s.colors.map(function (c, i) { return '<span style="background:' + P.css(c) + ';color:' + on(c.hex) + '">' + (i + 1) + '</span>'; }).join('') + '</div>'; }
   function section(k) {
     var s = P.sites[k], changed = JSON.stringify(P.order()[k]) !== JSON.stringify(P.published[k]);
     return '<h2>' + esc(s.name) + (changed ? ' <em>trial order</em>' : '') + '</h2><div class="page">' + esc(s.page) + '</div>' + strip(s) +
