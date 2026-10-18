@@ -8,7 +8,7 @@ Testing environment for the redesign of Old Sites, the museum at https://hackaho
 
 - `sitepages/` holds the six site-page designs (AI to AN) that Read more opens. Each is one HTML file that shows any site from `?site=`. The text is v0.1's, in `sitepages/data.js`; `sitepages/common.js` has the shared navigation, live windows, image viewer and v0.1's interactive features.
 
-Big browser windows show the live site from hackahobo.info in a scaled frame, as v0.1 did; small thumbnails stay as screenshots. Each site's colors are sampled from its own pages.
+Big browser windows show the live site from hackahobo.info in a scaled frame, as v0.1 did; small thumbnails stay as screenshots. Each site's colors live in one file, `palette.js`, read from the site's own CSS and image files; `palette.html` shows where each color comes from. The candidates and site pages all take their colors from `palette.js` and pick a palette color that reads on their background, so changing a palette there updates every page.
 
 Every main page has a test bar for choosing which site-page design Read more opens. The choice is remembered in the browser.
 

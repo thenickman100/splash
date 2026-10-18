@@ -8,7 +8,7 @@
 <style>
 /* AJ · Drawer. The site's first window fills the screen; the story is in a drawer over it.
    Close the drawer to use the site, open it again from the tab. Colors follow the AG main page. */
-:root{--bg:#1e2a24;--panel:#f6f7f4;--ink:#141a17;--muted:#5d6661;--line:#141a171a;--accent:#16803a}
+:root{--surface:#f6f7f4;--bg:#1e2a24;--panel:#f6f7f4;--ink:#141a17;--muted:#5d6661;--line:#141a171a;--accent:#16803a}
 html,body{height:100%}
 body{margin:0;background:radial-gradient(ellipse at 50% 120%,#2f4438,#1e2a24 60%);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;overflow:hidden}
 a{color:inherit}
@@ -22,13 +22,13 @@ body.open .stage{padding-right:min(560px,46vw)}
 .stage .sp-vp{flex:1;aspect-ratio:auto!important}
 .stage .sp-chrome{height:32px;font-size:11px}
 .sp-chrome{flex:none;display:flex;align-items:center;gap:6px;padding:0 12px;background:#e6e9e4;font:10px 'DM Mono',monospace;color:#4a514c;height:26px}
-.sp-chrome i{width:8px;height:8px;border-radius:50%;background:var(--accent)}.sp-chrome i+i,.sp-chrome i+i+i{background:#c3c8c2}
+.sp-chrome i{width:8px;height:8px;border-radius:50%;background:var(--accent-mark)}.sp-chrome i+i,.sp-chrome i+i+i{background:#c3c8c2}
 .sp-chrome .sp-url{margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,46vw);background:var(--panel);box-shadow:-20px 0 60px #0007;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;z-index:20}
 body.open .drawer{transform:none}
 .tab{position:absolute;left:-44px;top:50%;transform:translateY(-50%);width:44px;height:120px;border:0;border-radius:10px 0 0 10px;background:var(--accent);color:var(--on-accent);cursor:pointer;font:700 11px 'DM Mono',monospace;writing-mode:vertical-rl;letter-spacing:.08em}
 .dhead{padding:56px 34px 18px;border-bottom:1px solid var(--line);flex:none}
-.dhead .kick{font-size:11px;color:var(--accent);font-weight:500}
+.dhead .kick{font-size:11px;color:var(--accent-ink);font-weight:500}
 .dhead h1{margin:6px 0 8px;font-size:44px;font-weight:800;letter-spacing:-0.03em;line-height:1}
 .dhead .lede{margin:0;font-size:16px;line-height:1.5;color:#36403b}
 .dbody{overflow-y:auto;padding:8px 34px 40px;scrollbar-width:thin}
@@ -58,7 +58,7 @@ details[open] summary::after{content:'–'}
 .sp-code{white-space:pre-wrap;word-break:break-all;background:#141a17;color:#e5e9e6;padding:12px;border-radius:8px;font:11px/1.6 'DM Mono',monospace}
 .sp-logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 16px}
 .sp-logo{border:2px solid var(--line);background:#fff;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;align-items:center;font:9.5px 'DM Mono',monospace;color:var(--muted)}
-.sp-logo img{width:100%;height:46px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
+.sp-logo img{width:100%;height:46px;object-fit:contain}.sp-logo.on{border-color:var(--accent-mark)}
 .dfoot{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:24px}
 .dfoot a{border:1px solid var(--line);border-radius:8px;padding:14px;text-decoration:none;display:flex;flex-direction:column;gap:2px;background:#fff}
 .dfoot a:last-child{text-align:right}.dfoot .mono{font-size:10px;color:var(--muted)}.dfoot b{font-size:17px}
@@ -72,6 +72,7 @@ details[open] summary::after{content:'–'}
 </head>
 <body class="open">
 <div id="app"></div>
+<script src="../palette.js"></script>
 <script src="data.js"></script>
 <script src="common.js"></script>
 <script>

@@ -7,14 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* AL · Long read. Values from the AL export (AL-Longread.dc.html). */
-:root{--bg:#f2f3f1;--ink:#16181a;--muted:#5d6268;--line:#16181a1a;--accent:#16803a}
+:root{--surface:#f2f3f1;--bg:#f2f3f1;--ink:#16181a;--muted:#5d6268;--line:#16181a1a;--accent:#16803a}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif}
-a{color:var(--ink)}a:hover{color:var(--accent)}
+a{color:var(--ink)}a:hover{color:var(--accent-ink)}
 .mono{font-family:'DM Mono',monospace}
 .top{height:64px;display:flex;align-items:center;gap:24px;padding:0 50px;border-bottom:1px solid var(--line)}
 .top a{text-decoration:none}.top .home{font-weight:800}.top .sp{flex-grow:1}.top .mono{font-size:12px}
 .hero{padding:70px 50px 40px;display:flex;flex-direction:column;gap:18px}
-.kick{font-size:13px;color:var(--accent)}
+.kick{font-size:13px;color:var(--accent-ink)}
 h1{margin:0;font-size:clamp(56px,11vw,150px);font-weight:800;letter-spacing:-0.055em;line-height:.82}
 .facts{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 26px;padding-top:8px}
 .facts span{white-space:nowrap}
@@ -30,7 +30,7 @@ h1{margin:0;font-size:clamp(56px,11vw,150px);font-weight:800;letter-spacing:-0.0
 .sp-chrome .sp-url{margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sp-btns{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding:14px 0 6px}
 .sp-btn{font:800 15px 'Bricolage Grotesque',sans-serif;text-decoration:none;background:none;border:0;padding:0;cursor:pointer;color:var(--ink)}
-.sp-btn:hover{color:var(--accent)}
+.sp-btn:hover{color:var(--accent-ink)}
 button.sp-btn{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ink);font:12px 'DM Mono',monospace}
 .sp-fig{margin:28px 0}.sp-fig img{max-width:100%;border-radius:10px;display:block}
 .sp-fig.dark img{background:#16181a;padding:20px;box-sizing:border-box}
@@ -43,7 +43,7 @@ button.sp-btn{height:36px;padding:0 14px;border-radius:999px;border:1px solid va
 .sp-code{white-space:pre-wrap;word-break:break-all;background:#16181a;color:#e8eae6;padding:16px;border-radius:10px;font:12px/1.6 'DM Mono',monospace}
 .sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0 20px}
 .sp-logo{background:#fff;border:2px solid transparent;border-radius:10px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;font:10px 'DM Mono',monospace;color:var(--muted)}
-.sp-logo img{width:100%;height:70px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
+.sp-logo img{width:100%;height:70px;object-fit:contain}.sp-logo.on{border-color:var(--accent-mark)}
 .seg{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--ink);background:transparent;font:12px 'DM Mono',monospace;cursor:pointer;color:var(--ink)}.seg.on{background:var(--ink);color:#fff}
 .next{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:60px}
 .next a{padding:34px 50px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
@@ -58,6 +58,7 @@ button.sp-btn{height:36px;padding:0 14px;border-radius:999px;border:1px solid va
 </head>
 <body>
 <div id="app"></div>
+<script src="../palette.js"></script>
 <script src="data.js"></script>
 <script src="common.js"></script>
 <script>

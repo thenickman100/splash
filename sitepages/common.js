@@ -99,12 +99,6 @@
     return o.text + o.media + o.embed + o.buttons + o.extra;
   }
 
-  // Text color that reads on top of a site's color.
-  function onColor(hex) {
-    var n = parseInt(hex.slice(1), 16), r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
-    return (0.299 * r + 0.587 * g + 0.114 * b) > 165 ? '#11151b' : '#ffffff';
-  }
-
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function firstEmbed(s) {
     for (var i = 0; i < s.sections.length; i++) if (s.sections[i].embed) return s.sections[i].embed;
@@ -305,11 +299,20 @@
   window.SP = {
     site: site, sites: SITES, prev: prev, next: next, home: home, from: from, design: design,
     esc: esc, url: pageUrl, facts: facts, factsHtml: factsHtml, body: body, parts: parts, embedHtml: embedHtml,
-    figHtml: figHtml, galleryHtml: galleryHtml, slug: slug, firstEmbed: firstEmbed, fit: fit, onColor: onColor,
+    figHtml: figHtml, galleryHtml: galleryHtml, slug: slug, firstEmbed: firstEmbed, fit: fit,
     boot: function (render, after) {
       document.title = site.name + ' · Old Sites';
-      document.documentElement.style.setProperty('--accent', site.color);
-      document.documentElement.style.setProperty('--on-accent', onColor(site.color));
+      // Site colors from palette.js. --accent fills bars and buttons and --on-accent is text on it;
+      // --accent-ink is small text and --accent-ink-lg big type on the design's --surface; --accent-mark is thin marks.
+      var root = document.documentElement, P = PALETTE, k = site.key, r = P.ranked(k);
+      var surf = getComputedStyle(root).getPropertyValue('--surface').trim() || '#ffffff';
+      root.style.setProperty('--accent', P.main(k));
+      root.style.setProperty('--on-accent', P.on(k, P.main(k)));
+      root.style.setProperty('--accent-ink', P.ink(k, surf, 4.5));
+      root.style.setProperty('--accent-ink-lg', P.ink(k, surf, 3));
+      root.style.setProperty('--accent-mark', P.ink(k, surf, 3));
+      root.style.setProperty('--accent-2', r[1] || P.main(k));
+      root.style.setProperty('--accent-3', r[2] || P.main(k));
       var ic = document.createElement('link'); ic.rel = 'icon'; ic.type = 'image/x-icon'; ic.href = site.favicon; document.head.appendChild(ic);
       var st = document.createElement('style'); st.textContent = css; document.head.insertBefore(st, document.head.firstChild);
       document.getElementById('app').innerHTML = render(site, window.SP);

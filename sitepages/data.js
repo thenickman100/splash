@@ -1,6 +1,6 @@
 // Site content shared by every site-page design (AI to AN).
 // The text is v0.1's, word for word (projects/splash/*.html in splash-v0.1.zip).
-// Order is by start date; previous/next links follow it.
+// Order is by start date; previous/next links follow it. Colors come from ../palette.js.
 (function () {
   var H = 'https://hackahobo.info';
   var S = H + '/projects/sites/';
@@ -16,7 +16,6 @@
       range: 'c. 2008',
       started: 'c. 2008',
       tier: 'Flagship',
-      color: '#738f20',
       favicon: IC + 'awesomestuff/favicon.ico',
       logo: L + 'awesomestuff/awesomestuff-upscaled.png',
       thumb: 'img/awesome-lawesomel.jpg',
@@ -84,7 +83,6 @@
       range: 'c. 2009',
       started: 'c. 2009',
       tier: 'Flagship',
-      color: '#d50202',
       favicon: IC + 'askthenickman/favicon.ico',
       logo: L + 'askthenickman/original-cropped.png',
       thumb: 'img/ask-home.jpg',
@@ -148,7 +146,6 @@
       range: 'c. 2010',
       started: 'c. 2010',
       tier: 'Side project',
-      color: '#fec200',
       favicon: 'img/softball.ico',
       logo: L + 'titans/titansheader.png',
       thumb: 'img/titans.jpg',
@@ -174,7 +171,6 @@
       range: '2011 – today',
       started: '2011',
       tier: 'Flagship',
-      color: '#2fa0bf',
       favicon: IC + 'hackahobo/favicon.ico',
       logo: L + 'hackahobo/hackahobo-logo-stretched.png',
       thumb: 'img/hobo-2012.jpg',
@@ -235,7 +231,6 @@
       range: '2013',
       started: '2013',
       tier: 'Side project',
-      color: '#df1c21',
       favicon: 'img/blank.ico',
       logo: 'img/BVHomeworkBig.png',
       thumb: 'img/bv.jpg',
@@ -259,7 +254,6 @@
       range: '2014',
       started: '2014',
       tier: 'Side project',
-      color: '#0055e6',
       favicon: IC + 'engen/favicon_red.ico',
       logo: 'img/EnGenAlphaTrim.png',
       tagline: 'The Next Generation of Engineers',
@@ -300,7 +294,6 @@
       range: '2016 – today',
       started: '2016',
       tier: 'Personal',
-      color: '#46e7ff',
       favicon: IC + 'home-original/favicon.ico',
       logo: L + 'home-original/logo-transparent.png',
       thumb: 'img/home.jpg',
@@ -329,7 +322,6 @@
       range: '2018',
       started: '2018',
       tier: 'Notable',
-      color: '#4ba9dd',
       favicon: IC + 'spaceatlas/favicon.ico',
       logo: L + 'spaceatlas/spaceatlas.png',
       thumb: 'img/spaceatlas.jpg',
