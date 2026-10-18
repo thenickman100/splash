@@ -5,88 +5,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Site palettes</title>
 <style>
-:root{--bg:#f6f7f9;--fg:#15181d;--muted:#5b6270;--card:#fff;--line:#dde1e7}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038}}
-:root[data-theme="dark"]{--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038}
+:root{--bg:#f6f7f9;--fg:#15181d;--muted:#5b6270;--card:#fff;--line:#dde1e7;--code:#eef0f3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038;--code:#24272e}}
+:root[data-theme="dark"]{--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038;--code:#24272e}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
-main{max-width:980px;margin:0 auto;padding:36px 16px 60px}
+main{max-width:1040px;margin:0 auto;padding:36px 16px 60px}
 h1{margin:0 0 6px;font-size:30px}
-.intro{margin:0 0 28px;color:var(--muted);max-width:680px}
+.intro{margin:0 0 28px;color:var(--muted);max-width:720px}
 a{color:inherit}
-.site{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px;display:grid;grid-template-columns:260px 1fr;gap:20px}
-.site h2{margin:0 0 4px;font-size:21px}
-.shot{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:8px;border:1px solid var(--line);display:block}
-.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 14px}
-.chip{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.chip .sw{height:78px;display:flex;align-items:flex-start;justify-content:space-between;padding:8px 10px;font:700 13px ui-monospace,monospace}
-.chip .meta{padding:8px 10px;font-size:12.5px;line-height:1.4}
-.chip code{font:600 13px ui-monospace,monospace}
-.chip .from{color:var(--muted)}
-.prev{border-radius:10px;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;min-height:120px}
-.prev .a{padding:16px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px}
-.prev .a .yr{font:800 30px/0.95 system-ui,sans-serif;letter-spacing:-0.03em}
-.prev .a b{font-size:18px}
-.prev .b{padding:16px;display:flex;flex-direction:column;gap:8px;justify-content:center}
-.prev .btn{align-self:flex-start;padding:8px 14px;border-radius:8px;font:700 13px system-ui,sans-serif}
-.prev .tag{font:12px ui-monospace,monospace}
-.note{margin:10px 0 0;font-size:13px;color:var(--muted)}
-@media (max-width:700px){.site{grid-template-columns:1fr}.chip .sw{height:60px}}
+.site{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:22px}
+.site h2{margin:0 0 2px;font-size:22px}
+.site .page{margin:0 0 14px;font:12.5px ui-monospace,monospace;color:var(--muted);word-break:break-all}
+.row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.sw{border-radius:10px;height:96px;display:flex;align-items:flex-start;padding:8px 10px;font:700 15px ui-monospace,monospace;border:1px solid #0002}
+.hex{font:700 17px ui-monospace,monospace}
+.what{margin:2px 0 8px}
+.src{display:inline-block;margin:0 0 10px;padding:6px 10px;border-radius:6px;background:var(--code);font:12.5px/1.5 ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;max-width:100%;box-sizing:border-box}
+.src b{font-weight:700}
+.pic{display:block;max-width:100%;max-height:150px;border-radius:6px;border:1px solid var(--line);background:#fff}
+.alts{border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.alts h3{margin:0 0 4px;font-size:15px}
+.alts p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.alt{display:inline-flex;align-items:center;gap:8px;margin:0 14px 10px 0;font-size:13px}
+.alt i{width:28px;height:28px;border-radius:6px;border:1px solid #0002;display:inline-block}
+.alt code{font:600 12.5px ui-monospace,monospace}
+@media (max-width:640px){.row{grid-template-columns:76px 1fr;gap:12px}.sw{height:76px}}
 </style>
 </head>
 <body>
 <main>
 <h1>Site palettes</h1>
-<p class="intro">The top 3 colors for each site, in order, sampled from its own pages. Color 1 is the site's main color. The strip under each set shows the 3 together. Tell me any color to swap or reorder, and I'll fix contrast after you pick. <a href="index.html">← Back to the candidates</a></p>
+<p class="intro">The top 3 colors for each site, in order. Every color is read from the site's own code on hackahobo.info: a CSS rule, or an original image file when the color only exists in a logo or background image. The picture under each color is the live site, captured at 2×. <a href="index.html">← Back to the candidates</a></p>
 <div id="list"></div>
 </main>
 <script>
-// [hex, where it was sampled]. Order is the proposed rank.
+var S = 'https://hackahobo.info/projects/sites/';
+// Each color: [hex, what it is, source, picture]. A source starting with "image " names an original file.
 var P = [
-  { name: 'Awesome Stuff', shot: 'sitepages/img/awesome-lawesomel.jpg', c: [
-    ['#acf084', 'Lime of the box headings on lawesomel.webs.com'],
-    ['#30341c', 'Dark olive page background'],
-    ['#e4ecec', 'Pale gray of the boxes'] ] },
-  { name: 'Askthenickman', shot: 'sitepages/img/ask-home.jpg', c: [
-    ['#d60202', 'Red of the logo'],
-    ['#05030e', 'Black page background'],
-    ['#f6c600', 'Yellow of the starburst behind the logo'] ] },
-  { name: 'Titans Softball', shot: 'sitepages/img/titans.jpg', c: [
-    ['#fcc308', 'Gold page background'],
-    ['#30243c', 'Purple tab bar and stat boxes'],
-    ['#ffffff', 'White'] ] },
-  { name: 'Hack a HOBO', shot: 'sitepages/img/hobo-2026.jpg', c: [
-    ['#28a0c0', 'Blue behind the logo'],
-    ['#ffffff', 'White'],
-    ['#30a82a', 'Green outline of the logo, 2026 Edition with the original theme'] ] },
-  { name: 'BV Homework', shot: 'sitepages/img/bv.jpg', c: [
-    ['#d9232a', 'Red of the logo'],
-    ['#81cafc', 'Sky blue page background'],
-    ['#949000', 'Green of the subject buttons in the nav panel'] ] },
-  { name: 'EnGen NextGen', shot: 'sitepages/img/engen.jpg', c: [
-    ['#b8505e', 'Red of the text under the logo and the text across the site (thin text, so the shade is approximate)'],
-    ['#0055e6', 'Blue of the logo'],
-    ['#fcfcfc', 'White graph-paper background'] ] },
-  { name: 'Home', shot: 'sitepages/img/home.jpg', c: [
-    ['#46e7ff', 'Cyan of the bars'],
-    ['#a9ffff', 'Light cyan of the boxes'],
-    ['#fcfcfc', 'White patterned background'] ] },
-  { name: 'Space Atlas', shot: 'candidates/v0.1/exhibits/spaceatlas/mars.jpg', c: [
-    ['#2c2c2c', 'Gray menu bar'],
-    ['#000000', 'Black background'],
-    ['#e08424', 'Orange underline under MARS in the menu'] ] }
+  { name: 'Awesome Stuff', page: S + 'lawesomel/index.html', c: [
+    ['#acf083', 'Box headings', 'green/style.css\n.fw-title { background: <b>#acf083</b> url(\'title-bg.gif\') top repeat-x; }', 'palette/awesome-1.png'],
+    ['#30341d', 'Page background', '.design.css\nbody { background-color: <b>#30341d</b>; }', 'palette/awesome-2.png'],
+    ['#e6edee', 'Boxes', 'Chromz.css\n.fw-paragraph { background: <b>#e6edee</b> url(\'img08.gif\') repeat-x; }', 'palette/awesome-3.png'] ],
+    alts: [['#535a31', 'Footer, green/style.css #fw-footer'], ['#ffffff', 'Box heading text'], ['#333333', 'Body text, Chromz.css .fw-paragraph'], ['#747474', 'Box border, Chromz.css .fw-paragraph']] },
+  { name: 'Askthenickman', page: S + 'askthenickman/index.html', c: [
+    ['#d60000', 'Red of the logo', 'image askthenickman.png (the logo), its most common red', S + 'askthenickman/askthenickman.png'],
+    ['#000000', 'Page background', 'askthenickman.css\nbody { background-color: <b>black</b>; }', 'palette/ask-2.png'],
+    ['#fecb00', 'Yellow of the logo', 'image askthenickman.png (the logo), its most common yellow', S + 'askthenickman/askthenickman.png'] ] },
+  { name: 'Titans Softball', page: S + 'titans/titans.html', c: [
+    ['#ffc200', 'Gold page', 'titans.html\nbody { background-color: <b>#ffc200</b>; }', 'palette/titans-1.png'],
+    ['#362a38', 'Purple tabs', 'titans.html\ntd.header { background-color: <b>#362a38</b>; color: white; }', 'palette/titans-1.png'],
+    ['#ffffff', 'White tab text', 'titans.html\ntd.header { color: <b>white</b>; }', 'palette/titans-1.png'] ] },
+  { name: 'Hack a HOBO', page: 'https://hackahobo.info/?theme=original (2026 Edition, original theme)', c: [
+    ['#29a4c6', 'Blue behind the logo', 'files/style-home.css  .section-2 { background-color: var(--color-1); }\nfiles/style-shared.css  .original-theme { --og-teal-primary: <b>#29a4c6</b>; }', 'palette/hobo-1.png'],
+    ['#ffffff', 'White page', 'computed background of body; .original-theme { --og-white: <b>#ffffff</b>; }', 'palette/hobo-1.png'],
+    ['#30a92b', 'Green of the logo', 'image files/hackahobo.png (the logo on the 2026 site), its green', 'https://hackahobo.info/files/hackahobo.png'] ],
+    alts: [['#29c634', 'Green in the theme CSS, --og-green-dark'], ['#007c9e', '--og-teal-dark'], ['#cdf4ff', '--og-teal-light, game containers']] },
+  { name: 'BV Homework', page: S + 'bv-homework/BVHomework.html', c: [
+    ['#f21411', 'Red of the logo', 'image BVHomeworkBigHanako.jpg (the logo), its most common red', S + 'bv-homework/BVHomeworkBigHanako.jpg'],
+    ['#81c8ff', 'Sky blue page', 'image background.jpg (body background), its main color\n(the nav hover in the HTML is the same blue, <b>#82c8ff</b>)', 'palette/bv-2.png'],
+    ['#949000', 'Green nav buttons', 'BVHomework.html\n.nav { background-color: <b>#949000</b>; color: white; }', 'palette/bv-3.png'] ] },
+  { name: 'EnGen NextGen', page: S + 'engen/home.php', c: [
+    ['#e15252', 'Red text, under the logo and across the site', 'css.css\nfigcaption { color: <b>#E15252</b>; font-style: oblique; font-variant: small-caps; }', 'palette/engen-1.png'],
+    ['#0055e6', 'Blue of the logo and headings', 'css.css\nh3 { color: <b>#0055e6</b>; }  hr { border-color: <b>#0055e6</b>; }', 'palette/engen-1.png'],
+    ['#ffffff', 'White paper', 'image bg.png (graph-paper background), its main color; css.css .center { background-color: <b>#FFFFFF</b>; }', 'palette/engen-3.png'] ] },
+  { name: 'Home', page: S + 'home-original/index.php', c: [
+    ['#45e8ff', 'Cyan headers', 'style.css\n.blue-background-0 { background-color: <b>rgb(69,232,255)</b>; }', 'palette/home-1.png'],
+    ['#c6f8ff', 'Light cyan boxes and borders', 'style.css\n.blue-background-1 { background-color: <b>rgb(198,248,255)</b>; }', 'palette/home-2.png'],
+    ['#f0f0f0', 'White patterned background', 'style.css  html { background-image: url(\'pattern.png\'); }\nimage pattern.png, its average color', 'palette/home-3.png'] ] },
+  { name: 'Space Atlas', page: 'https://spaceatlas.hackahobo.info/', c: [
+    ['#2f2f2f', 'Gray menu bar', 'stylesheet.min.css\n#header { background-color: <b>#2f2f2f</b>; }', 'palette/sa-1.png'],
+    ['#000000', 'Black background', 'stylesheet.min.css\nbody { font-family: arial; margin: 0; background-color: <b>#000</b>; }', 'palette/sa-1.png'],
+    ['#ff8100', 'Mars orange', 'stylesheet.min.css\n[id=\'3headerBody\'] { text-decoration-color: <b>#ff8100</b>; }  .high { background-color: <b>#ff8100</b>; }', 'palette/sa-3.png'] ],
+    alts: [['#49aae3', 'Earth blue, [id=\'1headerBody\'] and .low']] }
 ];
 function lum(h) { var n = parseInt(h.slice(1), 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
 function on(h) { return lum(h) > .2 ? '#111' : '#fff'; }
 document.getElementById('list').innerHTML = P.map(function (s) {
-  var c = s.c.map(function (x) { return x[0]; });
-  return '<section class="site"><div><h2>' + s.name + '</h2><img class="shot" src="' + s.shot + '" alt="' + s.name + '"></div><div>' +
-    '<div class="chips">' + s.c.map(function (x, i) {
-      return '<div class="chip"><div class="sw" style="background:' + x[0] + ';color:' + on(x[0]) + '"><span>' + (i + 1) + '</span></div>' +
-        '<div class="meta"><code>' + x[0] + '</code><div class="from">' + x[1] + '</div></div></div>';
-    }).join('') + '</div>' +
-    '<div class="prev"><div class="a" style="background:' + c[0] + ';color:' + on(c[0]) + '"><span class="tag">Color 1</span><span class="yr">' + s.name + '</span></div>' +
-    '<div class="b" style="background:' + c[1] + ';color:' + on(c[1]) + '"><span class="tag">Color 2, with a color 3 button</span><span class="btn" style="background:' + c[2] + ';color:' + on(c[2]) + '">Read more →</span></div></div>' +
-    '</div></section>';
+  return '<section class="site"><h2>' + s.name + '</h2><div class="page">' + s.page + '</div>' +
+    s.c.map(function (x, i) {
+      return '<div class="row"><div class="sw" style="background:' + x[0] + ';color:' + on(x[0]) + '">' + (i + 1) + '</div><div>' +
+        '<div class="hex">' + x[0] + '</div><div class="what">' + x[1] + '</div><div class="src">' + x[2] + '</div>' +
+        '<img class="pic" src="' + x[3] + '" alt="Where ' + x[0] + ' appears on ' + s.name + '" loading="lazy"></div></div>';
+    }).join('') +
+    (s.alts ? '<div class="alts"><h3>Other colors in the code</h3><p>Swap any of these in if one fits better.</p>' + s.alts.map(function (a) {
+      return '<span class="alt"><i style="background:' + a[0] + '"></i><code>' + a[0] + '</code> ' + a[1] + '</span>';
+    }).join('') + '</div>' : '') + '</section>';
 }).join('');
 </script>
 </body>
