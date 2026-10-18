@@ -2,7 +2,7 @@
 // live: palette.html shows where each color comes from, and the candidates and site pages take their colors
 // from here, so editing a palette here updates every page.
 //
-// colors: ranked, color 1 first. A two-color stripe (Awesome Stuff's gradients) is a pair of hexes.
+// colors: ranked, color 1 first. Each stripe of a two-color pattern (Awesome Stuff's gradients) is its own color.
 // extra: other colors found in the site's code, not in the ranking.
 // px and img: the pixel each color was read from on a lossless 1280-wide capture, and its zoom images in palette/.
 (function () {
@@ -63,28 +63,36 @@
     ]
    },
    {
-    "hex": [
-     "#94a157",
-     "#a0ac66"
-    ],
-    "what": "Top of the header gradient behind the logo, a two-color stripe",
+    "hex": "#94a157",
+    "what": "Top of the header gradient behind the logo, stripe 1 of 2",
     "src": "image green/container-bg.gif (#fw-container background), its top rows",
     "px": [
      [
       10,
       5
-     ],
+     ]
+    ],
+    "img": [
+     "awesome-4a"
+    ],
+    "edge": [
+     true
+    ]
+   },
+   {
+    "hex": "#a0ac66",
+    "what": "Top of the header gradient behind the logo, stripe 2 of 2",
+    "src": "image green/container-bg.gif (#fw-container background), its top rows",
+    "px": [
      [
       7,
       7
      ]
     ],
     "img": [
-     "awesome-4a",
      "awesome-4b"
     ],
     "edge": [
-     true,
      true
     ]
    },
@@ -108,28 +116,36 @@
   ],
   "extra": [
    {
-    "hex": [
-     "#4c532d",
-     "#535a31"
-    ],
-    "what": "Footer, a two-color stripe",
+    "hex": "#4c532d",
+    "what": "Footer, stripe 1 of 2",
     "src": "green/style.css\n#fw-footer { background: [[#535a31]] url('html-bg.gif') repeat-x; }\nimage html-bg.gif gives the stripe its second color",
     "px": [
      [
       19,
       1044
-     ],
+     ]
+    ],
+    "img": [
+     "awesome-x1a"
+    ],
+    "edge": [
+     false
+    ]
+   },
+   {
+    "hex": "#535a31",
+    "what": "Footer, stripe 2 of 2",
+    "src": "green/style.css\n#fw-footer { background: [[#535a31]] url('html-bg.gif') repeat-x; }\nimage html-bg.gif gives the stripe its second color",
+    "px": [
      [
       16,
       1043
      ]
     ],
     "img": [
-     "awesome-x1a",
      "awesome-x1b"
     ],
     "edge": [
-     false,
      false
     ]
    }
@@ -609,32 +625,32 @@
     return '#' + m.slice(0, 3).map(function (v) { return ('0' + Math.round(+v).toString(16)).slice(-2); }).join('');
   }
   function site(key) { return SITES[key === 'hobo26' ? 'hobo' : key]; }
-  // The ranked colors as single hexes; a stripe pair counts as its first color.
-  function ranked(key) { return site(key).colors.map(function (c) { return Array.isArray(c.hex) ? c.hex[0] : c.hex; }); }
-  // First ranked color that reads against bg; otherwise black or white, whichever reads better.
+  function ranked(key) { return site(key).colors.map(function (c) { return c.hex; }); }
+  // First ranked color that reads against bg at the given ratio; if none does, color 1 as it is.
   function pick(key, bg, min) {
     bg = toHex(bg); min = min || 4.5;
     var r = ranked(key);
     for (var i = 0; i < r.length; i++) if (contrast(r[i], bg) >= min) return r[i];
-    return contrast('#000000', bg) >= contrast('#ffffff', bg) ? '#000000' : '#ffffff';
+    return r[0];
   }
-  // CSS background for a ranked color: a solid color, or the stripe for a pair.
-  function fill(key, i) {
-    var c = site(key).colors[i || 0];
-    if (!Array.isArray(c.hex)) return c.hex;
-    return 'repeating-linear-gradient(135deg,' + c.hex[0] + ' 0 2px,' + c.hex[1] + ' 2px 3px)';
-  }
-
   window.PALETTE = {
     sites: SITES,
     contrast: contrast,
     ranked: ranked,
     // Color 1, the site's main color, for fills such as bars and buttons.
     main: function (key) { return ranked(key)[0]; },
-    fill: fill,
     // A site color to use as text or a thin mark on a page background bg (any CSS color).
     ink: function (key, bg, min) { return pick(key, bg, min); },
-    // Text color to put on top of a site color fill.
-    on: function (key, fillHex, min) { return pick(key, fillHex, min); }
+    // Text color to put on top of a site color fill: the first ranked color that reads on it, or else the
+    // palette color with the most contrast against it (color 1 would vanish on its own fill).
+    on: function (key, fillHex, min) {
+      fillHex = toHex(fillHex); min = min || 4.5;
+      var r = ranked(key), best = null;
+      for (var i = 0; i < r.length; i++) {
+        if (contrast(r[i], fillHex) >= min) return r[i];
+        if (!best || contrast(r[i], fillHex) > contrast(best, fillHex)) best = r[i];
+      }
+      return best;
+    }
   };
 })();
