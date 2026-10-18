@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Old Sites: then and now</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;600;800&amp;family=Fragment+Mono&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fbfaf7}
+a{color:#111}a:hover{color:#555}
+.rng{width:100%;accent-color:#111;height:28px;cursor:ew-resize}
+.jump{height:48px;padding:0 20px;border-radius:999px;border:2px solid #111;display:flex;align-items:center;text-decoration:none;font-weight:800;color:#111}
+.jump:hover{background:#111;color:#fff}
+.mini{border-radius:12px;overflow:hidden;background:#fff;border:1px solid #0001;display:flex;flex-direction:column;text-decoration:none;color:#111;transition:transform .2s}
+.mini:hover{transform:translateY(-4px)}
+.tagl{position:absolute;top:12px;padding:6px 10px;border-radius:6px;background:#111d;color:#fff;font-family:'Fragment Mono',monospace;font-size:12px}
+</style>
+</helmet>
+<div style="width:1280px;box-sizing:border-box;background:#fbfaf7;color:#111;font-family:'Rethink Sans',sans-serif">
+
+  <div style="height:540px;box-sizing:border-box;padding:70px 80px 50px;display:flex;flex-direction:column;justify-content:flex-end;gap:22px;background:#111;color:#fbfaf7;position:relative;overflow:hidden">
+    <img src="./assets/649aa6048879b7d826ea004c3c167303.jpg" alt="" style="position:absolute;right:-60px;top:-40px;width:720px;opacity:.28;transform:rotate(-4deg)">
+    <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:#aaa">c. 2008 to today</div>
+    <div style="font-size:120px;font-weight:800;line-height:.85;letter-spacing:-0.04em;position:relative">Old Sites</div>
+    <p style="margin:0;max-width:560px;font-size:19px;line-height:1.5;color:#ddd;position:relative">Websites I made, starting in middle school. Drag the slider under each of the main three to compare two versions of it.</p>
+    <div style="display:flex;gap:12px;position:relative">
+      <a class="jump" href="#awesome" style="border-color:#9bc53d;color:#fbfaf7">Awesome Stuff</a>
+      <a class="jump" href="#ask" style="border-color:#ff4433;color:#fbfaf7">Askthenickman</a>
+      <a class="jump" href="#hobo" style="border-color:#46e06a;color:#fbfaf7">Hack a HOBO</a>
+    </div>
+  </div>
+
+  <sc-for list="{{flags}}" as="f" hint-placeholder-count="3">
+    <div id="{{f.id}}" style="height:600px;box-sizing:border-box;padding:56px 80px;display:flex;flex-direction:{{f.dir}};gap:56px;align-items:center;background:{{f.bg}};border-bottom:1px solid #0001">
+      <div style="flex:0 0 720px;display:flex;flex-direction:column;gap:10px">
+        <div style="position:relative;width:720px;height:450px;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px #0003;background:#000">
+          <img src="{{f.b}}" alt="{{f.bl}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top">
+          <img src="{{f.a}}" alt="{{f.al}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;clip-path:inset(0 {{f.clip}}% 0 0)">
+          <div style="position:absolute;top:0;bottom:0;left:{{f.pos}}%;width:3px;background:#fff;box-shadow:0 0 10px #000a"></div>
+          <span class="tagl" style="left:12px">{{f.al}}</span>
+          <span class="tagl" style="right:12px">{{f.bl}}</span>
+        </div>
+        <input class="rng" type="range" min="0" max="100" value="{{f.pos}}" onInput="{{f.slide}}" onChange="{{f.slide}}" aria-label="Compare {{f.al}} and {{f.bl}}">
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+        <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:{{f.ink}}">{{f.year}} · Flagship</div>
+        <div style="font-size:56px;font-weight:800;line-height:.95;letter-spacing:-0.03em">{{f.name}}</div>
+        <p style="margin:0;font-size:17px;line-height:1.55;color:#333">{{f.blurb}}</p>
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <a href="{{f.link}}" target="_blank" style="height:48px;padding:0 22px;display:flex;align-items:center;background:#111;color:#fff;text-decoration:none;border-radius:10px;font-weight:800">Open the site ↗</a>
+          <a href="#" style="height:48px;padding:0 22px;display:flex;align-items:center;border:2px solid #111;text-decoration:none;border-radius:10px;font-weight:800">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </sc-for>
+
+  <div style="height:320px;box-sizing:border-box;padding:48px 80px;display:flex;gap:44px;align-items:center;background:#0c0f1a;color:#eef1f8">
+    <img src="./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg" alt="Space Atlas" style="width:360px;height:225px;object-fit:cover;border-radius:10px">
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'Fragment Mono',monospace;font-size:13px;color:#a9b8ff">2018 · Notable</div>
+      <div style="font-size:40px;font-weight:800;letter-spacing:-0.02em">Space Atlas</div>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#c9cfe0;max-width:560px">A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.</p>
+    </div>
+    <a href="https://spaceatlas.hackahobo.info/" target="_blank" style="height:48px;padding:0 22px;display:flex;align-items:center;border:2px solid #a9b8ff;color:#eef1f8;text-decoration:none;border-radius:10px;font-weight:800">Open the site ↗</a>
+  </div>
+
+  <div style="box-sizing:border-box;padding:44px 80px 30px;display:flex;flex-direction:column;gap:18px">
+    <div style="font-size:22px;font-weight:800">Smaller sites</div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px">
+      <sc-for list="{{smalls}}" as="s" hint-placeholder-count="4">
+        <a class="mini" href="{{s.link}}" target="_blank">
+          <img src="{{s.img}}" alt="" style="width:100%;height:110px;object-fit:cover;object-position:top">
+          <span style="padding:10px 12px;display:flex;justify-content:space-between;font-size:14px;font-weight:600">{{s.name}}<span style="font-family:'Fragment Mono',monospace;font-size:11px;color:#666;font-weight:400">{{s.year}}</span></span>
+        </a>
+      </sc-for>
+    </div>
+    <div style="font-family:'Fragment Mono',monospace;font-size:12px;color:#777;padding-top:6px">Also: Bar Guide and Radplot, c. 2023</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3000}}'>
+var H = 'https://hackahobo.info';
+var FLAGS = [
+ {id:'awesome',name:'Awesome Stuff',year:'c. 2008',bg:'#f1f6e6',ink:'#4d7a12',dir:'row',a:'./assets/92c737d215aa3c7d3b8154869fd508c4.jpg',al:'lawesomel.webs.com',b:'./assets/cf0bde60261edd16e5f023557327bb75.jpg',bl:'Webstarts section',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker. It was one site on two domains. The Webstarts section held the hacking pages and games, because Webstarts had more features, like password-protected pages.'},
+ {id:'ask',name:'Askthenickman',year:'c. 2009',bg:'#fdecea',ink:'#b3261e',dir:'row-reverse',a:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',al:'Home page',b:'./assets/18f17b21248824ddff9debf0577ca075.jpg',bl:'Techno home page',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. It had flash games, secret phone numbers from the Hitchhiker’s Guide and a themed logo for each holiday. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {id:'hobo',name:'Hack a HOBO',year:'2011 – today',bg:'#e8f7ec',ink:'#16803a',dir:'row',a:'./assets/0c6e78e1fe9b6a24216761d235f3f769.jpg',al:'Golden age, Nov 6, 2012',b:'./assets/649aa6048879b7d826ea004c3c167303.jpg',bl:'2026 Edition',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. It went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul that finally fixed design issues I had for years.'}
+];
+var SMALLS = [
+ {name:'Titans Softball',year:'c. 2010',img:'./assets/b34913cd1ef92f183c5ebc5ffcbcc564.jpg',link:H+'/projects/sites/titans/titans.html'},
+ {name:'BV Homework',year:'2013',img:'./assets/7d6912249875c520a43fa19146e42fb3.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html'},
+ {name:'EnGen NextGen',year:'c. 2014',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php'},
+ {name:'Home',year:'2016',img:'./assets/85aa8e4e6bcfff3ec51d2bda3a8b00ac.jpg',link:H+'/projects/sites/home-original/index.php'}
+];
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { awesome: 50, ask: 50, hobo: 50 }; }
+  renderVals(){
+    return {
+      flags: FLAGS.map((f) => { var pos = this.state[f.id]; return Object.assign({}, f, { pos: pos, clip: 100 - pos, slide: (e) => { var o = {}; o[f.id] = Number(e.target.value); this.setState(o); } }); }),
+      smalls: SMALLS
+    };
+  }
+}
+</script>
+</body>
+</html>

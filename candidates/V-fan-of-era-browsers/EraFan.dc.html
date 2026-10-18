@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Old Sites: fan of era browsers</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#262420}
+a{color:#f4f1ea}a:hover{color:#ccc}
+.mono{font-family:'DM Mono',monospace}
+.c{position:absolute;border:0;padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;font:inherit;text-align:left;transform-origin:center bottom;box-shadow:0 10px 30px #0009;background:#000;transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),width .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.c:not(.on):hover{transform:rotate(var(--a)) translateY(-26px)!important}
+.c.on{cursor:default}
+.c .body{flex-grow:1;overflow:hidden;background:#000}
+.c.on .body{overflow-y:auto;scrollbar-width:thin}
+.bar{flex:none;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden}
+.bar .u{flex-grow:1;display:flex;align-items:center;overflow:hidden}
+.c .bar{height:22px;padding:0 6px}.c .bar .u{height:14px;font-size:9px;padding:0 5px}.c .bar .b{width:9px;height:8px}
+.c.on .bar{height:34px;padding:0 10px}.c.on .bar .u{height:22px;font-size:12px;padding:0 10px}.c.on .bar .b{width:14px;height:12px}
+.e0{border-radius:6px 6px 2px 2px}.e0 .bar{background:linear-gradient(#e8eef8,#b8c6dd);border-bottom:1px solid #7f93b5}.e0 .u{background:#fff;border:1px solid #7f93b5;font-family:Tahoma,Verdana,sans-serif;color:#222}.e0 .b{border:1px solid #7f93b5;background:linear-gradient(#fff,#cfd8e8);border-radius:2px}
+.e1{border-radius:8px}.e1 .bar{background:#ececec;border-bottom:1px solid #c9c9c9}.e1 .u{background:#fff;border:1px solid #c4c4c4;border-radius:11px;font-family:Arial,sans-serif;color:#333}.e1 .b{border-radius:50%;background:#bdbdbd}
+.e2{border-radius:6px}.e2 .bar{background:#2b2c31}.e2 .u{background:#1d1e22;border-radius:4px;font-family:'DM Mono',monospace;color:#cfd0d4}.e2 .b{border-radius:2px;background:#4a4b52}
+.e3{border-radius:14px}.e3 .bar{background:#f7f8fa}.e3 .u{background:#eceef2;border-radius:12px;justify-content:center;font-family:'Hanken Grotesk',sans-serif;color:#333}.e3 .b{border-radius:50%;background:#d4d7dd}
+.txt{animation:t .45s ease}
+@keyframes t{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="width:1280px;height:800px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,#3c3830,#262420 60%);color:#f4f1ea;font-family:'Hanken Grotesk',sans-serif">
+  <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
+    <div style="font-size:24px;font-weight:800">Old Sites</div>
+    <div class="mono" style="font-size:11px;color:#b3ac9c">Each site in a browser from its own time</div>
+  </div>
+
+  <div class="txt" key="{{cur.yr}}" style="position:absolute;left:830px;top:70px;right:50px;height:440px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:88px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}}">{{cur.yr}}</div>
+    <div class="mono" style="font-size:11px;color:#b3ac9c">{{cur.year}} · {{cur.tier}}</div>
+    <div style="font-size:30px;font-weight:800;line-height:1">{{cur.name}}</div>
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#dcd6c8">{{cur.blurb}}</p>
+    <div style="display:flex;gap:10px;margin-top:auto">
+      <a href="SitePage.dc.html" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.color}};color:#262420;text-decoration:none;font-weight:800">Read more →</a>
+      <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #5a554a;text-decoration:none;font-weight:600">Open full screen ↗</a>
+    </div>
+  </div>
+
+  <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
+    <button class="c {{c.era}} {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
+      <span class="bar"><span class="b"></span><span class="b"></span><span class="u">{{c.addr}}</span></span>
+      <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
+    </button>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+var H = 'https://hackahobo.info';
+var SITES = [
+ {name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',era:'e0',color:'#9bd23f',addr:'http://lawesomel.webs.com/',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
+ {name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',era:'e0',color:'#ff6a5a',addr:'http://askthenickman.webs.com/',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {name:'Titans Softball',yr:'2010',year:'c. 2010',tier:'Side project',era:'e0',color:'#ffc20e',addr:'http://softball.askthenickman.com/',img:'./assets/d40d39122d302efabd22bab1dfba7d0b.jpg',link:H+'/projects/sites/titans/titans.html',blurb:'My dad coached my sister’s softball team and wanted a central hub for the parents. It was the first commissioned site I made.'},
+ {name:'Hack a HOBO',yr:'2011',year:'2011 – today · shown on Nov 6, 2012',tier:'Flagship',era:'e1',color:'#5be37c',addr:'hackahobo.info',img:'./assets/46e9fbc735e6f13e79add42bea6309f1.jpg',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school.'},
+ {name:'BV Homework',yr:'2013',year:'2013',tier:'Side project',era:'e1',color:'#ff7b7b',addr:'BVHomework.html',img:'./assets/a5654f5475f2b4df8ec9f935b2936711.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html',blurb:'BV is for Blue Valley. I started it to share answers to homework problems at Blue Valley High School, and stopped working on it for fear of getting in trouble.'},
+ {name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',era:'e1',color:'#86a8ff',addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
+ {name:'Home',yr:'2016',year:'2016',tier:'Personal',era:'e2',color:'#6fd3ec',addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
+ {name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',era:'e2',color:'#b3c0ff',addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
+ {name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',era:'e3',color:'#5be37c',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
+];
+var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140};
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { i: 0 }; }
+  renderVals(){
+    var i = this.state.i, n = SITES.length;
+    return {
+      cur: SITES[i],
+      cards: SITES.map((s, k) => {
+        var base = { name: s.name, yr: s.yr, era: s.era, addr: s.addr, img: s.img };
+        if (k === i) return Object.assign(base, { l: 60, t: 70, w: 730, h: 440, a: 0, z: 300, cls: 'on', pick: () => {} });
+        var a = -26 + k * (52 / (n - 1)), rad = a * Math.PI / 180, R = 1050, cx = 640, cy = 1760;
+        var w = CW[s.tier], h = Math.round(w * 0.64);
+        var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
+        return Object.assign(base, { l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

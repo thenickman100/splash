@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Old Sites: scroll through time</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0f1012}
+a{color:#fff}a:hover{color:#ccc}
+.mono{font-family:'IBM Plex Mono',monospace}
+.sc{scrollbar-width:none}
+.sc::-webkit-scrollbar{display:none}
+.shot{transition:background-position .15s linear}
+.hint{animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(6px)}}
+.chrome{transition:background .5s,border-radius .5s}
+</style>
+</helmet>
+<div class="sc" onScroll="{{onScroll}}" style="width:1280px;height:800px;overflow-y:auto;background:#0f1012;color:#f1f1ef;font-family:'Bricolage Grotesque',sans-serif">
+  <div style="height:{{total}}px;position:relative">
+    <div style="position:sticky;top:0;height:800px;display:flex;box-sizing:border-box;padding:36px 48px;gap:48px">
+
+      <div style="flex:0 0 330px;display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:22px;font-weight:800">Old Sites</div>
+        <div style="margin-top:50px;font-size:150px;font-weight:800;line-height:.82;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}};transition:color .4s">{{cur.yr}}</div>
+        <div class="mono" style="font-size:12px;color:#9a9b9f">{{cur.year}} · {{cur.tier}}</div>
+        <div style="font-size:{{cur.fs}}px;font-weight:800;line-height:1;letter-spacing:-0.02em">{{cur.name}}</div>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:#c8c9cc">{{cur.blurb}}</p>
+        <div style="margin-top:auto;display:flex;gap:10px">
+          <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.color}};color:#0f1012;text-decoration:none;font-weight:800">Open full screen ↗</a>
+          <a href="#" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #3a3b40;text-decoration:none;font-weight:500">Read more →</a>
+        </div>
+      </div>
+
+      <div class="chrome" style="flex-grow:1;display:flex;flex-direction:column;border-radius:{{ch.r}}px;overflow:hidden;background:{{ch.bar}};box-shadow:0 30px 80px #000a">
+        <div style="height:42px;display:flex;align-items:center;gap:10px;padding:0 14px">
+          <span style="display:flex;gap:6px"><span style="width:11px;height:11px;border-radius:50%;background:{{ch.dot}}"></span><span style="width:11px;height:11px;border-radius:50%;background:{{ch.dot}}"></span><span style="width:11px;height:11px;border-radius:50%;background:{{ch.dot}}"></span></span>
+          <div class="mono" style="flex-grow:1;height:26px;display:flex;align-items:center;padding:0 12px;border-radius:{{ch.ur}}px;background:{{ch.url}};color:{{ch.text}};font-size:12px">http://{{cur.addr}}</div>
+        </div>
+        <div class="shot" style="flex-grow:1;background-color:#000;background-image:url({{cur.img}});background-size:100% auto;background-repeat:no-repeat;background-position:center {{local}}%"></div>
+      </div>
+
+      <div style="flex:0 0 14px;position:relative;margin:20px 0">
+        <div style="position:absolute;left:6px;top:0;bottom:0;width:2px;background:#2a2b30"></div>
+        <sc-for list="{{marks}}" as="m" hint-placeholder-count="9">
+          <div style="position:absolute;left:{{m.l}}px;top:{{m.top}}%;width:{{m.w}}px;height:{{m.h}}%;background:{{m.color}};opacity:{{m.op}};border-radius:2px"></div>
+        </sc-for>
+        <div style="position:absolute;left:-3px;top:{{pct}}%;width:20px;height:2px;background:#fff"></div>
+      </div>
+    </div>
+    <sc-if value="{{atStart}}" hint-placeholder-val="{{true}}">
+      <div class="mono hint" style="position:absolute;left:48px;top:740px;font-size:12px;color:#9a9b9f">Scroll to travel through the years ↓</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+var H = 'https://hackahobo.info';
+var SITES = [
+ {name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',w:3,color:'#9bd23f',era:0,addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
+ {name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',w:3,color:'#ff5545',era:0,addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {name:'Titans Softball',yr:'2010',year:'c. 2010',tier:'Side project',w:1,color:'#ffc20e',era:0,addr:'softball.askthenickman.com',img:'./assets/d40d39122d302efabd22bab1dfba7d0b.jpg',link:H+'/projects/sites/titans/titans.html',blurb:'My dad coached my sister’s softball team and wanted a central hub for the parents. It was the first commissioned site I made.'},
+ {name:'Hack a HOBO',yr:'2011',year:'2011 – today',tier:'Flagship',w:3.5,color:'#46e06a',era:1,addr:'hackahobo.info',img:'./assets/46e9fbc735e6f13e79add42bea6309f1.jpg',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. Shown here on November 6, 2012, its golden age.'},
+ {name:'BV Homework',yr:'2013',year:'2013',tier:'Side project',w:.8,color:'#ff6b6b',era:1,addr:'BVHomework.html',img:'./assets/a5654f5475f2b4df8ec9f935b2936711.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html',blurb:'BV is for Blue Valley. I started it to share answers to homework problems at Blue Valley High School, and stopped working on it for fear of getting in trouble.'},
+ {name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',w:1,color:'#6f98ff',era:1,addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
+ {name:'Home',yr:'2016',year:'2016',tier:'Personal',w:.8,color:'#6fd3ec',era:2,addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
+ {name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',w:2,color:'#a9b8ff',era:2,addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
+ {name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',w:3,color:'#46e06a',era:2,addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul with a new left sidebar and game containers that can take holiday themes. It is still running.'}
+];
+var ERA = [
+ {bar:'#c9ced6',dot:'#9aa1ac',url:'#fff',text:'#222',r:4,ur:2},
+ {bar:'#e4e6ea',dot:'#c3c7ce',url:'#fff',text:'#222',r:8,ur:13},
+ {bar:'#25262b',dot:'#45464d',url:'#18191c',text:'#ddd',r:16,ur:13}
+];
+var TOT = SITES.reduce((a, s) => a + s.w, 0), PX = 900, TOTAL = Math.round(TOT * PX / 3 + 800);
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { p: 0 }; }
+  renderVals(){
+    var p = this.state.p, pos = p * TOT, acc = 0, i = 0;
+    for (; i < SITES.length - 1; i++) { if (pos < acc + SITES[i].w) break; acc += SITES[i].w; }
+    var s = SITES[i], local = Math.max(0, Math.min(100, (pos - acc) / s.w * 100)), a2 = 0;
+    return {
+      total: TOTAL, cur: Object.assign({}, s, { fs: s.tier === 'Flagship' ? 44 : (s.tier === 'Notable' ? 34 : 26) }), ch: ERA[s.era],
+      local: Math.round(local), pct: (p * 100).toFixed(1), atStart: p < 0.02,
+      marks: SITES.map((x, k) => { var t = a2 / TOT * 100; a2 += x.w; var big = x.tier === 'Flagship'; return { top: t, h: x.w / TOT * 100 - 0.6, w: big ? 14 : (x.tier === 'Notable' ? 10 : 6), l: big ? 0 : (x.tier === 'Notable' ? 2 : 4), color: x.color, op: k === i ? 1 : 0.35 }; }),
+      onScroll: (e) => { var el = e.target; var max = el.scrollHeight - el.clientHeight; this.setState({ p: max > 0 ? el.scrollTop / max : 0 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
