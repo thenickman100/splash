@@ -6,6 +6,7 @@
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
 <script src="../../palette.js"></script>
+<script src="../../browsernav.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -28,6 +29,8 @@ a{color:#11151b}a:hover{color:#555}
 @keyframes c{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
+.bn-back,.bn-fwd{width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 15px/18px system-ui,sans-serif;opacity:.3;cursor:default}
+.bn-back.bn-on,.bn-fwd.bn-on{opacity:1;cursor:pointer}.bn-back.bn-on:hover,.bn-fwd.bn-on:hover{background:#8884}
 </style>
 </helmet>
 <div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:#e7eaee;color:#11151b;font-family:'Hanken Grotesk',sans-serif">
@@ -48,7 +51,7 @@ a{color:#11151b}a:hover{color:#555}
         <span class="body"><img src="{{w.img}}" alt="" style="width:100%;display:block"></span>
       </button>
     </sc-for>
-    <div class="live" key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;overflow:hidden;z-index:400;background:#000"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div>
+    <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.bt}}px;width:{{live.w}}px;height:{{live.bh}}px;z-index:400;pointer-events:none"><div style="position:absolute;right:6px;top:0;height:{{live.bar}}px;display:flex;align-items:center;gap:2px;pointer-events:auto;color:#4a525e"><button class="bn-back" title="Back" disabled>‹</button><button class="bn-fwd" title="Forward" disabled>›</button></div><div class="live" style="position:absolute;left:0;right:0;top:{{live.bar}}px;bottom:0;overflow:hidden;background:#000;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
   </div>
 
   <div class="cap" key="{{cur.key}}" style="position:absolute;left:44px;right:44px;top:{{capTop}}px;display:flex;gap:40px;align-items:flex-start">
@@ -81,8 +84,8 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math
 // site was built for (from v0.1's windows).
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
-function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
-var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/AE-row-of-windows-main-page/R8-AE.dc.html';
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar, bt: win.t, bh: win.h, bar: bar }, liveFit(key, win.w, win.h - bar)); }
+var SPD = ['AI','AK','AN','AJ','AL','AM'], SPFROM = '../candidates/AE-row-of-windows-main-page/R8-AE.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }

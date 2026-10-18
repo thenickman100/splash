@@ -79,7 +79,7 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
 function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
-var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/V-fan-of-era-browsers/EraFan.dc.html';
+var SPD = ['AI','AK','AN','AJ','AL','AM'], SPFROM = '../candidates/V-fan-of-era-browsers/EraFan.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }

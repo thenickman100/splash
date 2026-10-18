@@ -44,7 +44,7 @@
   function embedHtml(e) {
     var id = e.id || 'e' + (embeds++);
     return '<div class="sp-win" data-embed="' + id + '">' +
-      '<div class="sp-chrome"><i></i><i></i><i></i><span class="sp-url">' + esc(e.addr) + '</span></div>' +
+      '<div class="sp-chrome"><button class="sp-nav sp-back" title="Back" disabled>‹</button><button class="sp-nav sp-fwd" title="Forward" disabled>›</button><i></i><span class="sp-url">' + esc(e.addr) + '</span></div>' +
       '<div class="sp-vp" data-w="' + e.w + '" data-h="' + e.h + '" style="aspect-ratio:' + e.w + '/' + e.h + ';background-image:url(' + e.img + ')">' +
       '<iframe src="' + e.src + '" title="' + esc(e.title) + '" loading="lazy" style="width:' + e.w + 'px;height:' + e.h + 'px"></iframe></div></div>';
   }
@@ -122,6 +122,8 @@
     '.sp-test a{height:26px;min-width:32px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#fff;font:700 11px ui-monospace,monospace;text-decoration:none}' +
     '.sp-test a.on{background:#ffd23f;color:#111}' +
     '.sp-vp{position:relative;overflow:hidden;background:#000 top/cover no-repeat}.sp-vp iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:transparent}' +
+    '.sp-nav{flex:none;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 15px/16px system-ui,sans-serif;opacity:.3;cursor:default}' +
+    '.sp-nav.bn-on{opacity:1;cursor:pointer}.sp-nav.bn-on:hover{background:#8884}' +
     '.sp-fig img,.sp-gallery img{cursor:zoom-in}' +
     '.sp-logo{cursor:pointer}' +
     '.sp-viewer{position:fixed;inset:0;z-index:10000;background:#000e;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:40px 60px}' +
@@ -145,6 +147,10 @@
   }
 
   function wire() {
+    // Back and forward in each window (../browsernav.js).
+    if (window.BrowserNav) document.querySelectorAll('.sp-win').forEach(function (w) {
+      var f = w.querySelector('iframe'); if (f) BrowserNav.attach(f, w.querySelector('.sp-back'), w.querySelector('.sp-fwd'));
+    });
     addEventListener('resize', fit);
     fit();
     if (window.ResizeObserver) { var ro = new ResizeObserver(fit); document.querySelectorAll('.sp-vp').forEach(function (v) { ro.observe(v); }); }

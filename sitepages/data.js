@@ -89,6 +89,8 @@
       addresses: ['askthenickman.webs.com', 'askthenickman.net23.net', 'askthenickman.com'],
       evolvedInto: 'Hack a HOBO',
       lede: 'A site I built in Microsoft Word and later used mostly for games.',
+      // Versions shown on pages that line up a site's versions (AN); the windows in the sections come first.
+      versions: [{ addr: 'http://askthenickman.webs.com/', src: ATN + 'index-techno.html', w: 1280, h: 800, img: 'img/ask-techno.jpg', title: 'Techno home page' }],
       sections: [
         {
           h: 'Ask a Ninja',
@@ -367,12 +369,13 @@
     }
   ];
 
+  // The focus designs first.
   window.SITE_DESIGNS = {
     AI: { file: 'AI.html', name: 'Split screen' },
-    AJ: { file: 'AJ.html', name: 'Drawer' },
     AK: { file: 'AK.html', name: 'Chapters' },
+    AN: { file: 'AN.html', name: 'Fan page' },
+    AJ: { file: 'AJ.html', name: 'Drawer' },
     AL: { file: 'AL.html', name: 'Long read' },
-    AM: { file: 'AM.html', name: 'Window page' },
-    AN: { file: 'AN.html', name: 'Fan page' }
+    AM: { file: 'AM.html', name: 'Window page' }
   };
 })();

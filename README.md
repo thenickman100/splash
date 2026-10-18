@@ -10,6 +10,10 @@ Testing environment for the redesign of Old Sites, the museum at https://hackaho
 
 Big browser windows show the live site from hackahobo.info in a scaled frame, as v0.1 did; small thumbnails stay as screenshots. Each site's colors live in one file, `palette.js`, read from the site's own CSS and image files; `palette.html` shows where each color comes from. The candidates and site pages all take their colors from `palette.js` by position: color 1 is the site's color (text, big numbers, marks and fills) and color 2 is text on a color-1 fill, so changing a palette there updates every page. Every page also has a Palette button (bottom right) for trying a different order in place; the trial order is kept in the browser, and Export gives the text to send back so it can be made the published order.
 
+The browser windows have working back and forward buttons (`browsernav.js`), using the page's own history since the old sites load from another domain.
+
+The focus for now is start pages K, AG and AE and site pages AI, AK and AN; `index.html` lists them first.
+
 Every main page has a test bar for choosing which site-page design Read more opens. The choice is remembered in the browser.
 
 The candidates link to the restored sites on hackahobo.info (`/projects/sites/...`), so those links work from the test site without copying the sites here.

@@ -30,7 +30,11 @@ a{color:inherit}
 .c .body img{width:100%;display:block}
 .c.fit .body{align-items:center}.c.fit .body img{width:auto;max-width:100%;max-height:100%;object-fit:contain}
 .c.on{cursor:default}.c.on .cb{height:30px;font-size:11px}.c.on .body{overflow-y:auto;scrollbar-width:thin}
-.lv{position:absolute;z-index:350;overflow:hidden;background:#000;display:none;border-radius:0 0 8px 8px}.lv.on{display:block;animation:lvin .3s .55s both}@keyframes lvin{from{opacity:0}to{opacity:1}}
+.lv{position:absolute;z-index:350;overflow:hidden;background:#000;border-radius:0 0 8px 8px;animation:lvin .3s .55s both}
+.lv iframe{position:absolute;left:0;top:0}
+.lvnav{position:absolute;z-index:360;height:30px;width:56px;display:flex;align-items:center;justify-content:flex-end;gap:2px;color:#4a514c}
+.lvnav .sp-nav{font-size:16px}
+.hero.one{height:640px}@keyframes lvin{from{opacity:0}to{opacity:1}}
 .lv iframe{border:0;transform-origin:0 0;background:#fff}
 .cap{position:absolute;left:520px;right:80px;top:528px;z-index:300;display:flex;align-items:center;gap:14px;font:12px 'DM Mono',monospace;color:var(--muted)}
 .cap a{height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:8px;background:var(--accent-bg);color:var(--on-accent);text-decoration:none;font:800 13px 'Hanken Grotesk',sans-serif;flex:none}
@@ -83,20 +87,16 @@ a{color:inherit}
 <div id="app"></div>
 <script src="../palette.js"></script>
 <script src="data.js"></script>
+<script src="../browsernav.js"></script>
 <script src="common.js"></script>
 <script>
 // Cards: the site's windows (as screenshots), then its pictures.
+// Cards: the site's versions only, as live windows. Each section's window is a version, plus any extra versions.
 function cardsFor(s) {
   var c = [];
-  s.sections.forEach(function (x) {
-    if (x.embed) c.push({ addr: x.embed.addr, img: x.embed.img, cap: x.embed.title, link: x.embed.src, ew: x.embed.w });
-  });
-  s.sections.forEach(function (x) {
-    (x.media || []).concat(x.gallery || []).forEach(function (m) { c.push({ addr: m.cap, img: m.img, cap: m.cap, fit: true }); });
-    (x.sub || []).forEach(function (u) { (u.gallery || []).forEach(function (m) { c.push({ addr: m.cap, img: m.img, cap: m.cap, fit: true }); }); });
-  });
-  if (!c.length) c.push({ addr: s.name, img: s.thumb, cap: s.name });
-  return c.slice(0, 9);
+  s.sections.forEach(function (x) { if (x.embed) c.push(x.embed); });
+  (s.versions || []).forEach(function (v) { c.push(v); });
+  return c.map(function (e) { return { addr: e.addr, img: e.img, cap: e.title, link: e.src, ew: e.w }; });
 }
 SP.boot(function (s, sp) {
   var e = sp.esc, cards = cardsFor(s), h = '<header class="hero"><div class="in">';
@@ -109,7 +109,7 @@ SP.boot(function (s, sp) {
     h += '<button class="c' + (c.fit ? ' fit' : '') + '" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb"><i></i>' + e(c.addr) + '</span>' +
       '<span class="body"><img src="' + c.img + '" alt=""></span></button>';
   });
-  h += '<div class="lv"><iframe title=""></iframe></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
+  h += '<div class="lv"></div><div class="lvnav"><button class="bn-back sp-nav" title="Back" disabled>‹</button><button class="bn-fwd sp-nav" title="Forward" disabled>›</button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
   h += '<div class="story"><aside class="side">' + sp.factsHtml(s) + '<nav class="toc">' +
     s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav></aside><div>';
   s.sections.forEach(function (x) {
@@ -120,9 +120,10 @@ SP.boot(function (s, sp) {
     (sp.next ? '<a href="' + sp.url(sp.next.key) + '"><span class="mono">' + e(sp.next.range) + ' →</span><b>' + e(sp.next.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">Back to</span><b>All sites</b></a>') + '</div>';
   return h;
 }, function (s) {
-  var cards = cardsFor(s), els = document.querySelectorAll('.c'), cur = 0;
-  var txt = document.querySelector('.cap .txt'), open = document.querySelector('.cap .open');
-  // Layout from the AG main page: the picked card sits large on the right, the rest fan along an arc.
+  var cards = cardsFor(s), els = document.querySelectorAll('.c'), cur = 0, frame = null;
+  var txt = document.querySelector('.cap .txt'), open = document.querySelector('.cap .open'), lv = document.querySelector('.lv'), nav = document.querySelector('.lvnav');
+  if (cards.length < 2) document.querySelector('.hero').classList.add('one');
+  // The picked version sits large on the right; the others fan out close together beneath it, evenly spaced.
   var lay = function () {
     var small = innerWidth <= 900, n = els.length, W = small ? innerWidth : 1280;
     els.forEach(function (el, k) {
@@ -134,25 +135,25 @@ SP.boot(function (s, sp) {
         return;
       }
       el.classList.remove('on');
-      var m = n - 1, j = k < cur ? k : k - 1, a = m > 1 ? -22 + j * (44 / (m - 1)) : 0, rad = a * Math.PI / 180;
-      var R = small ? 900 : 1100, cx = small ? W / 2 : 640, cy = small ? 1180 : 1830, w2 = small ? 110 : 170, h2 = Math.round(w2 * 0.66);
-      var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
-      st.left = Math.round(x - w2 / 2) + 'px'; st.top = Math.round(y - h2) + 'px'; st.width = w2 + 'px'; st.height = h2 + 'px';
+      var m = n - 1, j = k < cur ? k : k - 1, step = 11, a = (j - (m - 1) / 2) * step, rad = a * Math.PI / 180;
+      var w2 = small ? 150 : 240, h2 = Math.round(w2 * 0.64), R = small ? 700 : 900;
+      var cx = small ? W / 2 : 860, base = small ? 360 : 700, x = cx + R * Math.sin(rad), y = base + R * (1 - Math.cos(rad));
+      st.left = Math.round(x - w2 / 2) + 'px'; st.top = Math.round(y - h2 + 30) + 'px'; st.width = w2 + 'px'; st.height = h2 + 'px';
       st.transform = 'rotate(' + a.toFixed(1) + 'deg)'; st.zIndex = 10 + k; el.style.setProperty('--a', a.toFixed(1) + 'deg');
     });
-    var c = cards[cur], on = els[cur], lv = document.querySelector('.lv'), f = lv.querySelector('iframe');
-    lv.classList.toggle('on', !!c.link);
-    if (c.link) {
-      // The card's final place, minus its address bar.
-      var bw = parseFloat(on.style.width), bh = parseFloat(on.style.height) - 30, sc = bw / c.ew;
-      lv.style.left = on.style.left; lv.style.top = (parseFloat(on.style.top) + 30) + 'px'; lv.style.width = bw + 'px'; lv.style.height = bh + 'px';
-      if (f.getAttribute('src') !== c.link) f.src = c.link;
-      f.title = c.cap; f.style.width = c.ew + 'px'; f.style.height = Math.ceil(bh / sc) + 'px'; f.style.transform = 'scale(' + sc + ')';
+    var c = cards[cur], on = els[cur];
+    // A fresh window per version, so back and forward stay within one version.
+    if (!frame || frame.dataset.src !== c.link) {
+      if (frame) frame.remove();
+      frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.appendChild(frame);
+      if (window.BrowserNav) BrowserNav.attach(frame, nav.querySelector('.bn-back'), nav.querySelector('.bn-fwd'));
       lv.style.animation = 'none'; void lv.offsetWidth; lv.style.animation = '';
-    } else f.removeAttribute('src');
-    txt.textContent = c.cap;
-    open.style.display = c.link ? '' : 'none';
-    if (c.link) open.href = c.link;
+    }
+    var bw = parseFloat(on.style.width), bh = parseFloat(on.style.height) - 30, sc = bw / c.ew;
+    lv.style.left = on.style.left; lv.style.top = (parseFloat(on.style.top) + 30) + 'px'; lv.style.width = bw + 'px'; lv.style.height = bh + 'px';
+    frame.style.width = c.ew + 'px'; frame.style.height = Math.ceil(bh / sc) + 'px'; frame.style.transform = 'scale(' + sc + ')';
+    nav.style.left = (parseFloat(on.style.left) + bw - 60) + 'px'; nav.style.top = on.style.top;
+    txt.textContent = c.cap; open.href = c.link;
   };
   els.forEach(function (el, k) { el.addEventListener('click', function () { if (k !== cur) { cur = k; lay(); } }); });
   addEventListener('resize', lay);

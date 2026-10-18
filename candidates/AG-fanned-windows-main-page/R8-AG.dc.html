@@ -6,6 +6,7 @@
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
 <script src="../../palette.js"></script>
+<script src="../../browsernav.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -28,6 +29,8 @@ a{color:#f2f4ef}a:hover{color:#ccc}
 @keyframes t{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
 .live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
+.bn-back,.bn-fwd{width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 15px/18px system-ui,sans-serif;opacity:.3;cursor:default}
+.bn-back.bn-on,.bn-fwd.bn-on{opacity:1;cursor:pointer}.bn-back.bn-on:hover,.bn-fwd.bn-on:hover{background:#8884}
 </style>
 </helmet>
 <div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.on}} 45%,#1e2a24),#1e2a24 60%);color:#f2f4ef;font-family:'Hanken Grotesk',sans-serif">
@@ -58,7 +61,7 @@ a{color:#f2f4ef}a:hover{color:#ccc}
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
-  <div class="live" key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;overflow:hidden;z-index:400;background:#000"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.bt}}px;width:{{live.w}}px;height:{{live.bh}}px;z-index:400;pointer-events:none"><div style="position:absolute;right:6px;top:0;height:{{live.bar}}px;display:flex;align-items:center;gap:2px;pointer-events:auto;color:{{live.c3}}"><button class="bn-back" title="Back" disabled>‹</button><button class="bn-fwd" title="Forward" disabled>›</button></div><div class="live" style="position:absolute;left:0;right:0;top:{{live.bar}}px;bottom:0;overflow:hidden;background:#000;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
@@ -71,8 +74,8 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math
 // site was built for (from v0.1's windows).
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
-function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
-var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar, bt: win.t, bh: win.h, bar: bar }, liveFit(key, win.w, win.h - bar)); }
+var SPD = ['AI','AK','AN','AJ','AL','AM'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
@@ -109,7 +112,7 @@ class Component extends DCLogic {
         return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, bg2: s.bg2, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) };
       })
     };
-    R.live = liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 32);
+    R.live = Object.assign(liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 32), { c3: SITES[i].c3 });
     return R;
   }
 }
