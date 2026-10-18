@@ -101,10 +101,12 @@ var SITES = [
 // splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
 function partsOf(page, key){ var o = PALETTE.partsFor(page, key), r = {}; for (var k in o) r['p_' + k] = o[k]; return r; }
 SITES.forEach((s) => { Object.assign(s, partsOf('AE', s.key)); });
+// After a Palette panel change reloads the page, start on the site that was showing.
+function startAt(i){ var k = SITES.findIndex((s) => s.key === PALETTE.resume); return k >= 0 ? k : i; }
 var W = {Flagship:720,Notable:600,'Side project':440,Personal:400};
 class Component extends DCLogic {
   testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
-  constructor(p){ super(p); addEventListener('resize', () => this.setState({ fit: screenFit(true) })); this.state = { fit: screenFit(true),  i: 0 }; }
+  constructor(p){ super(p); addEventListener('resize', () => this.setState({ fit: screenFit(true) })); this.state = { fit: screenFit(true),  i: startAt(0) }; }
   go(k){ this.setState({ i: Math.max(0, Math.min(SITES.length - 1, k)) }); }
   renderVals(){
     var i = this.state.i, cw = W[SITES[i].tier];

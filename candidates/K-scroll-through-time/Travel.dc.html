@@ -29,7 +29,7 @@ a{color:#fff}a:hover{color:#ccc}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
 </style>
 </helmet>
-<div class="sc" onScroll="{{onScroll}}" style="width:{{W}}px;height:{{H}}px;zoom:{{u}};overflow-y:auto;background:#121212;color:#f2f2f2;font-family:'Bricolage Grotesque',sans-serif">
+<div class="sc" data-keep-scroll onScroll="{{onScroll}}" style="width:{{W}}px;height:{{H}}px;zoom:{{u}};overflow-y:auto;background:#121212;color:#f2f2f2;font-family:'Bricolage Grotesque',sans-serif">
   <div style="position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>

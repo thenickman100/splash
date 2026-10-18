@@ -840,7 +840,8 @@
     });
   }
   // Parts: every place a page uses a site color, and which palette color (1 = color 1) it takes. A fill part
-  // can also take a pattern. These are the published choices; the Palette panel can try others in this browser.
+  // can also take a pattern. Each site has its own choices: slot is the default, and a page's sites list
+  // ({ site: { part: slot } }) holds a site's published changes. The Palette panel can try others in this browser.
   var PARTS = {
     K: { name: 'K · Scroll through time', parts: [
       { id: 'year', label: 'Big year', slot: 1 },
@@ -875,10 +876,17 @@
       { id: 'link', label: 'Link and contents hover', slot: 1 },
       { id: 'mark', label: 'Selected logo', slot: 1 } ] }
   };
-  var PKEY = 'splash-palette-parts', partTrial = null;
+  // Trial parts are saved as { page: { site: { part: slot } } }.
+  var PKEY = 'splash-palette-parts-sites', partTrial = null;
   try { partTrial = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch (e) {}
-  function slotOf(page, id) {
-    if (partTrial && partTrial[page] && partTrial[page][id]) return partTrial[page][id];
+  try { localStorage.removeItem('splash-palette-parts'); } catch (e) {} // the old all-sites format
+  function sk(key) { return key === 'hobo26' ? 'hobo' : key; }
+  function slotOf(page, id, key) {
+    key = sk(key);
+    var t = partTrial && partTrial[page] && partTrial[page][key];
+    if (t && t[id]) return t[id];
+    var pub = PARTS[page] && PARTS[page].sites && PARTS[page].sites[key];
+    if (pub && pub[id]) return pub[id];
     var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
     return d ? d.slot : 1;
   }
@@ -887,6 +895,11 @@
     var f = location.pathname.split('/').pop();
     return { 'Travel.dc.html': 'K', 'R8-AG.dc.html': 'AG', 'R8-AE.dc.html': 'AE', 'AI.html': 'AI', 'AK.html': 'AK', 'AN.html': 'AN' }[f] || null;
   })();
+
+  // After a panel change reloads the page, it comes back on the same site and scroll position.
+  var RKEY = 'splash-pal-return', back = null;
+  try { back = JSON.parse(sessionStorage.getItem(RKEY) || 'null'); sessionStorage.removeItem(RKEY); } catch (e) {}
+  if (back && back.path !== location.pathname + location.search) back = null;
 
   var trial = null;
   try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
@@ -911,7 +924,7 @@
     var m = String(c).match(/\d+(\.\d+)?/g); if (!m) return '#ffffff';
     return '#' + m.slice(0, 3).map(function (v) { return ('0' + Math.round(+v).toString(16)).slice(-2); }).join('');
   }
-  function site(key) { return SITES[key === 'hobo26' ? 'hobo' : key]; }
+  function site(key) { return SITES[sk(key)]; }
   function ranked(key) { return site(key).colors.map(function (c) { return c.hex; }); }
   window.PALETTE = {
     sites: SITES,
@@ -927,10 +940,13 @@
         lines.push(t.name + ': ' + t.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
         if (t.extra.length) lines.push('  other: ' + t.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
       });
-      lines.push('', 'Parts (which color each part of a page takes):');
+      lines.push('', 'Parts (which color each part of a page takes, per site):');
       var po = this.partOrder();
       Object.keys(PARTS).forEach(function (pg) {
-        lines.push(PARTS[pg].name + ': ' + PARTS[pg].parts.map(function (d) { return d.label + ' ' + po[pg][d.id]; }).join(', '));
+        lines.push(PARTS[pg].name);
+        Object.keys(SITES).forEach(function (k) {
+          lines.push('  ' + SITES[k].name + ': ' + PARTS[pg].parts.map(function (d) { return d.label + ' ' + po[pg][k][d.id]; }).join(', '));
+        });
       });
       lines.push('', 'order: ' + JSON.stringify(this.order()), 'parts: ' + JSON.stringify(po));
       return lines.join('\n');
@@ -939,11 +955,11 @@
     partsHtml: function (page, key) {
       var cs = site(key).colors, n = 0; Object.keys(SITES).forEach(function (k) { n = Math.max(n, SITES[k].colors.length); });
       return PARTS[page].parts.map(function (d) {
-        var cur = slotOf(page, d.id), chips = '';
+        var cur = slotOf(page, d.id, key), chips = '';
         for (var i = 1; i <= n; i++) {
           var c = cs[i - 1], bgc = c ? (d.fill ? css(c) : c.hex) : 'transparent';
           var fg = c && contrast(c.hex, '#000000') < contrast(c.hex, '#ffffff') ? '#fff' : '#111';
-          chips += '<button class="pal-slot' + (i === cur ? ' on' : '') + (c ? '' : ' none') + '" data-page="' + page + '" data-part="' + d.id + '" data-slot="' + i + '" title="Color ' + i + (c ? ' ' + c.hex : ', not in this site\'s palette (uses its last color)') + '" style="background:' + bgc + ';color:' + fg + '">' + i + '</button>';
+          chips += '<button class="pal-slot' + (i === cur ? ' on' : '') + (c ? '' : ' none') + '" data-page="' + page + '" data-site="' + sk(key) + '" data-part="' + d.id + '" data-slot="' + i + '" title="Color ' + i + (c ? ' ' + c.hex : ', not in this site\'s palette (uses its last color)') + '" style="background:' + bgc + ';color:' + fg + '">' + i + '</button>';
         }
         return '<div class="pal-part"><span class="pal-pl">' + d.label + '</span><span class="pal-slots">' + chips + '</span></div>';
       }).join('');
@@ -955,19 +971,35 @@
     // Pages that switch sites in place say which one they show, so the panel shows that site's colors.
     showing: function (key) { if (key === this.shown) return; this.shown = key; if (this.onShow) this.onShow(key); },
     shown: null,
+    // The site to start on, for pages that pick their site in place: the one showing before a panel reload, or ?site=.
+    resume: back && back.site || new URLSearchParams(location.search).get('site'),
+    // Reload the page, keeping the site shown and the scroll position (the page's own and [data-keep-scroll]).
+    reloadHere: function () {
+      var el = document.querySelector('[data-keep-scroll]');
+      try { sessionStorage.setItem(RKEY, JSON.stringify({ path: location.pathname + location.search, site: this.shown, y: scrollY, sc: el ? el.scrollTop : 0 })); } catch (e) {}
+      location.reload();
+    },
     parts: PARTS,
     partsTrial: !!partTrial,
     slotOf: slotOf,
+    key: sk,
     // The color (or for a fill part, the background) a page part takes for a site.
     part: function (page, id, key) {
-      var cs = site(key).colors, c = cs[Math.min(slotOf(page, id), cs.length) - 1];
+      var cs = site(key).colors, c = cs[Math.min(slotOf(page, id, key), cs.length) - 1];
       var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
       return d && d.fill ? css(c) : c.hex;
     },
     // Every part of a page for a site, as { id: value }.
     partsFor: function (page, key) { var o = {}, me = this; (PARTS[page] ? PARTS[page].parts : []).forEach(function (d) { o[d.id] = me.part(page, d.id, key); }); return o; },
-    partOrder: function () { var o = {}; Object.keys(PARTS).forEach(function (pg) { o[pg] = {}; PARTS[pg].parts.forEach(function (d) { o[pg][d.id] = slotOf(pg, d.id); }); }); return o; },
-    savePart: function (page, id, slot) { var o = partTrial || {}; o[page] = o[page] || {}; o[page][id] = slot; partTrial = o; try { localStorage.setItem(PKEY, JSON.stringify(o)); } catch (e) {} this.partsTrial = true; },
+    partOrder: function () {
+      var o = {};
+      Object.keys(PARTS).forEach(function (pg) { o[pg] = {}; Object.keys(SITES).forEach(function (k) { o[pg][k] = {}; PARTS[pg].parts.forEach(function (d) { o[pg][k][d.id] = slotOf(pg, d.id, k); }); }); });
+      return o;
+    },
+    savePart: function (page, id, slot, key) {
+      key = sk(key); var o = partTrial || {}; o[page] = o[page] || {}; o[page][key] = o[page][key] || {}; o[page][key][id] = slot; partTrial = o;
+      try { localStorage.setItem(PKEY, JSON.stringify(o)); } catch (e) {} this.partsTrial = true;
+    },
     clearParts: function () { partTrial = null; try { localStorage.removeItem(PKEY); } catch (e) {} this.partsTrial = false; },
     order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
@@ -989,7 +1021,7 @@
   // A change saves the trial order and reloads the page so it redraws in the new colors; the panel reopens.
   function panel() {
     if (window.PALETTE_NO_PANEL || document.getElementById('pal-btn')) return;
-    var P = window.PALETTE, here = new URLSearchParams(location.search).get('site') || P.shown;
+    var P = window.PALETTE, here = sk(new URLSearchParams(location.search).get('site') || P.shown);
     var st = document.createElement('style');
     st.textContent =
       '#pal-btn{position:fixed;right:14px;bottom:14px;z-index:100000;height:38px;padding:0 14px;border:0;border-radius:999px;background:#000000cc;color:#fff;font:700 12px ui-monospace,monospace;cursor:pointer;box-shadow:0 6px 20px #0005}' +
@@ -1024,7 +1056,7 @@
         (open.exp ? '<textarea readonly>' + P.exportText().replace(/</g, '&lt;') + '</textarea><div style="padding:0 14px 10px"><button data-x="copy">Copy</button></div>' : '') +
         (P.page && P.parts[P.page] ? (function () {
           var pk = here && SITES[here] ? here : (open.page === location.pathname + location.search && open.site) || keys[0];
-          return '<div class="pal-lbl">Parts on this page · which color each uses (shown in ' + SITES[pk].name + '\'s colors)</div>' + P.partsHtml(P.page, pk) + '<div style="height:8px;border-bottom:1px solid #eef0f3"></div>';
+          return '<div class="pal-lbl">Parts on this page for ' + SITES[pk].name + ' · which of its colors each uses</div>' + P.partsHtml(P.page, pk) + '<div style="height:8px;border-bottom:1px solid #eef0f3"></div>';
         })() : '') +
         keys.map(function (k) {
           var t = SITES[k];
@@ -1045,18 +1077,27 @@
         if (t.dataset.a === 'down') a.splice(i + 1, 0, a.splice(i, 1)[0]);
         if (t.dataset.a === 'out') o[k].extra.unshift(a.splice(i, 1)[0]);
         if (t.dataset.a === 'in') o[k].colors.push(a.splice(i, 1)[0]);
-        P.saveOrder(o); keep(k); location.reload();
+        P.saveOrder(o); keep(k); P.reloadHere();
       }
-      if (t.dataset.part) { P.savePart(t.dataset.page, t.dataset.part, +t.dataset.slot); keep(); location.reload(); return; }
+      if (t.dataset.part) { P.savePart(t.dataset.page, t.dataset.part, +t.dataset.slot, t.dataset.site); keep(t.dataset.site); P.reloadHere(); return; }
       var x = t.dataset.x;
       if (x === 'close') { box.hidden = true; keep(); }
-      if (x === 'reset') { P.clearOrder(); P.clearParts(); keep(); location.reload(); }
+      if (x === 'reset') { P.clearOrder(); P.clearParts(); keep(); P.reloadHere(); }
       if (x === 'export') { open.exp = !open.exp; keep(); draw(); }
       if (x === 'copy') { var ta = box.querySelector('textarea'); (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { t.textContent = 'Copied'; }, function () { ta.select(); document.execCommand('copy'); t.textContent = 'Copied'; }); }
       if (x === 'full') location.href = (location.pathname.indexOf('/candidates/') >= 0 ? '../../' : location.pathname.indexOf('/sitepages/') >= 0 ? '../' : '') + 'palette.html';
     });
-    P.onShow = function (key) { here = key; if (!box.hidden) draw(); };
+    P.onShow = function (key) { here = sk(key); if (!box.hidden) draw(); };
     if (open.on) { box.hidden = false; draw(); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', panel); else panel();
+  // Put the scroll back once the page has drawn (candidates draw after load, so keep trying for a moment).
+  if (back && (back.y || back.sc)) {
+    var tries = 0, put = setInterval(function () {
+      var el = document.querySelector('[data-keep-scroll]'), ok = true;
+      if (back.y) { scrollTo(0, back.y); ok = Math.abs(scrollY - back.y) < 2; }
+      if (back.sc) { if (el) { el.scrollTop = back.sc; ok = ok && Math.abs(el.scrollTop - back.sc) < 2; } else ok = false; }
+      if (ok && tries > 4 || ++tries > 40) clearInterval(put);
+    }, 100);
+  }
 })();

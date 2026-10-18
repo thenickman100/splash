@@ -56,7 +56,6 @@ button.link{border:0;background:none;padding:0;text-decoration:underline;font-we
 <h1>Site palettes</h1>
 <p class="intro">The colors for each site, ranked, then any other colors found in its code. Use the arrows to try a different order: it is saved in this browser and every candidate and site page here follows it, so you can see it live. When you like it, Export order and send it to Claude. Every color is read from the site's own code on hackahobo.info: a CSS rule, or an original image file when the color only exists in a logo or background image. Under each color is the exact pixel it was read from: a 10× zoom with the pixel boxed, and the spot on the live page ringed. The captures are lossless and at the page's real size, so every pixel is the site's own color. <a href="index.html">← Back to the candidates</a></p>
 <div id="bar" class="bar"></div>
-<section class="site" id="parts"></section>
 <div id="list"></div>
 <div id="dlg" class="dlg" hidden><div class="box"><h3>Export order</h3><p>Copy this and send it to Claude to make it the published order.</p><textarea id="exp" readonly></textarea><div class="btns"><button id="copy">Copy</button><button id="close">Close</button></div></div></div>
 </main>
@@ -89,31 +88,27 @@ button.link{border:0;background:none;padding:0;text-decoration:underline;font-we
   function section(k) {
     var s = P.sites[k], changed = JSON.stringify(P.order()[k]) !== JSON.stringify(P.published[k]);
     return '<h2>' + esc(s.name) + (changed ? ' <em>trial order</em>' : '') + '</h2><div class="page">' + esc(s.page) + '</div>' + strip(s) +
-      '<div class="links">See it: <a href="sitepages/AI.html?site=' + k + '">AI</a> <a href="sitepages/AK.html?site=' + k + '">AK</a> <a href="sitepages/AN.html?site=' + k + '">AN</a> <a href="candidates/AG-fanned-windows-main-page/R8-AG.dc.html">AG</a> <a href="candidates/I-weighted-scroll-page/Scroll.dc.html">I</a>' +
+      '<div class="links">See it: <a href="candidates/K-scroll-through-time/Travel.dc.html">K</a> <a href="candidates/AG-fanned-windows-main-page/R8-AG.dc.html?site=' + k + '">AG</a> <a href="candidates/AE-row-of-windows-main-page/R8-AE.dc.html?site=' + k + '">AE</a> <a href="sitepages/AI.html?site=' + k + '">AI</a> <a href="sitepages/AK.html?site=' + k + '">AK</a> <a href="sitepages/AN.html?site=' + k + '">AN</a>' +
       (changed ? ' · <button class="link" data-reset="' + k + '">Reset this site</button>' : '') + '</div>' +
       s.colors.map(function (c, i) { return row(k, 'colors', i, s.colors.length, c); }).join('') +
-      (s.extra.length ? '<div class="alts"><h3>Other colors in the code</h3><p>Not in the ranking.</p>' + s.extra.map(function (c, i) { return row(k, 'extra', i, s.extra.length, c); }).join('') + '</div>' : '');
+      (s.extra.length ? '<div class="alts"><h3>Other colors in the code</h3><p>Not in the ranking.</p>' + s.extra.map(function (c, i) { return row(k, 'extra', i, s.extra.length, c); }).join('') + '</div>' : '') +
+      '<details class="alts" data-parts="' + k + '"' + (partsOpen[k] ? ' open' : '') + '><summary><h3 style="display:inline">Page parts</h3> · which of ' + esc(s.name) + '\'s colors each part of the focus pages uses</summary>' +
+      Object.keys(P.parts).map(function (pg) { return '<h3 style="margin:14px 0 4px;font-size:15px">' + P.parts[pg].name + '</h3>' + P.partsHtml(pg, k); }).join('') + '</details>';
   }
+  var partsOpen = {};
+  document.addEventListener('toggle', function (e) { if (e.target.dataset && e.target.dataset.parts) partsOpen[e.target.dataset.parts] = e.target.open; }, true);
   function bar() {
     document.getElementById('bar').innerHTML = (P.trial || P.partsTrial ? '<b>Trial order on</b> in this browser. Every candidate and site page here uses it.' : 'Showing the published order.') +
       '<span class="sp"></span><button id="export">Export order</button>' + (P.trial || P.partsTrial ? '<button id="resetall">Reset all</button>' : '');
   }
-  var preview = 'awesome';
-  function parts() {
-    document.getElementById('parts').innerHTML = '<h2>Page parts</h2><p class="page" style="font-family:inherit">Which palette color each part of the focus pages uses. A number means that position in each site\'s palette, so one choice covers every site. Chips show: ' +
-      '<select id="pv">' + Object.keys(P.sites).map(function (k) { return '<option value="' + k + '"' + (k === preview ? ' selected' : '') + '>' + P.sites[k].name + '</option>'; }).join('') + '</select></p>' +
-      Object.keys(P.parts).map(function (pg) { return '<h3 style="margin:14px 0 4px;font-size:15px">' + P.parts[pg].name + '</h3>' + P.partsHtml(pg, preview); }).join('');
-  }
-  document.addEventListener('change', function (e) { if (e.target.id === 'pv') { preview = e.target.value; parts(); } });
   function render() {
-    parts();
     document.getElementById('list').innerHTML = Object.keys(P.sites).map(function (k) { return '<section class="site" id="site-' + k + '">' + section(k) + '</section>'; }).join('');
     bar();
   }
   function redraw(k) { document.getElementById('site-' + k).innerHTML = section(k); bar(); }
   document.addEventListener('click', function (e) {
     var t = e.target;
-    if (t.dataset.part) { P.savePart(t.dataset.page, t.dataset.part, +t.dataset.slot); parts(); bar(); return; }
+    if (t.dataset.part) { P.savePart(t.dataset.page, t.dataset.part, +t.dataset.slot, t.dataset.site); redraw(t.dataset.site); return; }
     if (t.dataset.a) {
       var k = t.dataset.k, l = t.dataset.l, i = +t.dataset.i, o = P.order(), a = o[k][l];
       if (t.dataset.a === 'up') a.splice(i - 1, 0, a.splice(i, 1)[0]);
