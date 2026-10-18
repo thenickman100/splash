@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Space Atlas &middot; Old Sites</title>
+<link rel="icon" href="https://hackahobo.info/projects/splash/icons/spaceatlas/favicon.ico" />
+<link rel="stylesheet" href="./museum.css" />
+<style>
+.credits { margin: 28px 0 0; padding: 26px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.credits div { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: baseline; padding: 9px 0; }
+.credits dt { text-align: right; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.credits dd { margin: 0; font-family: var(--display); font-size: 24px; font-weight: 600; line-height: 1.25; color: var(--ink); }
+.credits .me dd { color: var(--brass); }
+.credits .heads { display: flex; gap: 5px; margin-top: 7px; }
+.credits .heads i { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); }
+.credits .me .heads i { background: var(--brass); }
+@media (max-width: 520px) {
+  .credits div { gap: 16px; }
+  .credits dd { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html#hall">&larr; All sites</a>
+  <span class="label">Notable</span>
+</nav>
+
+<div class="room-hero" style="background-color:#2f2f2f;min-height:48vh">
+  <img src="https://hackahobo.info/projects/splash/logos/spaceatlas/spaceatlas.png" alt="Space Atlas" />
+</div>
+
+<div class="room-title">
+  <span class="label">2018</span>
+  <h1>Space Atlas</h1>
+  <p class="lede">A virtual experience about the future of space, made at the Air Force Academy for Newt Gingrich.</p>
+</div>
+
+<div class="facts">
+  <div><span class="label">Started</span><b>2018</b></div>
+  <div><span class="label">Address</span><b>thespaceatlas.org</b></div>
+  <div><span class="label">Commissioned by</span><b>Newt Gingrich, via USAFA</b></div>
+</div>
+
+<article class="story">
+  <h2>Assignment</h2>
+  <p>Around 2017, Newt Gingrich, the former Speaker of the U.S. House of Representatives and a longtime advocate of space exploration, commissioned the U.S. Air Force Academy to create a virtual experience that would teach the future of space, looking ahead to 2038. My best friend at USAFA was in the Astronautical Engineering department, and leading the team became his capstone project. I wasn't an Astronautical Engineering major, but he knew the <a href="./welcomenick.html">Home</a> start page I had built for myself. He was impressed with it, and he picked me to lead the web design.</p>
+
+  <h2>Development</h2>
+  <p>I worked most closely with our graphic artist, who designed assets for the site. My best friend and others on the team made the 3D renders in Blender, the rest did research, and another cadet took over as lead in the second semester. The project was technically very demanding, and with my friend's leadership we managed to pull it off. The whole site was a challenge, and when it was finished it felt like a masterpiece. We presented the work to the department and at Space Symposium, and we collaborated with SpaceX, Lockheed Martin, and JPL. I'm not sure how far the project went beyond that.</p>
+</article>
+
+<section class="wing">
+  <h2>Earth, the Moon, and Mars</h2>
+  <p>Pick Earth, the Moon, or Mars, drag to spin it, and tap a marker to open one of 13 pages, from the Big Falcon Rocket, New Glenn, and Vulcan to a commercial space station, the Lunar Gateway, and bases on the Moon and Mars. The renders are large and take a moment to load. Each planet and spacecraft is a sequence of 80 Blender renders, and dragging flips through the frames, so the object appears to turn while the browser only displays flat images.</p>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><span>http://thespaceatlas.org/</span></div>
+    <div class="viewport" data-width="1400" data-height="850"><iframe src="https://spaceatlas.hackahobo.info/" title="Space Atlas" loading="lazy" style="width:1400px;height:850px"></iframe></div>
+  </div>
+  <div class="buttons">
+    <a class="btn" href="https://spaceatlas.hackahobo.info/" target="_blank">Open full screen</a>
+  </div>
+</section>
+
+<section class="wing">
+  <h2>Concept work</h2>
+  <p>Sketches, notes, and drafts from building the site in 2018.</p>
+  <div class="wall-grid">
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/whiteboard.jpg" alt="Whiteboard sketch of the site layout" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>First layout sketch</figcaption></figure>
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/menu-button-math.jpg" alt="Notebook page of geometry for the menu button" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>Working out the geometry for the menu button, whose bars rotate into an X</figcaption></figure>
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/orbit-test.jpg" alt="A blue dot orbiting a red planet on a laptop screen" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>Orbit test, January 22, 2018</figcaption></figure>
+  </div>
+  <h3 style="margin:26px 0 10px">Logo</h3>
+  <div class="wall-grid">
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/early-logo.jpg" alt="Early round logo next to the title Space in 2038" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>Early logo, under the working title &ldquo;Space in 2038&rdquo;</figcaption></figure>
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/logo-sketch-cleaned.jpg" alt="Handwritten Space Atlas with a shooting star" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>Hand-drawn logo idea</figcaption></figure>
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/spaceatlas/concept/new/logo-design.jpg" alt="Space Atlas wordmark with a rocket in place of the A" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover" /></div><figcaption>Logo design with a rocket in place of the A</figcaption></figure>
+    <figure><div class="frame" style="background:#2f2f2f"><img src="./exhibits/spaceatlas/concept/new/icons/final-logo.png" alt="Final Space Atlas logo" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div><figcaption>Final logo</figcaption></figure>
+  </div>
+  <h3 style="margin:26px 0 10px">Icons</h3>
+  <p>Icons I drafted for the spacecraft and bases.</p>
+  <div class="wall-grid">
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-another-rocket1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-arm-thing1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-debris-manager1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-dream-chaser.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-glen1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-moon-base.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-not-much-better.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-other-satelite1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-rocket-logo-3.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-rocket-logo-4.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-satellite2.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-space-thing1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+    <figure><div class="frame" style="background:#fff"><img src="./exhibits/spaceatlas/concept/new/icons/custom-tank-thing1.png" alt="" loading="lazy" style="max-height:110px;width:auto;margin:auto" /></div></figure>
+  </div>
+</section>
+
+<nav class="next-room">
+  <a href="./welcomenick.html"><span class="label">&larr; Previous</span><b>Home</b></a>
+  <a class="right" href="./index.html#hall"><span class="label">Back to</span><b>All sites</b></a>
+</nav>
+
+<script>
+function fitFrames() {
+  document.querySelectorAll('.viewport').forEach(v => {
+    const w = +v.dataset.width, h = +v.dataset.height;
+    const s = Math.min(1, v.clientWidth / w);
+    v.style.height = (h * s) + 'px';
+    v.querySelector('iframe').style.transform = 'scale(' + s + ')';
+  });
+}
+window.addEventListener('resize', fitFrames);
+fitFrames();
+</script>
+
+<script src="./museum.js"></script>
+</body>
+</html>

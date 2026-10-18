@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EnGen NextGen &middot; Old Sites</title>
+<link rel="icon" href="https://hackahobo.info/projects/splash/icons/engen/favicon_red.ico" />
+<link rel="stylesheet" href="./museum.css" />
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html#hall">&larr; All sites</a>
+  <span class="label">Side project</span>
+</nav>
+
+<div class="room-hero" style="background:linear-gradient(to right,#fff,rgba(255,255,255,0) 15%,rgba(255,255,255,0) 85%,#fff),url('https://hackahobo.info/projects/splash/logos/engen/bg.png');min-height:48vh">
+  <figure class="engen-logo"><img src="./logos/engen/EnGenAlphaTrim.png" alt="EnGen NextGen" /><figcaption>The Next Generation of Engineers</figcaption></figure>
+</div>
+
+<div class="room-title">
+  <span class="label">2014</span>
+  <h1>EnGen NextGen</h1>
+  <p class="lede">My second commission, paid for in personal training.</p>
+</div>
+
+<div class="facts">
+  <div><span class="label">Started</span><b>2014</b></div>
+  <div><span class="label">Address</span><b>engennextgen.org</b></div>
+  <div><span class="label">Commissioned by</span><b>The club's founder</b></div>
+</div>
+
+<article class="story">
+  <h2>Commission</h2>
+  <p>I had to get in shape for basic training. My best friend had a friend who was very fit, so I asked him to be my personal trainer. He had a girlfriend who wanted a website, and he said he'd train me if I made it. She wanted to build her resume for college, so she was starting a club called EnGen NextGen, the next generation of engineers, which would meet weekly with professional engineers. I worked hard to make the site engineering themed. The front page showcased the club, which I joined. We did photo shoots for the site's photos, someone wrote blog entries that I uploaded, and there was a calendar of the club's events. The club was mostly there to help people get into college, so it didn't last.</p>
+
+  <h2>Competition</h2>
+  <p>At the same time, I was in a drafting class in high school, and my teacher signed everyone up for engineering competitions at the local college. Web design was one of the categories, so I entered the club's site. I kept working on it all the way up to the competition, and it won first place.</p>
+
+  <h2>Domain expiry</h2>
+  <p>Later I used the site for my own blog, where the club's blog had been. I had a communications class where we had to keep a blog and were graded on our posts, and I hosted mine on engennextgen.org. When the domain expired around 2015, everything on it was lost, including the version I worked so hard on and entered in the competition. I think I kept all the files on the web host and never saved them on my own computer. The only code that survived is the first version, from August 2014, saved on an old backup drive along with two of my class posts.</p>
+</article>
+
+<section class="wing">
+  <h2>Rebuilt site</h2>
+  <p>Click through the tabs, and click the pictures on the home page to open them. The posts and the calendar were stored in a database that was lost with the domain. The site now runs on the files that survived, which are one of the club's blog posts, two of my class posts, the About text, and the photos from our shoots. I rebuilt the layout from my memory of the version I entered in the competition.</p>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><span>http://www.engennextgen.org/</span></div>
+    <div class="viewport" data-width="1366" data-height="768"><iframe src="https://hackahobo.info/projects/sites/engen/home.php" title="EnGen NextGen" loading="lazy" style="width:1366px;height:768px"></iframe></div>
+  </div>
+  <div class="buttons">
+    <a class="btn" href="https://hackahobo.info/projects/sites/engen/home.php" target="_blank">Open full screen</a>
+  </div>
+</section>
+
+<section class="wing">
+  <h2>Records</h2>
+  <div class="wall-grid">
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/engen/cte-first-place.jpg" alt="CTE 2015 awards slide showing Web Information, 1st place, Williams, BV High" /></div><figcaption>Competitive Technology Event 2015, Web Information, 1st place</figcaption></figure>
+    <figure><div class="frame" style="padding:0"><img src="./exhibits/engen/first-day.jpg" alt="The EnGen site on its first day of building, filled with placeholder text" /></div><figcaption>First day of building, August 1, 2014</figcaption></figure>
+  </div>
+</section>
+
+<nav class="next-room">
+  <a href="./bvhomework.html"><span class="label">&larr; Previous</span><b>BV Homework</b></a>
+  <a class="right" href="./welcomenick.html"><span class="label">Next &rarr;</span><b>Home</b></a>
+</nav>
+
+<script>
+function fitFrames() {
+  document.querySelectorAll('.viewport').forEach(v => {
+    const w = +v.dataset.width, h = +v.dataset.height;
+    const s = Math.min(1, v.clientWidth / w);
+    v.style.height = (h * s) + 'px';
+    v.querySelector('iframe').style.transform = 'scale(' + s + ')';
+  });
+}
+window.addEventListener('resize', fitFrames);
+fitFrames();
+
+/* Links inside the walk-in site that jump to a spot on a page (like posts.php#2) also scroll this
+   page, because the browser brings the target into view everywhere. Hold the museum where it was. */
+document.querySelectorAll('.viewport iframe').forEach(f => {
+  let hold = null;
+  const keep = () => {
+    if (hold === null) return;
+    const y = hold;
+    [0, 50, 150, 400].forEach(t => setTimeout(() => window.scrollTo({ top: y, behavior: 'instant' }), t));
+  };
+  f.addEventListener('load', () => {
+    keep();
+    try {
+      const w = f.contentWindow;
+      w.document.addEventListener('click', e => { if (e.target.closest('a')) { hold = window.scrollY; keep(); } }, true);
+      w.addEventListener('hashchange', keep);
+    } catch (e) {}
+  });
+});
+</script>
+
+<script src="./museum.js"></script>
+</body>
+</html>

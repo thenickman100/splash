@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BV Homework &middot; Old Sites</title>
+<link rel="icon" type="image/x-icon" href="./icons/blank.ico" /><!-- no favicon: a fully transparent icon -->
+<link rel="stylesheet" href="./museum.css" />
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html#hall">&larr; All sites</a>
+  <span class="label">Side project</span>
+</nav>
+
+<div class="room-hero" style="background:#fff;min-height:40vh">
+  <img src="./logos/bvhomework/BVHomeworkBig.png" alt="BV Homework" />
+</div>
+
+<div class="room-title">
+  <span class="label">2013</span>
+  <h1>BV Homework</h1>
+  <p class="lede">A homework-answers site I never launched.</p>
+</div>
+
+<div class="facts">
+  <div><span class="label">Started</span><b>2013</b></div>
+</div>
+
+<article class="story">
+  <h2>Idea</h2>
+  <p>BV Homework, named for Blue Valley High School, was going to be a place to share answers to everyone's homework problems. Its pitch was &ldquo;Blue Valley students, unite against the tyranny of busy work.&rdquo; I stopped working on it before it launched because I was afraid of getting in trouble.</p>
+</article>
+
+<section class="wing">
+  <h2>Draft</h2>
+  <p>The site as I left it in April 2013.</p>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><span>BV Homework</span></div>
+    <div class="viewport" data-width="1280" data-height="900"><iframe src="https://hackahobo.info/projects/sites/bv-homework/BVHomework.html" title="BV Homework draft" loading="lazy" style="width:1280px;height:900px"></iframe></div>
+  </div>
+  <div class="buttons">
+    <a class="btn" href="https://hackahobo.info/projects/sites/bv-homework/BVHomework.html" target="_blank">Open full screen</a>
+  </div>
+</section>
+
+<nav class="next-room">
+  <a href="./hackahobo.html"><span class="label">&larr; Previous</span><b>Hack a HOBO</b></a>
+  <a class="right" href="./engen.html"><span class="label">Next &rarr;</span><b>EnGen NextGen</b></a>
+</nav>
+
+<script>
+function fitFrames() {
+  document.querySelectorAll('.viewport').forEach(v => {
+    const w = +v.dataset.width, h = +v.dataset.height;
+    const s = Math.min(1, v.clientWidth / w);
+    v.style.height = (h * s) + 'px';
+    v.querySelector('iframe').style.transform = 'scale(' + s + ')';
+  });
+}
+window.addEventListener('resize', fitFrames);
+fitFrames();
+</script>
+<script src="./museum.js"></script>
+</body>
+</html>

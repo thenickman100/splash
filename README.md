@@ -4,7 +4,8 @@ Testing environment for the redesign of Old Sites, the museum at https://hackaho
 
 - `index.html` lists the candidates.
 - `candidates/` holds the 8 candidate designs, each exactly as exported from the design tool (`*.dc.html`, `assets/`, `support.js`, `vendor/`).
-- `docs/` holds the project brief (`museum-handoff.md`), Nick's backstories and the writing guide.
+- `candidates/v0.1/` is the museum live now, from `splash-v0.1.zip`, for comparison. For the test site, its `../sites/` and `../../` links point at `https://hackahobo.info/`, and logos and icons missing from the zip load from `https://hackahobo.info/projects/splash/`. Don't upload this copy to the server.
+- `docs/` holds the project brief (`museum-handoff.md`), Nick's backstories, the writing guide and `sites-tree.txt` (the file list of `/projects/sites/`).
 
 The candidates link to the restored sites on hackahobo.info (`/projects/sites/...`), so those links work from the test site without copying the sites here.
 

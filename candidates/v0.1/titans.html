@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Titans Softball &middot; Old Sites</title>
+<link rel="icon" href="./icons/titans/softball.ico" />
+<link rel="stylesheet" href="./museum.css" />
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html#hall">&larr; All sites</a>
+  <span class="label">Side project</span>
+</nav>
+
+<div class="room-hero" style="background:#ffc200 url('https://hackahobo.info/projects/splash/logos/titans/titans2.png');min-height:48vh">
+  <img src="https://hackahobo.info/projects/splash/logos/titans/titansheader.png" alt="Titans Softball" />
+</div>
+
+<div class="room-title">
+  <span class="label">c. 2010</span>
+  <h1>Titans Softball</h1>
+  <p class="lede">The first site someone asked me to build.</p>
+</div>
+
+<div class="facts">
+  <div><span class="label">Started</span><b>c. 2010</b></div>
+  <div><span class="label">Address</span><b>softball.askthenickman.com</b></div>
+  <div><span class="label">Commissioned by</span><b>My dad</b></div>
+</div>
+
+<article class="story">
+  <h2>Commission</h2>
+  <p>My dad coached my sister's softball team. He likes sports and is very into stats. He wanted one place where parents on the team could get information on practices and games, see photos from the games, and check their kids' stats. It was the first site anyone asked me to build, and because it was built to his specifications, I learned how to work with a customer to find out what they need. I built it shortly before the first season, and it lived at the subdomain softball.askthenickman.com.</p>
+</article>
+
+<section class="wing">
+  <h2>Rebuilt site</h2>
+  <p>Click through the tabs along the top. To protect the players' privacy, the team leaders are shown by their initials. The roster and stat sheets had the players' full names and their families' phone numbers, so I left them out, and those buttons no longer go anywhere. The photo albums were on an outside photo site and aren't included. The home page played &ldquo;Centerfield&rdquo; when it opened.</p>
+  <div class="browser">
+    <div class="chrome"><i></i><i></i><i></i><span>http://softball.askthenickman.com/</span></div>
+    <div class="viewport" data-width="1366" data-height="768"><iframe src="https://hackahobo.info/projects/sites/titans/titans.html" title="Titans Softball" loading="lazy" style="width:1366px;height:768px"></iframe></div>
+  </div>
+  <div class="buttons">
+    <a class="btn" href="https://hackahobo.info/projects/sites/titans/titans.html" target="_blank">Open full screen</a>
+    <button class="btn" id="song">Play &ldquo;Centerfield&rdquo;</button>
+  </div>
+  <audio id="song-audio" src="https://hackahobo.info/projects/sites/titans/centerfield.mp3" preload="none"></audio>
+</section>
+
+<nav class="next-room">
+  <a href="./askthenickman.html"><span class="label">&larr; Previous</span><b>Askthenickman</b></a>
+  <a class="right" href="./hackahobo.html"><span class="label">Next &rarr;</span><b>Hack a HOBO</b></a>
+</nav>
+
+<script>
+function fitFrames() {
+  document.querySelectorAll('.viewport').forEach(v => {
+    const w = +v.dataset.width, h = +v.dataset.height;
+    const s = Math.min(1, v.clientWidth / w);
+    v.style.height = (h * s) + 'px';
+    v.querySelector('iframe').style.transform = 'scale(' + s + ')';
+  });
+}
+window.addEventListener('resize', fitFrames);
+fitFrames();
+
+const song = document.getElementById('song'), songAudio = document.getElementById('song-audio');
+song.addEventListener('click', () => {
+  if (songAudio.paused) { songAudio.play(); song.textContent = 'Stop the song'; song.classList.add('on'); }
+  else { songAudio.pause(); songAudio.currentTime = 0; song.textContent = 'Play \u201cCenterfield\u201d'; song.classList.remove('on'); }
+});
+songAudio.addEventListener('ended', () => { song.textContent = 'Play \u201cCenterfield\u201d'; song.classList.remove('on'); });
+</script>
+<script src="./museum.js"></script>
+</body>
+</html>
