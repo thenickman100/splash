@@ -5,6 +5,7 @@
 <title>Old Sites: fanned windows</title>
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
+<link rel="stylesheet" href="../../browser.css">
 <script src="../../palette.js"></script>
 <script src="../../browsernav.js"></script>
 <script src="./support.js"></script>
@@ -15,25 +16,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
 html,body{overflow:hidden}
-body{margin:0;background:#1e2a24}
-a{color:#f2f4ef}a:hover{color:#ccc}
+body{margin:0;background:#121212}
+a{color:#f2f2f2}a:hover{color:#ccc}
 .mono{font-family:'DM Mono',monospace}
-.c{position:absolute;border:0;padding:0;border-radius:8px;overflow:hidden;background:#fff;display:flex;flex-direction:column;cursor:pointer;text-align:left;font:inherit;transform-origin:center bottom;box-shadow:0 10px 30px #0008;transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),width .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.c{position:absolute;padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:left;font:inherit;transform-origin:center bottom;box-shadow:0 10px 30px #0008;transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),width .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
 .c:not(.on):hover{transform:rotate(var(--a)) translateY(-26px)!important}
-.c .bar{height:22px;flex:none;display:flex;align-items:center;gap:6px;padding:0 8px;background:#e6e9e4;font-family:'DM Mono',monospace;font-size:9px;color:#4a514c;white-space:nowrap;overflow:hidden}
 .c .body{flex-grow:1;overflow:hidden;background:#000}
 .c.on{cursor:default}
-.c.on .bar{height:32px;font-size:11px}
 .c.on .body{overflow-y:auto;scrollbar-width:thin}
 .txt{animation:t .45s ease}
 @keyframes t{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
 .live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
-.bn-back,.bn-fwd{width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 15px/18px system-ui,sans-serif;opacity:.3;cursor:default}
-.bn-back.bn-on,.bn-fwd.bn-on{opacity:1;cursor:pointer}.bn-back.bn-on:hover,.bn-fwd.bn-on:hover{background:#8884}
 </style>
 </helmet>
-<div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.on}} 45%,#1e2a24),#1e2a24 60%);color:#f2f4ef;font-family:'Hanken Grotesk',sans-serif">
+<div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.on}} 45%,#121212),#121212 60%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
   <div style="position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
@@ -41,14 +38,14 @@ a{color:#f2f4ef}a:hover{color:#ccc}
   </div>
   <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
     <div style="font-size:24px;font-weight:800">Old Sites</div>
-    <div class="mono" style="font-size:11px;color:#a9b5ad">Pick a window from the row below, left to right in time</div>
+    <div class="mono" style="font-size:11px;color:#9a9a9a">Pick a window from the row below, left to right in time</div>
   </div>
 
   <div class="txt" key="{{cur.key}}" style="position:absolute;left:{{tx}}px;top:70px;right:50px;height:440px;display:flex;flex-direction:column;gap:10px">
     <div style="font-size:88px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}}">{{cur.yr}}</div>
     <div class="mono" style="font-size:11px;color:{{cur.c3}}">{{cur.year}} · {{cur.tier}}</div>
     <div style="font-size:30px;font-weight:800;line-height:1">{{cur.name}}</div>
-    <p style="margin:0;font-size:14px;line-height:1.55;color:#d3dad5">{{cur.blurb}}</p>
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#cfcfcf">{{cur.blurb}}</p>
     <div style="display:flex;gap:10px;margin-top:auto">
       <a href="{{spHref}}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.bg1}};color:{{cur.on}};text-decoration:none;font-weight:800">Read more →</a>
       <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid {{cur.c3}};color:{{cur.c3}};text-decoration:none;font-weight:600">Open full screen ↗</a>
@@ -56,12 +53,12 @@ a{color:#f2f4ef}a:hover{color:#ccc}
   </div>
 
   <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
-    <button class="c {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
-      <span class="bar" style="background:{{c.bg2}};color:{{c.c3}}"><span style="width:7px;height:7px;border-radius:50%;background:{{c.color}};flex:none"></span>{{c.addr}}</span>
+    <button class="c ob {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
+      <span class="bar ob-chrome" style="font-size:{{c.fs}}px"><i></i><i></i><i></i><span class="ob-url">{{c.addr}}</span></span>
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
-  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.bt}}px;width:{{live.w}}px;height:{{live.bh}}px;z-index:400;pointer-events:none"><div style="position:absolute;right:6px;top:0;height:{{live.bar}}px;display:flex;align-items:center;gap:2px;pointer-events:auto;color:{{live.c3}}"><button class="bn-back" title="Back" disabled>‹</button><button class="bn-fwd" title="Forward" disabled>›</button></div><div class="live" style="position:absolute;left:0;right:0;top:{{live.bar}}px;bottom:0;overflow:hidden;background:#000;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:13px;top:15px;display:flex;gap:10px;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
@@ -74,8 +71,8 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math
 // site was built for (from v0.1's windows).
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
-function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar, bt: win.t, bh: win.h, bar: bar }, liveFit(key, win.w, win.h - bar)); }
-var SPD = ['AI','AK','AN','AJ','AL','AM'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t, w: win.w, h: win.h, bar: bar }, liveFit(key, win.w - 2, win.h - bar - 1)); }
+var SPD = ['AI','AK','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
@@ -105,14 +102,14 @@ class Component extends DCLogic {
       spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts,
       cur: SITES[i],
       cards: SITES.map((s, k) => {
-        if (k === i) return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, bg2: s.bg2, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', pick: () => {} };
+        if (k === i) return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, bg2: s.bg2, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', fs: 13, pick: () => {} };
         var a = -26 + k * (52 / (n - 1)), rad = a * Math.PI / 180, R = 1050, cx = this.state.fit.W / 2, cy = 1760 + (this.state.fit.H - 800);
         var w = CW[s.tier], h = Math.round(w * 0.64);
         var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
-        return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, bg2: s.bg2, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', pick: () => this.setState({ i: k }) };
+        return { name: s.name, yr: s.yr, color: s.color, on: s.on, c3: s.c3, bg2: s.bg2, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', fs: 7, pick: () => this.setState({ i: k }) };
       })
     };
-    R.live = Object.assign(liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 32), { c3: SITES[i].c3 });
+    R.live = liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 40);
     return R;
   }
 }

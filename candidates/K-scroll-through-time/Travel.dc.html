@@ -5,6 +5,7 @@
 <title>Old Sites: scroll through time</title>
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
+<link rel="stylesheet" href="../../browser.css">
 <script src="../../palette.js"></script>
 <script src="../../browsernav.js"></script>
 <script src="./support.js"></script>
@@ -15,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
 html,body{overflow:hidden}
-body{margin:0;background:#0f1012}
+body{margin:0;background:#121212}
 a{color:#fff}a:hover{color:#ccc}
 .mono{font-family:'IBM Plex Mono',monospace}
 .sc{scrollbar-width:none}
@@ -26,11 +27,9 @@ a{color:#fff}a:hover{color:#ccc}
 .chrome{transition:background .5s,border-radius .5s}
 .live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
 .live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
-.bn-back,.bn-fwd{width:16px;height:16px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 14px/15px system-ui,sans-serif;opacity:.3;cursor:default}
-.bn-back.bn-on,.bn-fwd.bn-on{opacity:1;cursor:pointer}.bn-back.bn-on:hover,.bn-fwd.bn-on:hover{background:#8884}
 </style>
 </helmet>
-<div class="sc" onScroll="{{onScroll}}" style="width:{{W}}px;height:{{H}}px;zoom:{{u}};overflow-y:auto;background:#0f1012;color:#f1f1ef;font-family:'Bricolage Grotesque',sans-serif">
+<div class="sc" onScroll="{{onScroll}}" style="width:{{W}}px;height:{{H}}px;zoom:{{u}};overflow-y:auto;background:#121212;color:#f2f2f2;font-family:'Bricolage Grotesque',sans-serif">
   <div style="position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
@@ -43,25 +42,22 @@ a{color:#fff}a:hover{color:#ccc}
       <div style="flex:0 0 330px;display:flex;flex-direction:column;gap:14px">
         <div style="font-size:22px;font-weight:800">Old Sites</div>
         <div style="margin-top:50px;font-size:150px;font-weight:800;line-height:.82;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.color}};transition:color .4s">{{cur.yr}}</div>
-        <div class="mono" style="font-size:12px;color:#9a9b9f">{{cur.year}} · {{cur.tier}}</div>
+        <div class="mono" style="font-size:12px;color:#9a9a9a">{{cur.year}} · {{cur.tier}}</div>
         <div style="font-size:{{cur.fs}}px;font-weight:800;line-height:1;letter-spacing:-0.02em">{{cur.name}}</div>
-        <p style="margin:0;font-size:15px;line-height:1.55;color:#c8c9cc">{{cur.blurb}}</p>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:#cfcfcf">{{cur.blurb}}</p>
         <div style="margin-top:auto;display:flex;gap:10px">
           <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:{{cur.color}};color:{{cur.on}};text-decoration:none;font-weight:800">Open full screen ↗</a>
-          <a href="{{spHref}}" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #3a3b40;text-decoration:none;font-weight:500">Read more →</a>
+          <a href="{{spHref}}" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #333333;text-decoration:none;font-weight:500">Read more →</a>
         </div>
       </div>
 
-      <div class="chrome" data-bn style="flex-grow:1;display:flex;flex-direction:column;border-radius:{{ch.r}}px;overflow:hidden;background:{{ch.bar}};box-shadow:0 30px 80px #000a">
-        <div style="height:42px;display:flex;align-items:center;gap:10px;padding:0 14px">
-          <span style="display:flex;gap:4px;align-items:center;color:{{ch.text}}"><button class="bn-back" title="Back" disabled>‹</button><button class="bn-fwd" title="Forward" disabled>›</button><span style="width:11px;height:11px;border-radius:50%;background:{{ch.dot}}"></span></span>
-          <div class="mono" style="flex-grow:1;height:26px;display:flex;align-items:center;padding:0 12px;border-radius:{{ch.ur}}px;background:{{ch.url}};color:{{ch.text}};font-size:12px">http://{{cur.addr}}</div>
-        </div>
-        <div class="shot" style="flex-grow:1;position:relative;overflow:hidden;background:#000"><div class="live" key="{{cur.link}}" style="position:absolute;inset:0;pointer-events:{{lf.pe}}"><iframe src="{{cur.link}}" title="{{cur.name}}" style="width:{{lf.fw}}px;height:{{lf.fh}}px;transform:scale({{lf.fs}})"></iframe></div><sc-if value="{{lf.cover}}" hint-placeholder-val="{{true}}"><button onClick="{{lf.use}}" class="mono" style="position:absolute;right:14px;bottom:14px;height:34px;padding:0 14px;border:0;border-radius:999px;background:#000c;color:#fff;font-size:12px;cursor:pointer">Click to use this site</button></sc-if></div>
+      <div class="chrome ob" data-bn style="flex-grow:1;display:flex;flex-direction:column;box-shadow:0 30px 80px #000a">
+        <div class="ob-chrome"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
+        <div class="shot ob-view" style="flex-grow:1;position:relative;overflow:hidden"><div class="live" key="{{cur.link}}" style="position:absolute;inset:0;pointer-events:{{lf.pe}}"><iframe src="{{cur.link}}" title="{{cur.name}}" style="width:{{lf.fw}}px;height:{{lf.fh}}px;transform:scale({{lf.fs}})"></iframe></div><sc-if value="{{lf.cover}}" hint-placeholder-val="{{true}}"><button onClick="{{lf.use}}" class="mono" style="position:absolute;right:14px;bottom:14px;height:34px;padding:0 14px;border:0;border-radius:999px;background:#000c;color:#fff;font-size:12px;cursor:pointer">Click to use this site</button></sc-if></div>
       </div>
 
       <div style="flex:0 0 14px;position:relative;margin:20px 0">
-        <div style="position:absolute;left:6px;top:0;bottom:0;width:2px;background:#2a2b30"></div>
+        <div style="position:absolute;left:6px;top:0;bottom:0;width:2px;background:#2a2a2a"></div>
         <sc-for list="{{marks}}" as="m" hint-placeholder-count="9">
           <div style="position:absolute;left:{{m.l}}px;top:{{m.top}}%;width:{{m.w}}px;height:{{m.h}}%;background:{{m.color}};opacity:{{m.op}};border-radius:2px"></div>
         </sc-for>
@@ -69,7 +65,7 @@ a{color:#fff}a:hover{color:#ccc}
       </div>
     </div>
     <sc-if value="{{atStart}}" hint-placeholder-val="{{true}}">
-      <div class="mono hint" style="position:absolute;left:48px;top:{{hintTop}}px;font-size:12px;color:#9a9b9f">Scroll to travel through the years ↓</div>
+      <div class="mono hint" style="position:absolute;left:48px;top:{{hintTop}}px;font-size:12px;color:#9a9a9a">Scroll to travel through the years ↓</div>
     </sc-if>
   </div>
 </div>
@@ -85,7 +81,7 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight, u = fixed ? Math
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
 function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t + bar, w: win.w, h: win.h - bar }, liveFit(key, win.w, win.h - bar)); }
-var SPD = ['AI','AK','AN','AJ','AL','AM'], SPFROM = '../candidates/K-scroll-through-time/Travel.dc.html';
+var SPD = ['AI','AK','AN'], SPFROM = '../candidates/K-scroll-through-time/Travel.dc.html';
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
@@ -103,11 +99,6 @@ var SITES = [
 ];
 // splash test: site colors come from ../../palette.js: color 1 for the site's color, color 2 for text on it.
 SITES.forEach((s) => { s.color = PALETTE.main(KEYS[s.name]); s.on = PALETTE.on(KEYS[s.name]); });
-var ERA = [
- {bar:'#c9ced6',dot:'#9aa1ac',url:'#fff',text:'#222',r:4,ur:2},
- {bar:'#e4e6ea',dot:'#c3c7ce',url:'#fff',text:'#222',r:8,ur:13},
- {bar:'#25262b',dot:'#45464d',url:'#18191c',text:'#ddd',r:16,ur:13}
-];
 var TOT = SITES.reduce((a, s) => a + s.w, 0), PX = 900, TOTAL = Math.round(TOT * PX / 3 + 800);
 class Component extends DCLogic {
   testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
@@ -120,10 +111,10 @@ class Component extends DCLogic {
     var F = this.state.fit;
     var on = this.state.use === s.name;
     return {
-      lf: Object.assign(liveFit(KEYS[s.name], F.W - 536, F.H - 114), { pe: on ? 'auto' : 'none', cover: !on, use: () => this.setState({ use: s.name }) }),
+      lf: Object.assign(liveFit(KEYS[s.name], F.W - 538, F.H - 112), { pe: on ? 'auto' : 'none', cover: !on, use: () => this.setState({ use: s.name }) }),
       u: F.u, W: F.W, H: F.H, hintTop: F.H - 112,
       spHref: spHref(T.sp, KEYS[s.name]), spOpts: T.spOpts,
-      total: TOTAL, cur: Object.assign({}, s, { fs: s.tier === 'Flagship' ? 44 : (s.tier === 'Notable' ? 34 : 26) }), ch: ERA[s.era],
+      total: TOTAL, cur: Object.assign({}, s, { fs: s.tier === 'Flagship' ? 44 : (s.tier === 'Notable' ? 34 : 26) }),
       local: Math.round(local), pct: (p * 100).toFixed(1), atStart: p < 0.02,
       marks: SITES.map((x, k) => { var t = a2 / TOT * 100; a2 += x.w; var big = x.tier === 'Flagship'; return { top: t, h: x.w / TOT * 100 - 0.6, w: big ? 14 : (x.tier === 'Notable' ? 10 : 6), l: big ? 0 : (x.tier === 'Notable' ? 2 : 4), color: x.color, op: k === i ? 1 : 0.35 }; }),
       onScroll: (e) => { var el = e.target; var max = el.scrollHeight - el.clientHeight; this.setState({ p: max > 0 ? el.scrollTop / max : 0 }); }

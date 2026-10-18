@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Old Sites</title>
+<link rel="stylesheet" href="../browser.css">
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* AJ · Drawer. The site's first window fills the screen; the story is in a drawer over it.
@@ -18,12 +19,8 @@ body.open .stage{padding-right:min(560px,46vw)}
 .stage .bar{padding:0 20px}
 .bar{display:flex;align-items:center;gap:16px;color:#f2f4ef;font-size:14px}
 .bar .home{font-weight:800;text-decoration:none}.bar .sp{flex-grow:1}.bar .mono{font-size:12px;text-decoration:none;color:#c6d0c9}
-.stage .sp-win{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#000}
+.stage .sp-win{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .stage .sp-vp{flex:1;aspect-ratio:auto!important}
-.stage .sp-chrome{height:32px;font-size:11px}
-.sp-chrome{flex:none;display:flex;align-items:center;gap:6px;padding:0 12px;background:#e6e9e4;font:10px 'DM Mono',monospace;color:#4a514c;height:26px}
-.sp-chrome i{width:8px;height:8px;border-radius:50%;background:var(--accent-mark)}.sp-chrome i+i,.sp-chrome i+i+i{background:#c3c8c2}
-.sp-chrome .sp-url{margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,46vw);background:var(--panel);box-shadow:-20px 0 60px #0007;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;z-index:20}
 body.open .drawer{transform:none}
 .tab{position:absolute;left:-44px;top:50%;transform:translateY(-50%);width:44px;height:120px;border:0;border-radius:10px 0 0 10px;background:var(--accent-bg);color:var(--on-accent);cursor:pointer;font:700 11px 'DM Mono',monospace;writing-mode:vertical-rl;letter-spacing:.08em}
@@ -43,7 +40,7 @@ summary::after{content:'+';margin-left:auto;font:400 22px 'DM Mono',monospace;co
 details[open] summary::after{content:'–'}
 .dbody p{margin:0 0 14px;font-size:15.5px;line-height:1.65;color:#2a312d}
 .dbody h3{margin:20px 0 8px;font-size:16px;font-weight:800}
-.dbody .sp-win{margin:12px 0;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px #0003}
+.dbody .sp-win{margin:12px 0;overflow:hidden}
 .sp-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
 .sp-btn{height:38px;padding:0 14px;display:inline-flex;align-items:center;border-radius:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer}
 .sp-btn.primary{background:var(--accent-bg);border-color:var(--accent);color:var(--on-accent)}

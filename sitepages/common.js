@@ -43,8 +43,9 @@
   var embeds = 0;
   function embedHtml(e) {
     var id = e.id || 'e' + (embeds++);
-    return '<div class="sp-win" data-embed="' + id + '">' +
-      '<div class="sp-chrome"><button class="sp-nav sp-back" title="Back" disabled>‹</button><button class="sp-nav sp-fwd" title="Forward" disabled>›</button><i></i><span class="sp-url">' + esc(e.addr) + '</span></div>' +
+    // v0.1's browser look (../browser.css): the same on every site. The first two dots are back and forward.
+    return '<div class="sp-win ob" data-embed="' + id + '">' +
+      '<div class="sp-chrome ob-chrome"><button class="ob-nav sp-back" title="Back" disabled></button><button class="ob-nav sp-fwd" title="Forward" disabled></button><i></i><span class="sp-url ob-url">' + esc(e.addr) + '</span></div>' +
       '<div class="sp-vp" data-w="' + e.w + '" data-h="' + e.h + '" style="aspect-ratio:' + e.w + '/' + e.h + ';background-image:url(' + e.img + ')">' +
       '<iframe src="' + e.src + '" title="' + esc(e.title) + '" loading="lazy" style="width:' + e.w + 'px;height:' + e.h + 'px"></iframe></div></div>';
   }
@@ -109,7 +110,8 @@
   function testBar() {
     var b = document.createElement('div');
     b.className = 'sp-test';
-    b.innerHTML = '<span>TEST · SITE PAGE</span>' + Object.keys(SITE_DESIGNS).map(function (d) {
+    // Only the favorite designs are offered.
+    b.innerHTML = '<span>TEST · SITE PAGE</span>' + ['AI', 'AK', 'AN'].map(function (d) {
       return '<a href="' + pageUrl(site.key, d) + '" title="' + SITE_DESIGNS[d].name + '"' + (d === design ? ' class="on"' : '') + '>' + d + '</a>';
     }).join('') + '<span class="sep"></span><a href="' + home + '">' + (from ? 'BACK TO ' + from.split('/')[2].split('-')[0] : 'ALL CANDIDATES') + '</a>';
     document.body.appendChild(b);
@@ -121,9 +123,7 @@
     '.sp-test span{padding-right:6px;letter-spacing:.05em}.sp-test .sep{width:1px;height:16px;background:#fff4;margin:0 6px;padding:0}' +
     '.sp-test a{height:26px;min-width:32px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#fff;font:700 11px ui-monospace,monospace;text-decoration:none}' +
     '.sp-test a.on{background:#ffd23f;color:#111}' +
-    '.sp-vp{position:relative;overflow:hidden;background:#000 top/cover no-repeat}.sp-vp iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:transparent}' +
-    '.sp-nav{flex:none;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;font:700 15px/16px system-ui,sans-serif;opacity:.3;cursor:default}' +
-    '.sp-nav.bn-on{opacity:1;cursor:pointer}.sp-nav.bn-on:hover{background:#8884}' +
+    '.sp-vp{position:relative;overflow:hidden;background:#fff top/cover no-repeat}.sp-vp iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:transparent}' +
     '.sp-fig img,.sp-gallery img{cursor:zoom-in}' +
     '.sp-logo{cursor:pointer}' +
     '.sp-viewer{position:fixed;inset:0;z-index:10000;background:#000e;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:40px 60px}' +
