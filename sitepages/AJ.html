@@ -13,11 +13,12 @@ html,body{height:100%}
 body{margin:0;background:radial-gradient(ellipse at 50% 120%,#2f4438,#1e2a24 60%);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;overflow:hidden}
 a{color:inherit}
 .mono{font-family:'DM Mono',monospace}
-.stage{position:fixed;inset:0;padding:56px 24px 24px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;transition:padding-right .45s cubic-bezier(.2,.8,.2,1)}
+.stage{position:fixed;inset:0;padding:48px 0 0;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;transition:padding-right .45s cubic-bezier(.2,.8,.2,1)}
 body.open .stage{padding-right:min(560px,46vw)}
+.stage .bar{padding:0 20px}
 .bar{display:flex;align-items:center;gap:16px;color:#f2f4ef;font-size:14px}
 .bar .home{font-weight:800;text-decoration:none}.bar .sp{flex-grow:1}.bar .mono{font-size:12px;text-decoration:none;color:#c6d0c9}
-.stage .sp-win{flex:1;min-height:0;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;box-shadow:0 20px 60px #0009;background:#000}
+.stage .sp-win{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#000}
 .stage .sp-vp{flex:1;aspect-ratio:auto!important}
 .stage .sp-chrome{height:32px;font-size:11px}
 .sp-chrome{flex:none;display:flex;align-items:center;gap:6px;padding:0 12px;background:#e6e9e4;font:10px 'DM Mono',monospace;color:#4a514c;height:26px}
@@ -64,7 +65,7 @@ details[open] summary::after{content:'–'}
 .dfoot a:last-child{text-align:right}.dfoot .mono{font-size:10px;color:var(--muted)}.dfoot b{font-size:17px}
 @media (max-width:760px){
   body{overflow:auto}
-  .stage{position:static;height:62vh;padding:52px 12px 12px}body.open .stage{padding-right:12px}
+  .stage{position:static;height:62vh;padding:48px 0 0}body.open .stage{padding-right:0}
   .drawer{position:static;width:auto;transform:none;box-shadow:none}
   .tab{display:none}.dhead{padding:24px 16px 14px}.dbody{padding:4px 16px 40px;overflow:visible}
 }

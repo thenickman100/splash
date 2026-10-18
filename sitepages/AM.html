@@ -6,17 +6,17 @@
 <title>Old Sites</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* AM · Window page. The page is one browser window like the windows on the AE, AG and M main pages.
+/* AM · Window page. The whole screen is one browser, styled like the windows on the AE, AG and M main pages.
    Each section is a browser tab; back and forward go to the previous and next site. */
 :root{--desk:#e7eaee;--ink:#11151b;--muted:#5b626c;--line:#11151b1f;--accent:#16803a}
 body{margin:0;min-height:100vh;background:var(--desk);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;
-  background-image:radial-gradient(circle at 20% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 55%)}
+  }
 a{color:inherit}
 .mono{font-family:'DM Mono',monospace}
-.desk{max-width:1180px;margin:0 auto;padding:60px 28px 40px}
-.home{display:inline-block;margin-bottom:14px;font-weight:800;text-decoration:none}
-.window{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px #11151b33;border:1px solid #11151b26}
-.tabs{display:flex;align-items:flex-end;gap:2px;padding:10px 10px 0;background:#d9dde2;overflow-x:auto;scrollbar-width:none}
+.desk{min-height:100vh;display:flex;flex-direction:column}
+.home{flex:none;white-space:nowrap;height:30px;padding:0 12px;display:flex;align-items:center;border-radius:999px;font:600 13px 'Hanken Grotesk',sans-serif;text-decoration:none;color:#3a414a}.home:hover{background:#11151b0f}
+.window{flex:1;display:flex;flex-direction:column;background:#fff}
+.tabs{display:flex;align-items:flex-end;gap:2px;padding:50px 10px 0;background:#d9dde2;overflow-x:auto;scrollbar-width:none}
 .tabs button{flex:none;height:34px;max-width:220px;padding:0 16px;border:0;border-radius:9px 9px 0 0;background:transparent;color:#4b525c;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .tabs button:hover{background:#ffffff80}
 .tabs button.on{background:#fff;color:var(--ink)}
@@ -27,7 +27,7 @@ a{color:inherit}
 .nav a:hover{background:#11151b0f}.nav span.off{color:#c0c5cc}
 .nav .url{flex:1;height:32px;border-radius:999px;background:#f0f2f4;display:flex;align-items:center;padding:0 16px;font:12.5px 'DM Mono',monospace;color:#3a414a;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
 .nav .url b{color:var(--ink);font-weight:500}
-.page{padding:44px 54px 54px;min-height:520px}
+.page{flex:1;padding:44px max(54px,calc((100vw - 1240px) / 2)) 54px}
 .pane{display:none}.pane.on{display:block;animation:in .35s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .about{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start}
@@ -68,7 +68,7 @@ a{color:inherit}
 .status{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;border-top:1px solid var(--line);background:#f6f7f9;font:11px 'DM Mono',monospace;color:var(--muted)}
 .status a{text-decoration:none}.status a:hover{color:var(--ink)}
 @media (max-width:820px){
-  .desk{padding:52px 10px 20px}.page{padding:26px 16px 36px}
+  .page{padding:26px 16px 36px}
   .about{grid-template-columns:1fr;gap:24px}.about .lede{font-size:18px}
 }
 </style>
@@ -80,12 +80,12 @@ a{color:inherit}
 <script>
 SP.boot(function (s, sp) {
   var e = sp.esc, addr = s.addresses[0] || s.name;
-  var h = '<div class="desk"><a class="home" href="' + sp.home + '">← All sites</a><div class="window">';
+  var h = '<div class="desk"><div class="window">';
   h += '<div class="tabs" role="tablist"><button class="on" data-t="0" role="tab"><img src="' + s.favicon + '" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'dot\'}))">' + e(s.name) + '</button>' +
     s.sections.map(function (x, k) { return '<button data-t="' + (k + 1) + '" role="tab">' + e(x.h) + '</button>'; }).join('') + '</div>';
   h += '<div class="nav">' + (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '" title="' + e(sp.prev.name) + '">←</a>' : '<span class="off">←</span>') +
     (sp.next ? '<a href="' + sp.url(sp.next.key) + '" title="' + e(sp.next.name) + '">→</a>' : '<span class="off">→</span>') +
-    '<div class="url">http://<b>' + e(addr) + '</b><span class="path"></span></div></div>';
+    '<a class="home" href="' + sp.home + '">All sites</a><div class="url">http://<b>' + e(addr) + '</b><span class="path"></span></div></div>';
   h += '<div class="page"><div class="pane on" data-p="0"><div class="about"><div><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div><h1>' + e(s.name) + '</h1>' +
     '<p class="lede">' + e(s.lede) + '</p><div class="go">' + s.sections.map(function (x, k) { return '<button data-go="' + (k + 1) + '">' + e(x.h) + ' →</button>'; }).join('') + '</div></div>' +
     '<div class="card">' + (s.logo ? '<img class="logo" src="' + s.logo + '" alt="' + e(s.name) + ' logo" onerror="this.remove()">' : '') + sp.factsHtml(s) + '</div></div></div>';
