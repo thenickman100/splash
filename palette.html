@@ -42,38 +42,38 @@ a{color:inherit}
 <script>
 // [hex, where it was sampled]. Order is the proposed rank.
 var P = [
-  { name: 'Awesome Stuff', shot: 'sitepages/img/awesome-webstarts.jpg', c: [
-    ['#748f20', 'Olive green of the Webstarts section and header'],
-    ['#393d23', 'Dark olive behind the lawesomel.webs.com page'],
-    ['#adf084', 'Lime of the box headings on lawesomel'] ] },
+  { name: 'Awesome Stuff', shot: 'sitepages/img/awesome-lawesomel.jpg', c: [
+    ['#acf084', 'Lime of the box headings on lawesomel.webs.com'],
+    ['#30341c', 'Dark olive page background'],
+    ['#e4ecec', 'Pale gray of the boxes'] ] },
   { name: 'Askthenickman', shot: 'sitepages/img/ask-home.jpg', c: [
-    ['#d60202', 'Red of the logo and links'],
+    ['#d60202', 'Red of the logo'],
     ['#05030e', 'Black page background'],
-    ['#fa4002', 'Orange of the techno home page'] ] },
+    ['#f6c600', 'Yellow of the starburst behind the logo'] ] },
   { name: 'Titans Softball', shot: 'sitepages/img/titans.jpg', c: [
-    ['#30243c', 'Purple tab bar and stat boxes'],
     ['#fcc308', 'Gold page background'],
-    ['#c89800', 'Dark gold shading in the logo'] ] },
-  { name: 'Hack a HOBO', shot: 'sitepages/img/hobo-2012.jpg', c: [
-    ['#2aa4c5', 'Blue top bar, 2012'],
-    ['#242323', 'Near-black text and chat box'],
-    ['#d2f4fe', 'Pale cyan of the 2026 game containers'] ] },
+    ['#30243c', 'Purple tab bar and stat boxes'],
+    ['#ffffff', 'White'] ] },
+  { name: 'Hack a HOBO', shot: 'sitepages/img/hobo-2026.jpg', c: [
+    ['#28a0c0', 'Blue behind the logo'],
+    ['#ffffff', 'White'],
+    ['#30a82a', 'Green outline of the logo, 2026 Edition with the original theme'] ] },
   { name: 'BV Homework', shot: 'sitepages/img/bv.jpg', c: [
     ['#d9232a', 'Red of the logo'],
     ['#81cafc', 'Sky blue page background'],
-    ['#482635', 'Dark plum in the logo artwork'] ] },
+    ['#949000', 'Green of the subject buttons in the nav panel'] ] },
   { name: 'EnGen NextGen', shot: 'sitepages/img/engen.jpg', c: [
-    ['#b8505e', 'Red of the captions and tagline (thin text, so the shade is approximate)'],
-    ['#0055e6', 'Blue of the logo and Recent Posts heading'],
-    ['#808682', 'Gray of the gears in the logo'] ] },
+    ['#b8505e', 'Red of the text under the logo and the text across the site (thin text, so the shade is approximate)'],
+    ['#0055e6', 'Blue of the logo'],
+    ['#fcfcfc', 'White graph-paper background'] ] },
   { name: 'Home', shot: 'sitepages/img/home.jpg', c: [
-    ['#46e7ff', 'Cyan bars and boxes'],
-    ['#0c1016', 'Near-black headings'],
-    ['#d8473e', 'Red of the event boxes and losses'] ] },
-  { name: 'Space Atlas', shot: 'sitepages/img/spaceatlas.jpg', c: [
-    ['#040508', 'Black of space and the menu bar'],
-    ['#443f4b', 'Gray of the menu and panels'],
-    ['#fc7848', 'Orange of the orbits and markers'] ] }
+    ['#46e7ff', 'Cyan of the bars'],
+    ['#a9ffff', 'Light cyan of the boxes'],
+    ['#fcfcfc', 'White patterned background'] ] },
+  { name: 'Space Atlas', shot: 'candidates/v0.1/exhibits/spaceatlas/mars.jpg', c: [
+    ['#2c2c2c', 'Gray menu bar'],
+    ['#000000', 'Black background'],
+    ['#e08424', 'Orange underline under MARS in the menu'] ] }
 ];
 function lum(h) { var n = parseInt(h.slice(1), 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
 function on(h) { return lum(h) > .2 ? '#111' : '#fff'; }
