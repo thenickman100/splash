@@ -59,6 +59,7 @@ button.link{border:0;background:none;padding:0;text-decoration:underline;font-we
 <div id="list"></div>
 <div id="dlg" class="dlg" hidden><div class="box"><h3>Export order</h3><p>Copy this and send it to Claude to make it the published order.</p><textarea id="exp" readonly></textarea><div class="btns"><button id="copy">Copy</button><button id="close">Close</button></div></div></div>
 </main>
+<script>window.PALETTE_NO_PANEL = true;</script>
 <script src="palette.js"></script>
 <script>
 // Renders straight from palette.js, so this page always shows the palettes the site pages use.
@@ -120,14 +121,7 @@ button.link{border:0;background:none;padding:0;text-decoration:underline;font-we
     } else if (t.id === 'close' || t.id === 'dlg') document.getElementById('dlg').hidden = true;
   });
   function openExport() {
-    var lines = ['Palette order for Old Sites (from palette.html)', ''];
-    Object.keys(P.sites).forEach(function (k) {
-      var s = P.sites[k];
-      lines.push(s.name + ': ' + s.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
-      if (s.extra.length) lines.push('  other: ' + s.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
-    });
-    lines.push('', 'order: ' + JSON.stringify(P.order()));
-    document.getElementById('exp').value = lines.join('\n');
+    document.getElementById('exp').value = P.exportText();
     document.getElementById('copy').textContent = 'Copy';
     document.getElementById('dlg').hidden = false;
   }

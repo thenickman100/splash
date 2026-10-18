@@ -662,6 +662,16 @@
     published: PUBLISHED,
     saveOrder: function (order) { arrange(order); try { localStorage.setItem(KEY, JSON.stringify(order)); } catch (e) {} this.trial = true; },
     clearOrder: function () { arrange(PUBLISHED); try { localStorage.removeItem(KEY); } catch (e) {} this.trial = false; },
+    exportText: function () {
+      var lines = ['Palette order for Old Sites', ''];
+      Object.keys(SITES).forEach(function (k) {
+        var t = SITES[k];
+        lines.push(t.name + ': ' + t.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
+        if (t.extra.length) lines.push('  other: ' + t.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
+      });
+      lines.push('', 'order: ' + JSON.stringify(this.order()));
+      return lines.join('\n');
+    },
     order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
     ranked: ranked,
@@ -681,4 +691,73 @@
       return best;
     }
   };
+
+  // Palette panel: a Palette button on every page that loads this file, for trying a different order in place.
+  // A change saves the trial order and reloads the page so it redraws in the new colors; the panel reopens.
+  function panel() {
+    if (window.PALETTE_NO_PANEL || document.getElementById('pal-btn')) return;
+    var P = window.PALETTE, here = new URLSearchParams(location.search).get('site');
+    var css = document.createElement('style');
+    css.textContent =
+      '#pal-btn{position:fixed;right:14px;bottom:14px;z-index:100000;height:38px;padding:0 14px;border:0;border-radius:999px;background:#000000cc;color:#fff;font:700 12px ui-monospace,monospace;cursor:pointer;box-shadow:0 6px 20px #0005}' +
+      '#pal-btn i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffd23f;margin-right:7px;vertical-align:-1px}' +
+      '#pal{position:fixed;right:14px;bottom:62px;z-index:100000;width:min(380px,calc(100vw - 28px));max-height:min(72vh,640px);overflow:auto;background:#fff;color:#15181d;border-radius:14px;box-shadow:0 20px 60px #0007;font:13px/1.4 system-ui,sans-serif;text-align:left;zoom:1}' +
+      '#pal *{box-sizing:border-box}#pal[hidden]{display:none}' +
+      '#pal .pal-top{position:sticky;top:0;background:#fff;padding:12px 14px 10px;border-bottom:1px solid #e3e6ea;display:flex;flex-wrap:wrap;gap:6px;align-items:center}' +
+      '#pal .pal-top b{flex:1 1 100%;font-size:14px}#pal .pal-top small{flex:1 1 100%;color:#5b6270}' +
+      '#pal button{font:600 12px system-ui,sans-serif;padding:6px 10px;border-radius:7px;border:1px solid #d6dbe1;background:#f6f7f9;color:#15181d;cursor:pointer}#pal button:disabled{opacity:.3;cursor:default}' +
+      '#pal details{border-bottom:1px solid #eef0f3}#pal summary{cursor:pointer;padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:700;list-style:none}#pal summary::-webkit-details-marker{display:none}' +
+      '#pal summary .pal-st{display:flex;gap:2px;margin-left:auto}#pal summary .pal-st span{width:14px;height:14px;border-radius:3px;border:1px solid #0002}' +
+      '#pal .pal-c{display:flex;align-items:center;gap:8px;padding:5px 14px}#pal .pal-c .pal-sw{flex:none;width:26px;height:26px;border-radius:6px;border:1px solid #0002;font:700 10px ui-monospace,monospace;display:flex;align-items:center;justify-content:center}' +
+      '#pal .pal-c .pal-t{flex:1;min-width:0}#pal .pal-c code{font:600 12px ui-monospace,monospace}#pal .pal-c .pal-w{color:#5b6270;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '#pal .pal-c button{padding:4px 7px}#pal .pal-lbl{padding:6px 14px 2px;color:#5b6270;font-size:11px;text-transform:uppercase;letter-spacing:.05em}' +
+      '#pal textarea{width:calc(100% - 28px);margin:8px 14px;height:180px;font:11px/1.45 ui-monospace,monospace;border:1px solid #d6dbe1;border-radius:8px;padding:8px}';
+    document.head.appendChild(css);
+    var btn = document.createElement('button'); btn.id = 'pal-btn'; btn.innerHTML = '<i></i>Palette' + (P.trial ? ' · trial' : '');
+    var box = document.createElement('div'); box.id = 'pal'; box.hidden = true;
+    document.body.appendChild(box); document.body.appendChild(btn);
+    var open = {}; try { open = JSON.parse(sessionStorage.getItem('splash-pal-open') || '{}'); } catch (e) {}
+    function sw(h, label) { return '<span class="pal-sw" style="background:' + h + ';color:' + (contrast(h, '#000000') >= contrast(h, '#ffffff') ? '#111' : '#fff') + '">' + label + '</span>'; }
+    function line(k, l, i, n, c) {
+      var b = function (a, t, off) { return '<button data-k="' + k + '" data-l="' + l + '" data-i="' + i + '" data-a="' + a + '"' + (off ? ' disabled' : '') + '>' + t + '</button>'; };
+      return '<div class="pal-c">' + sw(c.hex, l === 'colors' ? i + 1 : '·') + '<div class="pal-t"><code>' + c.hex + '</code><div class="pal-w">' + c.what + '</div></div>' +
+        b('up', '↑', i === 0) + b('down', '↓', i === n - 1) + (l === 'colors' ? b('out', '−', n === 1) : b('in', '+')) + '</div>';
+    }
+    function draw() {
+      var keys = Object.keys(SITES); if (here && SITES[here]) keys = [here].concat(keys.filter(function (k) { return k !== here; }));
+      box.innerHTML = '<div class="pal-top"><b>Palette order</b><small>' + (P.trial ? 'Trial order on in this browser.' : 'Published order.') +
+        ' ↑ ↓ reorder, − takes a color out of the ranking, + adds it back.</small><button data-x="export">Export</button>' +
+        (P.trial ? '<button data-x="reset">Reset all</button>' : '') + '<button data-x="full">All details</button><button data-x="close">Close</button></div>' +
+        (open.exp ? '<textarea readonly>' + P.exportText().replace(/</g, '&lt;') + '</textarea><div style="padding:0 14px 10px"><button data-x="copy">Copy</button></div>' : '') +
+        keys.map(function (k) {
+          var t = SITES[k];
+          return '<details data-k="' + k + '"' + ((open.page === location.pathname + location.search && open.site ? open.site === k : k === keys[0]) ? ' open' : '') + '><summary>' + t.name +
+            '<span class="pal-st">' + t.colors.map(function (c) { return '<span style="background:' + c.hex + '"></span>'; }).join('') + '</span></summary>' +
+            t.colors.map(function (c, i) { return line(k, 'colors', i, t.colors.length, c); }).join('') +
+            (t.extra.length ? '<div class="pal-lbl">Other colors</div>' + t.extra.map(function (c, i) { return line(k, 'extra', i, t.extra.length, c); }).join('') : '') + '</details>';
+        }).join('');
+    }
+    function keep(site) { open.on = !box.hidden; if (site) { open.site = site; open.page = location.pathname + location.search; } try { sessionStorage.setItem('splash-pal-open', JSON.stringify(open)); } catch (e) {} }
+    btn.addEventListener('click', function () { box.hidden = !box.hidden; if (!box.hidden) draw(); keep(); });
+    box.addEventListener('toggle', function (e) { if (e.target.open) keep(e.target.dataset.k); }, true);
+    box.addEventListener('click', function (e) {
+      var t = e.target.closest('button'); if (!t) return;
+      if (t.dataset.a) {
+        var k = t.dataset.k, l = t.dataset.l, i = +t.dataset.i, o = P.order(), a = o[k][l];
+        if (t.dataset.a === 'up') a.splice(i - 1, 0, a.splice(i, 1)[0]);
+        if (t.dataset.a === 'down') a.splice(i + 1, 0, a.splice(i, 1)[0]);
+        if (t.dataset.a === 'out') o[k].extra.unshift(a.splice(i, 1)[0]);
+        if (t.dataset.a === 'in') o[k].colors.push(a.splice(i, 1)[0]);
+        P.saveOrder(o); keep(k); location.reload();
+      }
+      var x = t.dataset.x;
+      if (x === 'close') { box.hidden = true; keep(); }
+      if (x === 'reset') { P.clearOrder(); keep(); location.reload(); }
+      if (x === 'export') { open.exp = !open.exp; keep(); draw(); }
+      if (x === 'copy') { var ta = box.querySelector('textarea'); (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { t.textContent = 'Copied'; }, function () { ta.select(); document.execCommand('copy'); t.textContent = 'Copied'; }); }
+      if (x === 'full') location.href = (location.pathname.indexOf('/candidates/') >= 0 ? '../../' : location.pathname.indexOf('/sitepages/') >= 0 ? '../' : '') + 'palette.html';
+    });
+    if (open.on) { box.hidden = false; draw(); }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', panel); else panel();
 })();
