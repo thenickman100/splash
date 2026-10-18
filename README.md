@@ -2,10 +2,13 @@
 
 Testing environment for the redesign of Old Sites, the museum at https://hackahobo.info/projects/splash/.
 
-- `index.html` lists the candidates.
+- `index.html` lists the candidates and the site pages.
 - `candidates/` holds the 8 candidate designs, each exactly as exported from the design tool (`*.dc.html`, `assets/`, `support.js`, `vendor/`).
 - `candidates/v0.1/` is the museum live now, from `splash-v0.1.zip`, for comparison. For the test site, its `../sites/` and `../../` links point at `https://hackahobo.info/`, and logos and icons missing from the zip load from `https://hackahobo.info/projects/splash/`. Don't upload this copy to the server.
-- `docs/` holds the project brief (`museum-handoff.md`), Nick's backstories, the writing guide and `sites-tree.txt` (the file list of `/projects/sites/`).
+
+- `sitepages/` holds the six site-page designs (AI to AN) that Read more opens. Each is one HTML file that shows any site from `?site=`. The text is v0.1's, in `sitepages/data.js`; `sitepages/common.js` has the shared navigation, live windows, image viewer and v0.1's interactive features.
+
+Every main page has a test bar for choosing which site-page design Read more opens. The choice is remembered in the browser.
 
 The candidates link to the restored sites on hackahobo.info (`/projects/sites/...`), so those links work from the test site without copying the sites here.
 

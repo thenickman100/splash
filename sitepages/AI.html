@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Sites</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* AI · Split screen. A sticky panel names the site on the left; the story scrolls on the right.
+   Type and window chrome follow the AE and AG main pages. */
+:root{--bg:#f4f5f2;--ink:#11151b;--muted:#5c636c;--line:#11151b1a;--accent:#16803a}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',sans-serif}
+a{color:inherit}
+.mono{font-family:'DM Mono',monospace}
+.wrap{display:grid;grid-template-columns:minmax(320px,40%) 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;box-sizing:border-box;padding:64px 44px 28px;background:var(--accent);color:var(--on-accent);display:flex;flex-direction:column;gap:16px;overflow:auto}
+.side .home{font-weight:800;text-decoration:none}
+.yr{font-size:clamp(70px,9vw,128px);font-weight:800;line-height:.85;letter-spacing:-0.05em;margin-top:18px}
+.side .kick{font-size:12px;opacity:.85}
+.side h1{margin:0;font-size:clamp(34px,3.6vw,52px);font-weight:800;line-height:1;letter-spacing:-0.02em}
+.side .lede{margin:0;font-size:17px;line-height:1.5;opacity:.95}
+.sp-facts{margin:6px 0 0;display:grid;gap:10px;font-size:13px}
+.sp-facts div{display:grid;grid-template-columns:120px 1fr;gap:10px}
+.sp-facts dt{font:11px 'DM Mono',monospace;opacity:.75;padding-top:2px}.sp-facts dd{margin:0;font-weight:600}
+.sp-addr{display:block;white-space:nowrap}
+.toc{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px}
+.toc a{font:11px 'DM Mono',monospace;text-decoration:none;padding:6px 10px;border-radius:999px;border:1px solid currentColor;opacity:.85}
+.toc a:hover{opacity:1}
+.pn{display:flex;justify-content:space-between;font:12px 'DM Mono',monospace;gap:10px}
+.pn a{text-decoration:none;opacity:.9}
+.main{padding:70px 56px 80px;min-width:0}
+.main section{max-width:760px;margin:0 auto 54px}
+.main h2{margin:0 0 14px;font-size:32px;font-weight:800;letter-spacing:-0.02em;display:flex;gap:14px;align-items:baseline}
+.main h2 .n{font:500 13px 'DM Mono',monospace;color:var(--accent)}
+.main h3{margin:26px 0 8px;font-size:19px;font-weight:800}
+.main p{margin:0 0 16px;font-size:17px;line-height:1.65;color:#2b3038}
+.sp-win{margin:22px 0 4px;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 18px 44px #11151b2e;border:1px solid var(--line)}
+.sp-chrome{height:32px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#e6e9e4;font:11px 'DM Mono',monospace;color:#4a514c}
+.sp-chrome i{width:8px;height:8px;border-radius:50%;background:var(--accent)}.sp-chrome i+i,.sp-chrome i+i+i{background:#c9cec8}
+.sp-chrome .sp-url{margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.sp-btn{height:42px;padding:0 18px;display:inline-flex;align-items:center;border-radius:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;font:600 14px 'Hanken Grotesk',sans-serif;cursor:pointer}
+.sp-btn.primary{background:var(--ink);color:#fff}
+.sp-fig{margin:20px 0}.sp-fig img{max-width:100%;display:block;border-radius:8px}
+.sp-fig.dark img{background:#11151b;padding:18px;box-sizing:border-box}
+.sp-fig figcaption{margin-top:8px;font:12px 'DM Mono',monospace;color:var(--muted)}
+.sp-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:10px 0 18px}
+.sp-gallery .sp-fig{margin:0}.sp-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.sp-icons{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}.sp-icons img{aspect-ratio:1;object-fit:contain}
+.sp-list{columns:2 200px;padding:0;margin:0 0 8px;list-style:none;font:14px/1.9 'DM Mono',monospace}
+.sp-list a{text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line)}.sp-list a:hover{border-color:var(--accent)}.sp-list span{color:var(--muted)}
+.sp-code{white-space:pre-wrap;word-break:break-all;background:#11151b;color:#e5e7eb;padding:14px;border-radius:8px;font:12px/1.6 'DM Mono',monospace}
+.sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:8px 0 16px}
+.sp-logo{border:2px solid var(--line);background:#fff;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:center;font:10px 'DM Mono',monospace;color:var(--muted)}
+.sp-logo img{width:100%;height:60px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
+.sp-cmp{margin:22px 0;color:var(--accent)}.sp-cmp-box{border-radius:10px}
+.foot{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.foot a{border:1px solid var(--line);border-radius:10px;padding:18px 20px;text-decoration:none;display:flex;flex-direction:column;gap:4px;background:#fff}
+.foot a:last-child{text-align:right}.foot .mono{font-size:11px;color:var(--muted)}.foot b{font-size:22px}
+@media (max-width:860px){
+  .wrap{display:block}.side{position:static;height:auto;padding:56px 16px 24px}
+  .main{padding:36px 16px 60px}.toc{margin-top:8px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+SP.boot(function (s, sp) {
+  var e = sp.esc, h = '<div class="wrap"><aside class="side">';
+  h += '<a class="home" href="' + sp.home + '">← All sites</a>';
+  h += '<div class="yr">' + e(s.started.replace('c. ', '')) + '</div>';
+  h += '<div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div><h1>' + e(s.name) + '</h1>';
+  h += '<p class="lede">' + e(s.lede) + '</p>' + sp.factsHtml(s);
+  h += '<nav class="toc">' + s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav>';
+  h += '<div class="pn">' + (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '">← ' + e(sp.prev.name) + '</a>' : '<span></span>') +
+    (sp.next ? '<a href="' + sp.url(sp.next.key) + '">' + e(sp.next.name) + ' →</a>' : '') + '</div>';
+  h += '</aside><main class="main">';
+  s.sections.forEach(function (x, k) {
+    h += '<section id="' + sp.slug(x.h) + '"><h2><span class="n">' + String(k + 1).padStart(2, '0') + '</span>' + e(x.h) + '</h2>' + sp.body(x) + '</section>';
+    if (s.compare && s.compare.after === x.h) h += '<section>' + sp.compareHtml(s.compare) + '</section>';
+  });
+  h += '<div class="foot">' +
+    (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← Previous</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +
+    (sp.next ? '<a href="' + sp.url(sp.next.key) + '"><span class="mono">Next →</span><b>' + e(sp.next.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">Back to</span><b>All sites</b></a>') + '</div>';
+  return h + '</main></div>';
+});
+</script>
+</body>
+</html>

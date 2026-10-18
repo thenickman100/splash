@@ -30,6 +30,7 @@ a{color:#f2f4ef}a:hover{color:#ccc}
   <div style="position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
+    <a href="../../index.html" style="height:26px;padding:0 10px;display:flex;align-items:center;margin-left:4px;border-left:1px solid #fff4;color:#fff;font:700 11px monospace;text-decoration:none">ALL</a>
   </div>
   <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
     <div style="font-size:24px;font-weight:800">Old Sites</div>
@@ -57,6 +58,11 @@ a{color:#f2f4ef}a:hover{color:#ccc}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
 var H = 'https://hackahobo.info';
+// splash test: Read more opens the site page chosen in the test bar, for the site on screen.
+var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
+function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
+function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
+function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
 var SITES = [
  {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',color:'#9bd23f',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
  {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',color:'#ff6a5a',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
@@ -69,15 +75,14 @@ var SITES = [
  {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',color:'#5be37c',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
 ];
 var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140};
-var SP = {AI:'R8-AI.dc.html',AJ:'AJ-Drawer.dc.html',AK:'AK-Chapters.dc.html',AL:'AL-Longread.dc.html',AM:'AM-WindowPage.dc.html',AN:'AN-FanPage.dc.html'};
 class Component extends DCLogic {
-  testVals(){ var sp = this.state.sp || 'AI'; return { spHref: SP[sp], spOpts: Object.keys(SP).map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => this.setState({ sp: k }) })) }; }
+  testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
   constructor(p){ super(p); this.state = { i: 3 }; }
   renderVals(){
     var i = this.state.i, n = SITES.length;
     var T = this.testVals();
     return {
-      spHref: T.spHref, spOpts: T.spOpts,
+      spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts,
       cur: SITES[i],
       cards: SITES.map((s, k) => {
         if (k === i) return { name: s.name, yr: s.yr, color: s.color, addr: s.addr, img: s.img, l: 60, t: 70, w: 730, h: 440, a: 0, z: 300, cls: 'on', pick: () => {} };

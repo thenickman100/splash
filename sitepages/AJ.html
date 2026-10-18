@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Sites</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* AJ · Drawer. The site's first window fills the screen; the story is in a drawer over it.
+   Close the drawer to use the site, open it again from the tab. Colors follow the AG main page. */
+:root{--bg:#1e2a24;--panel:#f6f7f4;--ink:#141a17;--muted:#5d6661;--line:#141a171a;--accent:#16803a}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(ellipse at 50% 120%,#2f4438,#1e2a24 60%);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;overflow:hidden}
+a{color:inherit}
+.mono{font-family:'DM Mono',monospace}
+.stage{position:fixed;inset:0;padding:56px 24px 24px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;transition:padding-right .45s cubic-bezier(.2,.8,.2,1)}
+body.open .stage{padding-right:min(560px,46vw)}
+.bar{display:flex;align-items:center;gap:16px;color:#f2f4ef;font-size:14px}
+.bar .home{font-weight:800;text-decoration:none}.bar .sp{flex-grow:1}.bar .mono{font-size:12px;text-decoration:none;color:#c6d0c9}
+.stage .sp-win{flex:1;min-height:0;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;box-shadow:0 20px 60px #0009;background:#000}
+.stage .sp-vp{flex:1;aspect-ratio:auto!important}
+.stage .sp-chrome{height:32px;font-size:11px}
+.sp-chrome{flex:none;display:flex;align-items:center;gap:6px;padding:0 12px;background:#e6e9e4;font:10px 'DM Mono',monospace;color:#4a514c;height:26px}
+.sp-chrome i{width:8px;height:8px;border-radius:50%;background:var(--accent)}.sp-chrome i+i,.sp-chrome i+i+i{background:#c3c8c2}
+.sp-chrome .sp-url{margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,46vw);background:var(--panel);box-shadow:-20px 0 60px #0007;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;z-index:20}
+body.open .drawer{transform:none}
+.tab{position:absolute;left:-44px;top:50%;transform:translateY(-50%);width:44px;height:120px;border:0;border-radius:10px 0 0 10px;background:var(--accent);color:var(--on-accent);cursor:pointer;font:700 11px 'DM Mono',monospace;writing-mode:vertical-rl;letter-spacing:.08em}
+.dhead{padding:56px 34px 18px;border-bottom:1px solid var(--line);flex:none}
+.dhead .kick{font-size:11px;color:var(--accent);font-weight:500}
+.dhead h1{margin:6px 0 8px;font-size:44px;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.dhead .lede{margin:0;font-size:16px;line-height:1.5;color:#36403b}
+.dbody{overflow-y:auto;padding:8px 34px 40px;scrollbar-width:thin}
+.sp-facts{margin:18px 0 0;display:grid;gap:8px;font-size:13px}
+.sp-facts div{display:grid;grid-template-columns:118px 1fr;gap:10px}.sp-facts dt{font:11px 'DM Mono',monospace;color:var(--muted);padding-top:2px}.sp-facts dd{margin:0;font-weight:600}
+.sp-addr{display:block;white-space:nowrap}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;align-items:baseline;gap:12px;font-size:20px;font-weight:800}
+summary::-webkit-details-marker{display:none}
+summary .n{font:500 11px 'DM Mono',monospace;color:var(--muted)}
+summary::after{content:'+';margin-left:auto;font:400 22px 'DM Mono',monospace;color:var(--muted)}
+details[open] summary::after{content:'–'}
+.dbody p{margin:0 0 14px;font-size:15.5px;line-height:1.65;color:#2a312d}
+.dbody h3{margin:20px 0 8px;font-size:16px;font-weight:800}
+.dbody .sp-win{margin:12px 0;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px #0003}
+.sp-btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.sp-btn{height:38px;padding:0 14px;display:inline-flex;align-items:center;border-radius:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer}
+.sp-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.sp-fig{margin:14px 0}.sp-fig img{max-width:100%;display:block;border-radius:8px}
+.sp-fig.dark img{background:#141a17;padding:14px;box-sizing:border-box}
+.sp-fig figcaption{margin-top:6px;font:11px 'DM Mono',monospace;color:var(--muted)}
+.sp-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:8px 0 16px}
+.sp-gallery .sp-fig{margin:0}.sp-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.sp-icons{grid-template-columns:repeat(4,minmax(0,1fr))}.sp-icons img{aspect-ratio:1;object-fit:contain}
+.sp-list{columns:2;padding:0;margin:0 0 8px;list-style:none;font:12.5px/1.9 'DM Mono',monospace}
+.sp-list a{text-decoration:none;border-bottom:1px solid var(--line)}.sp-list span{color:var(--muted)}
+.sp-code{white-space:pre-wrap;word-break:break-all;background:#141a17;color:#e5e9e6;padding:12px;border-radius:8px;font:11px/1.6 'DM Mono',monospace}
+.sp-logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 16px}
+.sp-logo{border:2px solid var(--line);background:#fff;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;align-items:center;font:9.5px 'DM Mono',monospace;color:var(--muted)}
+.sp-logo img{width:100%;height:46px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
+.sp-cmp{margin:12px 0 18px;color:var(--accent)}.sp-cmp-box{border-radius:8px}
+.dfoot{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:24px}
+.dfoot a{border:1px solid var(--line);border-radius:8px;padding:14px;text-decoration:none;display:flex;flex-direction:column;gap:2px;background:#fff}
+.dfoot a:last-child{text-align:right}.dfoot .mono{font-size:10px;color:var(--muted)}.dfoot b{font-size:17px}
+@media (max-width:760px){
+  body{overflow:auto}
+  .stage{position:static;height:62vh;padding:52px 12px 12px}body.open .stage{padding-right:12px}
+  .drawer{position:static;width:auto;transform:none;box-shadow:none}
+  .tab{display:none}.dhead{padding:24px 16px 14px}.dbody{padding:4px 16px 40px;overflow:visible}
+}
+</style>
+</head>
+<body class="open">
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+SP.boot(function (s, sp) {
+  var e = sp.esc, first = sp.firstEmbed(s), h = '';
+  h += '<div class="stage"><div class="bar"><a class="home" href="' + sp.home + '">← All sites</a><span class="sp"></span>' +
+    (sp.prev ? '<a class="mono" href="' + sp.url(sp.prev.key) + '">← ' + e(sp.prev.name) + '</a>' : '') +
+    (sp.next ? '<a class="mono" href="' + sp.url(sp.next.key) + '">' + e(sp.next.name) + ' →</a>' : '') + '</div>' +
+    (first ? sp.embedHtml(first) : '<div class="sp-win"><img src="' + s.thumb + '" alt=""></div>') + '</div>';
+  h += '<aside class="drawer"><button class="tab" aria-label="Show or hide the story">STORY</button><div class="dhead"><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div>' +
+    '<h1>' + e(s.name) + '</h1><p class="lede">' + e(s.lede) + '</p>' + sp.factsHtml(s) + '</div><div class="dbody">';
+  s.sections.forEach(function (x, k) {
+    var o = sp.parts(x);
+    // The first window is the stage, so its section keeps only the text and buttons.
+    var win = x.embed === first ? '' : o.embed;
+    h += '<details' + (k < 2 ? ' open' : '') + '><summary><span class="n">' + String(k + 1).padStart(2, '0') + '</span>' + e(x.h) + '</summary>' +
+      o.text + o.media + win + o.buttons + o.extra + (s.compare && s.compare.after === x.h ? sp.compareHtml(s.compare) : '') + '</details>';
+  });
+  h += '<div class="dfoot">' +
+    (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← Previous</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +
+    (sp.next ? '<a href="' + sp.url(sp.next.key) + '"><span class="mono">Next →</span><b>' + e(sp.next.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">Back to</span><b>All sites</b></a>') + '</div>';
+  return h + '</div></aside>';
+}, function (s, sp) {
+  document.querySelector('.tab').addEventListener('click', function () {
+    document.body.classList.toggle('open');
+    setTimeout(sp.fit, 480);
+  });
+  // Details that open later need their windows sized.
+  document.querySelectorAll('details').forEach(function (d) { d.addEventListener('toggle', sp.fit); });
+});
+</script>
+</body>
+</html>

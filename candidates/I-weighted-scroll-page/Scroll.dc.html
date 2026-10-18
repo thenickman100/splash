@@ -33,6 +33,12 @@ a{color:#15181d}a:hover{color:#555}
 </style>
 </helmet>
 <div style="width:1280px;background:#f6f7f9;color:#15181d;font-family:'Epilogue',sans-serif">
+  <div style="position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
+    <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
+    <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
+    <a href="../../index.html" style="height:26px;padding:0 10px;display:flex;align-items:center;margin-left:4px;border-left:1px solid #fff4;color:#fff;font:700 11px monospace;text-decoration:none">ALL</a>
+  </div>
+
 
   <div class="sec" style="height:380px">
     <div class="gut"><div class="bar" style="width:2px;top:250px;background:#15181d44"></div></div>
@@ -62,7 +68,7 @@ a{color:#15181d}a:hover{color:#555}
         <div class="mono" style="font-size:11px;color:#4d7a12">Flagship</div>
         <div style="font-size:50px;font-weight:800;line-height:.95;letter-spacing:-0.03em">Awesome Stuff</div>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3d434e">I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker. It was one site on two domains. The Webstarts section held the hacking pages and games, because Webstarts had more features, like password-protected pages.</p>
-        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/projects/sites/lawesomel/index.html" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="#" style="border:1.5px solid #15181d">Read more →</a></div>
+        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/projects/sites/lawesomel/index.html" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="{{rmAwesome}}" style="border:1.5px solid #15181d">Read more →</a></div>
       </div>
     </div>
   </div>
@@ -84,7 +90,7 @@ a{color:#15181d}a:hover{color:#555}
         <div class="mono" style="font-size:11px;color:#b3261e">Flagship</div>
         <div style="font-size:50px;font-weight:800;line-height:.95;letter-spacing:-0.03em">Askthenickman</div>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3d434e">I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. It had flash games and secret phone numbers from the Hitchhiker’s Guide. I enjoyed websites with holiday themes and wanted to try it myself, so I made a logo for each holiday.</p>
-        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/projects/sites/askthenickman/index.html" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="#" style="border:1.5px solid #15181d">Read more →</a></div>
+        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/projects/sites/askthenickman/index.html" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="{{rmAsk}}" style="border:1.5px solid #15181d">Read more →</a></div>
       </div>
     </div>
   </div>
@@ -118,7 +124,7 @@ a{color:#15181d}a:hover{color:#555}
           <div class="mono" style="font-size:11px;color:#16803a">Flagship · still running</div>
           <div style="font-size:50px;font-weight:800;line-height:.95;letter-spacing:-0.03em">Hack a HOBO</div>
           <p style="margin:0;font-size:16px;line-height:1.55;color:#3d434e">My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school. It went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul.</p>
-          <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/files/v1/index-v1.html" target="_blank" style="background:#15181d;color:#fff">Open the golden age ↗</a><a class="btn" href="#" style="border:1.5px solid #15181d">Read more →</a></div>
+          <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://hackahobo.info/files/v1/index-v1.html" target="_blank" style="background:#15181d;color:#fff">Open the golden age ↗</a><a class="btn" href="{{rmHobo}}" style="border:1.5px solid #15181d">Read more →</a></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:0;height:40px" class="mono">
@@ -154,7 +160,7 @@ a{color:#15181d}a:hover{color:#555}
         <div class="mono" style="font-size:11px;color:#3c4cc2">Notable</div>
         <div style="font-size:38px;font-weight:800;line-height:1;letter-spacing:-0.02em">Space Atlas</div>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3d434e">My best friend at the Air Force Academy led a capstone team and knew the Welcome Nick site I had built. I led web design. The site taught the future of space, looking ahead to 2038.</p>
-        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://spaceatlas.hackahobo.info/" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="#" style="border:1.5px solid #15181d">Read more →</a></div>
+        <div style="display:flex;gap:10px;margin-top:6px"><a class="btn" href="https://spaceatlas.hackahobo.info/" target="_blank" style="background:#15181d;color:#fff">Open full screen ↗</a><a class="btn" href="{{rmSa}}" style="border:1.5px solid #15181d">Read more →</a></div>
       </div>
     </div>
   </div>
@@ -167,6 +173,11 @@ a{color:#15181d}a:hover{color:#555}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3530}}'>
 var H = 'https://hackahobo.info';
+// splash test: Read more opens the site page chosen in the test bar, for the site on screen.
+var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/I-weighted-scroll-page/Scroll.dc.html';
+function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
+function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
+function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
 var HOLS = [
  {name:'Everyday',img:'./assets/bd2678f8e76c0e53ee461035d49de752.png'},
  {name:'Valentine’s Day',img:'./assets/a9cf981451635f5ab0aa8e3224a7d656.png'},
@@ -179,10 +190,13 @@ var SMALLS = [
  {name:'Home',year:'2016',bw:2,color:'#2a9fbd',img:'./assets/85aa8e4e6bcfff3ec51d2bda3a8b00ac.jpg',link:H+'/projects/sites/home-original/index.php',line:'My own start page. It greeted me with Welcome Nick.'}
 ];
 class Component extends DCLogic {
+  testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
   constructor(p){ super(p); this.state = { a: 50, h: 50, hol: 0 }; }
   renderVals(){
     var a = this.state.a, h = this.state.h, hol = this.state.hol;
+    var T = this.testVals();
     return {
+      spOpts: T.spOpts, rmAwesome: spHref(T.sp, 'awesome'), rmAsk: spHref(T.sp, 'ask'), rmHobo: spHref(T.sp, 'hobo'), rmSa: spHref(T.sp, 'spaceatlas'),
       aPos: a, aClip: 100 - a, aAddr: a > 50 ? 'lawesomel.webs.com' : 'awesomestuffr.webstarts.com',
       aSlide: (e) => this.setState({ a: Number(e.target.value) }),
       hPos: h, hClip: 100 - h, hSlide: (e) => this.setState({ h: Number(e.target.value) }),

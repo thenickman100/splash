@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Sites</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* AM · Window page. The page is one browser window like the windows on the AE, AG and M main pages.
+   Each section is a browser tab; back and forward go to the previous and next site. */
+:root{--desk:#e7eaee;--ink:#11151b;--muted:#5b626c;--line:#11151b1f;--accent:#16803a}
+body{margin:0;min-height:100vh;background:var(--desk);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;
+  background-image:radial-gradient(circle at 20% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 55%)}
+a{color:inherit}
+.mono{font-family:'DM Mono',monospace}
+.desk{max-width:1180px;margin:0 auto;padding:60px 28px 40px}
+.home{display:inline-block;margin-bottom:14px;font-weight:800;text-decoration:none}
+.window{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 30px 80px #11151b33;border:1px solid #11151b26}
+.tabs{display:flex;align-items:flex-end;gap:2px;padding:10px 10px 0;background:#d9dde2;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:none;height:34px;max-width:220px;padding:0 16px;border:0;border-radius:9px 9px 0 0;background:transparent;color:#4b525c;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.tabs button:hover{background:#ffffff80}
+.tabs button.on{background:#fff;color:var(--ink)}
+.tabs button img{width:14px;height:14px}
+.tabs .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.nav{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line)}
+.nav a,.nav span.off{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;text-decoration:none;font-size:16px;color:#3a414a}
+.nav a:hover{background:#11151b0f}.nav span.off{color:#c0c5cc}
+.nav .url{flex:1;height:32px;border-radius:999px;background:#f0f2f4;display:flex;align-items:center;padding:0 16px;font:12.5px 'DM Mono',monospace;color:#3a414a;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+.nav .url b{color:var(--ink);font-weight:500}
+.page{padding:44px 54px 54px;min-height:520px}
+.pane{display:none}.pane.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.about{display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start}
+.about .kick{font-size:12px;color:var(--accent)}
+.about h1{margin:8px 0 16px;font-size:clamp(46px,6.5vw,88px);font-weight:800;line-height:.9;letter-spacing:-0.045em}
+.about .lede{margin:0 0 24px;font-size:21px;line-height:1.5;color:#2d333b}
+.logo{max-width:100%;max-height:120px;display:block;margin-bottom:8px}
+.card{border:1px solid var(--line);border-radius:10px;padding:20px;background:#fafbfc}
+.sp-facts{margin:0;display:grid;gap:12px;font-size:14px}
+.sp-facts div{display:grid;gap:2px}.sp-facts dt{font:11px 'DM Mono',monospace;color:var(--muted)}.sp-facts dd{margin:0;font-weight:600}
+.sp-addr{display:block;white-space:nowrap}
+.go{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.go button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer}
+.go button:hover{border-color:var(--accent)}
+.pane h2{margin:0 0 18px;font-size:34px;font-weight:800;letter-spacing:-0.02em}
+.pane h3{margin:24px 0 8px;font-size:19px;font-weight:800}
+.pane p{margin:0 0 16px;max-width:760px;font-size:17px;line-height:1.65;color:#2b3038}
+.pane .sp-win{margin:20px 0 4px;border-radius:8px;overflow:hidden;border:1px solid var(--line);box-shadow:0 12px 34px #11151b24}
+.sp-chrome{height:28px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#eceef1;font:11px 'DM Mono',monospace;color:#4b525c}
+.sp-chrome i{width:8px;height:8px;border-radius:50%;background:#c6cbd2}
+.sp-chrome .sp-url{margin-left:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.sp-btn{height:42px;padding:0 18px;display:inline-flex;align-items:center;border-radius:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;font:600 14px 'Hanken Grotesk',sans-serif;cursor:pointer}
+.sp-btn.primary{background:var(--ink);color:#fff}
+.sp-fig{margin:20px 0}.sp-fig img{max-width:100%;display:block;border-radius:8px}
+.sp-fig.dark img{background:var(--ink);padding:18px;box-sizing:border-box}
+.sp-fig figcaption{margin-top:8px;font:12px 'DM Mono',monospace;color:var(--muted)}
+.sp-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:10px 0 18px}
+.sp-gallery .sp-fig{margin:0}.sp-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.sp-icons{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}.sp-icons img{aspect-ratio:1;object-fit:contain}
+.sp-list{columns:3 180px;padding:0;margin:0 0 8px;list-style:none;font:13.5px/1.9 'DM Mono',monospace}
+.sp-list a{text-decoration:none;border-bottom:1px solid var(--line)}.sp-list span{color:var(--muted)}
+.sp-code{white-space:pre-wrap;word-break:break-all;background:var(--ink);color:#e5e7eb;padding:14px;border-radius:8px;font:12px/1.6 'DM Mono',monospace}
+.sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:10px 0 16px}
+.sp-logo{border:2px solid var(--line);background:#fff;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:center;font:10px 'DM Mono',monospace;color:var(--muted)}
+.sp-logo img{width:100%;height:62px;object-fit:contain}.sp-logo.on{border-color:var(--accent)}
+.sp-cmp{margin:20px 0;color:var(--accent)}.sp-cmp-box{border-radius:8px}
+.status{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;border-top:1px solid var(--line);background:#f6f7f9;font:11px 'DM Mono',monospace;color:var(--muted)}
+.status a{text-decoration:none}.status a:hover{color:var(--ink)}
+@media (max-width:820px){
+  .desk{padding:52px 10px 20px}.page{padding:26px 16px 36px}
+  .about{grid-template-columns:1fr;gap:24px}.about .lede{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+SP.boot(function (s, sp) {
+  var e = sp.esc, addr = s.addresses[0] || s.name;
+  var h = '<div class="desk"><a class="home" href="' + sp.home + '">← All sites</a><div class="window">';
+  h += '<div class="tabs" role="tablist"><button class="on" data-t="0" role="tab"><img src="' + s.favicon + '" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'dot\'}))">' + e(s.name) + '</button>' +
+    s.sections.map(function (x, k) { return '<button data-t="' + (k + 1) + '" role="tab">' + e(x.h) + '</button>'; }).join('') + '</div>';
+  h += '<div class="nav">' + (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '" title="' + e(sp.prev.name) + '">←</a>' : '<span class="off">←</span>') +
+    (sp.next ? '<a href="' + sp.url(sp.next.key) + '" title="' + e(sp.next.name) + '">→</a>' : '<span class="off">→</span>') +
+    '<div class="url">http://<b>' + e(addr) + '</b><span class="path"></span></div></div>';
+  h += '<div class="page"><div class="pane on" data-p="0"><div class="about"><div><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div><h1>' + e(s.name) + '</h1>' +
+    '<p class="lede">' + e(s.lede) + '</p><div class="go">' + s.sections.map(function (x, k) { return '<button data-go="' + (k + 1) + '">' + e(x.h) + ' →</button>'; }).join('') + '</div></div>' +
+    '<div class="card">' + (s.logo ? '<img class="logo" src="' + s.logo + '" alt="' + e(s.name) + ' logo" onerror="this.remove()">' : '') + sp.factsHtml(s) + '</div></div></div>';
+  s.sections.forEach(function (x, k) {
+    h += '<div class="pane" data-p="' + (k + 1) + '"><h2>' + e(x.h) + '</h2>' + sp.body(x) + (s.compare && s.compare.after === x.h ? sp.compareHtml(s.compare) : '') + '</div>';
+  });
+  h += '</div><div class="status">' + (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '">← ' + e(sp.prev.name) + '</a>' : '<a href="' + sp.home + '">← All sites</a>') +
+    '<span>Old Sites</span>' + (sp.next ? '<a href="' + sp.url(sp.next.key) + '">' + e(sp.next.name) + ' →</a>' : '<a href="' + sp.home + '">All sites →</a>') + '</div>';
+  return h + '</div></div>';
+}, function (s, sp) {
+  var tabs = document.querySelectorAll('.tabs button'), panes = document.querySelectorAll('.pane'), path = document.querySelector('.url .path');
+  var show = function (t) {
+    tabs.forEach(function (b) { b.classList.toggle('on', +b.dataset.t === t); });
+    panes.forEach(function (p) { p.classList.toggle('on', +p.dataset.p === t); });
+    path.textContent = t ? '/' + sp.slug(s.sections[t - 1].h) : '';
+    try { history.replaceState(null, '', t ? '#' + sp.slug(s.sections[t - 1].h) : location.pathname + location.search); } catch (e) {}
+    sp.fit();
+  };
+  tabs.forEach(function (b) { b.addEventListener('click', function () { show(+b.dataset.t); }); });
+  document.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { show(+b.dataset.go); }); });
+  // A logo that loads a window in another tab switches to that tab.
+  document.querySelectorAll('.sp-logos').forEach(function (box) {
+    box.addEventListener('click', function (ev) {
+      if (!ev.target.closest('.sp-logo')) return;
+      var w = document.querySelector('[data-embed="' + box.dataset.target + '"]');
+      var p = w && w.closest('.pane');
+      if (p && !p.classList.contains('on')) show(+p.dataset.p);
+    });
+  });
+  var hash = location.hash.slice(1);
+  s.sections.forEach(function (x, k) { if (sp.slug(x.h) === hash) show(k + 1); });
+});
+</script>
+</body>
+</html>

@@ -33,6 +33,12 @@ a{color:#f4f1ea}a:hover{color:#ccc}
 </style>
 </helmet>
 <div style="width:1280px;height:800px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,#3c3830,#262420 60%);color:#f4f1ea;font-family:'Hanken Grotesk',sans-serif">
+  <div style="position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
+    <span style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span>
+    <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
+    <a href="../../index.html" style="height:26px;padding:0 10px;display:flex;align-items:center;margin-left:4px;border-left:1px solid #fff4;color:#fff;font:700 11px monospace;text-decoration:none">ALL</a>
+  </div>
+
   <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
     <div style="font-size:24px;font-weight:800">Old Sites</div>
     <div class="mono" style="font-size:11px;color:#b3ac9c">Each site in a browser from its own time</div>
@@ -44,7 +50,7 @@ a{color:#f4f1ea}a:hover{color:#ccc}
     <div style="font-size:30px;font-weight:800;line-height:1">{{cur.name}}</div>
     <p style="margin:0;font-size:14px;line-height:1.55;color:#dcd6c8">{{cur.blurb}}</p>
     <div style="display:flex;gap:10px;margin-top:auto">
-      <a href="SitePage.dc.html" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.color}};color:#262420;text-decoration:none;font-weight:800">Read more →</a>
+      <a href="{{spHref}}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.color}};color:#262420;text-decoration:none;font-weight:800">Read more →</a>
       <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #5a554a;text-decoration:none;font-weight:600">Open full screen ↗</a>
     </div>
   </div>
@@ -59,6 +65,12 @@ a{color:#f4f1ea}a:hover{color:#ccc}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
 var H = 'https://hackahobo.info';
+// splash test: Read more opens the site page chosen in the test bar, for the site on screen.
+var SPD = ['AI','AJ','AK','AL','AM','AN'], SPFROM = '../candidates/V-fan-of-era-browsers/EraFan.dc.html';
+function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
+function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
+function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
+var KEYS = {'Awesome Stuff':'awesome','Askthenickman':'ask','Titans Softball':'titans','Hack a HOBO':'hobo','BV Homework':'bv','EnGen NextGen':'engen','Home':'home','Space Atlas':'spaceatlas'};
 var SITES = [
  {name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',era:'e0',color:'#9bd23f',addr:'http://lawesomel.webs.com/',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
  {name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',era:'e0',color:'#ff6a5a',addr:'http://askthenickman.webs.com/',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
@@ -72,10 +84,13 @@ var SITES = [
 ];
 var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140};
 class Component extends DCLogic {
+  testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
   constructor(p){ super(p); this.state = { i: 0 }; }
   renderVals(){
     var i = this.state.i, n = SITES.length;
+    var T = this.testVals();
     return {
+      spHref: spHref(T.sp, KEYS[SITES[i].name]), spOpts: T.spOpts,
       cur: SITES[i],
       cards: SITES.map((s, k) => {
         var base = { name: s.name, yr: s.yr, era: s.era, addr: s.addr, img: s.img };
