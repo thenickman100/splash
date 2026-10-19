@@ -866,7 +866,7 @@
       { id: 'tocNum', label: 'Current chapter in the contents', slot: 1, neutral: '#141414' },
       { id: 'mark', label: 'Facts box line and selected logo', slot: 1, neutral: '#141414' } ] },
     // AN is the site page paired with AG.
-    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:1},engen:{glow:2,year:3,kick:2,btnFill:4,bar:2},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
+    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:0},engen:{glow:2,year:3,kick:2,btnFill:4,bar:2},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
       { id: 'glow', label: 'Glow behind the top section', slot: 1, neutral: '#555555' },
       { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
       { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },

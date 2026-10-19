@@ -8,8 +8,8 @@
 // group of pictures under a smaller heading, s2.o0 a logo, s2.fx the effect buttons and s2.song the song button.
 // The windows at the top are t0, t1…, with the song beside them as song and its links as tl0, tl1….
 (function () {
-  // The key changed when the first review was published, since piece ids follow data.js's order.
-  var KEY = 'splash-content-2';
+  // The key changes each time a review is published, since piece ids follow data.js's order.
+  var KEY = 'splash-content-3';
   var ORIG = JSON.parse(JSON.stringify(window.SITES));
 
   // Suggested cuts, shown in content.html for Nick to accept or ignore. Nothing here is applied by itself.

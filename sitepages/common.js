@@ -147,7 +147,9 @@
     '.sp-viewer .x{top:12px;right:16px}.sp-viewer .l{left:12px;top:50%}.sp-viewer .r{right:12px;top:50%}' +
     '#sp-fx{position:fixed;inset:0;pointer-events:none;z-index:9000}' +
     '.sp-trail{position:fixed;pointer-events:none;z-index:9001;color:#ffd23f;font-size:16px;transform:translate(-50%,-50%);transition:opacity .7s,transform .7s}' +
-    '.sp-btn.on{outline:2px solid currentColor;outline-offset:2px}';
+    '.sp-btn.on{outline:2px solid currentColor;outline-offset:2px}' +
+    // Pictures on a dark backing (logos, icons) are shown whole, never cropped to the gallery's shape.
+    '.sp-gallery .sp-fig.dark img{object-fit:contain}';
 
   // Scale every live window to its column width.
   function fit() {
@@ -192,8 +194,6 @@
           w.querySelector('.sp-url').textContent = b.dataset.addr;
           document.querySelectorAll('[data-open="' + t + '"]').forEach(function (a) { a.href = b.dataset.src; });
           box.querySelectorAll('.sp-logo').forEach(function (x) { x.classList.toggle('on', x === b); });
-          var r = w.getBoundingClientRect();
-          if (r.top < 0 || r.bottom > innerHeight) w.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
       });
     });

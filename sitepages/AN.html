@@ -91,14 +91,16 @@ a{color:inherit}
 <script src="common.js"></script>
 <script>
 // Cards: the site's windows (as screenshots), then its pictures.
-// The fan: the site's top windows in order ({ ref } is a section's own window), then any other section windows.
+// The fan: the site's top windows in order ({ ref } is a section's own window), then any other section windows
+// except the ones holiday logos load into, which stay with their logos.
 function fanWindows(s) {
   var own = s.sections.filter(function (x) { return x.embed; }).map(function (x) { return x.embed; }), c = [];
+  var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
   (s.top || []).forEach(function (t) {
     var e = t.ref ? own.filter(function (o) { return o.id === t.ref; })[0] : t;
     if (e && c.indexOf(e) < 0) c.push(e);
   });
-  own.forEach(function (e) { if (c.indexOf(e) < 0) c.push(e); });
+  own.forEach(function (e) { if (c.indexOf(e) < 0 && !(e.id && targets.indexOf(e.id) >= 0)) c.push(e); });
   return c;
 }
 function cardsFor(s) {
@@ -183,12 +185,11 @@ SP.boot(function (s, sp) {
   });
   addEventListener('resize', lay);
   lay();
-  // Holiday logos whose window is at the top load into that window: it comes forward and the page scrolls up to it.
+  // Holiday logos whose window is at the top load into that window, which comes forward (the page stays put).
   SP.onLogo = function (t, src, addr) {
     var k = -1; cards.forEach(function (c, i) { if (c.id === t) k = i; });
     if (k < 0) return false;
     cards[k].link = src; els[k].querySelector('.ob-url').textContent = addr; cur = k; lay();
-    document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
     return true;
   };
 });

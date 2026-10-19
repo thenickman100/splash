@@ -35,10 +35,9 @@
           media: [{ img: 'img/toolbar-2010.png', cap: 'The Awesome Stuff toolbar in Internet Explorer, 2010' }]
         },
         {
-          h: 'Two domains',
+          h: 'Games and scripting',
           p: ['Awesome Stuff was one site on two domains. The main site was at lawesomel.webs.com, and the hacking scripts and games were in a section at awesomestuffr.webstarts.com. Webstarts had more features than webs.com, like password-protected pages. I tried to make that section look the same as the main site, but I didn’t do very well. It’s somehow still online.',
             'The games page from the Webstarts section is still online. It lists the games I made in GameMaker and posted to YoYo Games, along with Planetary Ballistics, the HD Masters games, and a PowerPoint game made by my friend Harry. The downloads below are the original files. The GameMaker games are Windows programs from around 2008, so they may need compatibility mode or a virtual machine running an older version of Windows to work on a modern computer. Harry’s PowerPoint games play as slide shows.'],
-          embed: { addr: 'http://awesomestuffr.webstarts.com/', src: S + 'awesomestuff/index.html', w: 1280, h: 900, img: 'img/awesome-webstarts.jpg', title: 'Awesome Stuff games page' },
           lists: [
             { h: 'Games I made', items: [
               ['Sepy', G + 'sepy.exe'], ['Awesome Pac Guy', G + 'Awesome%20pac%20guy.exe'], ['Old Pac Guy', G + 'Old%20pac%20guy.exe'],
@@ -83,7 +82,7 @@
       addresses: ['askthenickman.webs.com', 'askthenickman.net23.net', 'askthenickman.com'],
       evolvedInto: 'Hack a HOBO',
       lede: 'A site I built in Microsoft Word and later used mostly for games.',
-      top: [{ ref: 'atn' }, { addr: 'http://askthenickman.webs.com/', src: ATN + 'index-techno.html', w: 1280, h: 800, img: 'img/ask-techno.jpg', title: 'Techno home page' }],
+      top: [{ ref: 'atn' }, { addr: 'http://askthenickman.com/', src: ATN + 'index-techno.html', w: 1280, h: 800, img: 'img/ask-techno.jpg', title: 'Techno home page' }],
       sections: [
         {
           h: 'Ask a Ninja',
@@ -120,7 +119,7 @@
             { name: 'Halloween', img: L + 'askthenickman/holidays/halloween.png', src: ATN + 'Holidays/halloween.html', addr: 'http://askthenickman.webs.com/Holidays/halloween.html' },
             { name: 'Christmas', img: L + 'askthenickman/holidays/christmas.png', src: ATN + 'Holidays/christmas.html', addr: 'http://askthenickman.webs.com/Holidays/christmas.html' },
             { name: 'Everyday logo', img: L + 'askthenickman/original-cropped.png', src: ATN + 'index.html', addr: 'http://askthenickman.webs.com/' },
-            { name: '“Techno blur” redesign', img: L + 'askthenickman/askthenickmantechnoblur.jpg', src: ATN + 'index-techno.html', addr: 'http://askthenickman.webs.com/' }
+            { name: '“Techno blur” redesign', img: L + 'askthenickman/askthenickmantechnoblur.jpg', src: ATN + 'index-techno.html', addr: 'http://askthenickman.com/' }
           ] }
         },
         {
@@ -167,11 +166,10 @@
       top: [{ addr: 'http://www.hackahobo.info/', src: H + '/files/v1/index-v1.html', w: 1100, h: 760, img: 'img/hobo-2012.jpg', title: '2011 Edition, as of November 6, 2012' },
         { addr: 'https://hackahobo.info/', src: H + '/index-v2.php', w: 1100, h: 760, img: 'img/hobo-2024.jpg', title: '2024 Edition' },
         { id: 'hah', addr: 'https://hackahobo.info/?theme=original', src: H + '/?theme=original', w: 1100, h: 760, img: 'img/hobo-2026.jpg', title: '2026 Edition' }],
-      topLinks: [{ text: 'Compare 2011, 2024, and 2026', href: H + '/files/version-compare.html' }],
       sections: [
         {
           h: 'Origins',
-          p: ['In 2011, I started transitioning the games from Askthenickman to their own site. My sister came up with the new site’s name, Hack a HOBO. We wanted the site themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
+          p: ['In 2011, I started transitioning the games from Askthenickman to their own site. My sister came up with the new site’s name, Hack a HOBO. We wanted it themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
         },
         {
           h: 'Profiles',
@@ -182,13 +180,14 @@
           p: [
             'For years before it ended, browsers warned that Flash was going away and started blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I let the site die off. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
             'The 2024 Edition made the site modern, so it works in current browsers and on phones, and it brought the games back. The site now runs Flash games with Ruffle, Java games with CheerpJ, and Shockwave games with DirPlayer. Only a handful of the Flash games still aren’t fully working in Ruffle. DirPlayer only took off in the past year, and soon almost every Shockwave game will be fully playable. Previews of its latest GitHub build show near-perfect emulation of the complicated 3D games of the past.',
-            'The 2026 Edition was an overhaul to fix design problems that had been on the site for over a decade, which I finally had ideas and fixes for. The first fix was the left sidebar, which now holds a featured game and the navigation tools. The second was game containers on the home page, which let me give the site custom holiday themes. The holidays I most wanted were Halloween and Christmas, and the containers made those themes possible by letting me use more colors. I’ve always wanted snow to collect on the game containers, and I plan to have that working by Christmas 2027.'
+            'The 2026 Edition was an overhaul to fix design problems that had been on the site for over a decade, which I finally had ideas and fixes for. The first fix was the left sidebar, which now holds a featured game and the navigation tools. The second was game containers on the home page, which let me give the site custom holiday themes. The holidays I most wanted were Halloween and Christmas, and the containers made those themes possible by letting me use more colors in the design. I’ve always wanted snow to collect on the game containers, and I plan to have that working by Christmas 2027.'
           ]
         },
         {
           h: 'Holiday logos',
           p: ['Click a logo to load that theme on the live site. Hover over a logo to see its animated version.'],
-          logos: { target: 'hah', items: [
+          embed: { id: 'themes', addr: 'https://hackahobo.info/?theme=original', src: H + '/?theme=original', w: 1100, h: 760, img: 'img/hobo-2026.jpg', title: 'Holiday themes' },
+          logos: { target: 'themes', items: [
             { name: 'Original', img: H + '/files/hackahobo.png', hover: H + '/files/hackahoboover.gif', src: H + '/?theme=original', addr: 'https://hackahobo.info/?theme=original' },
             { name: 'Valentine’s Day', img: H + '/files/hackahobo-vday.png', hover: H + '/files/hackahoboover-vday.gif', src: H + '/?theme=valentines', addr: 'https://hackahobo.info/?theme=valentines' },
             { name: 'St. Patrick’s Day', img: H + '/files/hackahobo-stpattys.png', hover: H + '/files/hackahoboover-stpattys.gif', src: H + '/?theme=stpattys', addr: 'https://hackahobo.info/?theme=stpattys' },
@@ -238,7 +237,7 @@
       sections: [
         {
           h: 'Commission',
-          p: ['I had to get in shape for basic training. My best friend had a friend who was very fit, so I asked him to be my personal trainer. He had a girlfriend who wanted a website, and he said he’d train me if I made it. She wanted to build her resume for college, so she was starting a club called EnGen NextGen, the next generation of engineers, which would meet weekly with professional engineers. I worked hard to make the site engineering themed. The front page showcased the club, which I joined. We did photo shoots for the site’s photos, someone wrote blog entries that I uploaded, and there was a calendar of the club’s events. The club was mostly there to help people get into college, so it didn’t last.']
+          p: ['I had to get in shape for basic training. My best friend had a friend who was very fit, so I asked him to be my personal trainer. He had a girlfriend who wanted a website, and he said he’d train me if I made it for her. She wanted to build her resume for college, so she started a club called EnGen NextGen, which would meet weekly with professional engineers. I worked hard to make the site engineering themed. The front page showcased the club, which I joined. We did photo shoots for the site’s photos, someone wrote blog entries that I uploaded, and there was a calendar of the club’s events. The club was mostly there to help people get into college, so it didn’t last long.']
         },
         {
           h: 'Competition',
@@ -246,7 +245,7 @@
         },
         {
           h: 'Domain expiry',
-          p: ['Later I used the site for my own blog, where the club’s blog had been. I had a communications class where we had to keep a blog and were graded on our posts, and I hosted mine on engennextgen.org. When the domain expired around 2015, everything on it was lost, including the version I worked so hard on and entered in the competition. I think I kept all the files on the web host and never saved them on my own computer. The only code that survived is the first version, from August 2014, saved on an old backup drive along with two of my class posts.']
+          p: ['Later I used the site for my own blog, where the club’s blog had been. I had a communications class where we had to keep a blog and were graded on our posts, and I hosted mine on engennextgen.org. When the domain expired around 2015, everything on it was lost, including the version I worked so hard on and entered in the competition. For some reason, I had kept all the files on the server and never saved them on my own computer. There were a few very old builds of the site that I was able to recover, but they were missing many months of work done before the competition. I tried my best to recreate what I could.']
         },
         {
           h: 'Notable milestones',
@@ -267,7 +266,7 @@
       logo: L + 'home-original/logo-transparent.png',
       thumb: 'img/home.jpg',
       addresses: ['localhost/home'],
-      lede: 'The start page I built for myself. I rebuilt it in 2018 and still use it.',
+      lede: 'The start page I built to help keep me organized. I rebuilt it in 2018 and still use it today.',
       top: [{ addr: 'http://localhost/home/', src: S + 'home-original/index.php', w: 1280, h: 900, img: 'img/home.jpg', title: 'Home, first version' }],
       sections: [
         {
@@ -323,6 +322,10 @@
               'other-satelite1', 'rocket-logo-3', 'rocket-logo-4', 'satellite2', 'space-thing1', 'tank-thing1'
             ].map(function (n) { return { img: 'img/sa-icons/custom-' + n + '.png', cap: '', dark: true }; }) }
           ]
+        },
+        {
+          h: 'Lost builds',
+          p: ['I kept archives of every version of Space Atlas, codenamed Newton, from v1 through v8. I loaned out my hard drive for Space Symposium and never got it back, and it turned out the only copies of v1 through v6 were on that drive, so they’re mostly lost for good. All that’s left of the old builds are the photos and videos I took with my phone.']
         }
       ]
     }
