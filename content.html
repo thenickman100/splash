@@ -73,7 +73,7 @@ button{font:600 13px system-ui,sans-serif;padding:7px 12px;border-radius:8px;bor
   function count(k) { var s = st(k), n = s.cut.length, r = Object.keys(s.text).length; return (n ? n + ' cut' : '') + (n && r ? ', ' : '') + (r ? r + ' rewritten' : '') || 'No changes'; }
 
   function row(site, it, s) {
-    var cut = s.cut.indexOf(it.id) >= 0, sec = 's' + it.sec, secCut = it.kind !== 'section' && s.cut.indexOf(sec) >= 0;
+    var cut = s.cut.indexOf(it.id) >= 0, sec = 's' + it.sec, secCut = it.kind !== 'section' && it.sec >= 0 && s.cut.indexOf(sec) >= 0;
     var sug = (C.suggest[site.key] || {})[it.id], edit = it.text != null, changed = s.text[it.id] != null;
     var body = it.kind === 'section'
       ? '<span class="kind">Section</span><span class="ed' + (changed ? ' changed' : '') + '" contenteditable="plaintext-only" data-k="' + site.key + '" data-id="' + it.id + '">' + esc(changed ? s.text[it.id] : it.text) + '</span>'
@@ -93,8 +93,9 @@ button{font:600 13px system-ui,sans-serif;padding:7px 12px;border-radius:8px;bor
       '<div class="links">See it: <a href="sitepages/AN.html?site=' + site.key + '">AN</a> <a href="sitepages/AI.html?site=' + site.key + '">AI</a> <a href="sitepages/AK.html?site=' + site.key + '">AK</a></div>' +
       '<div class="lede"><span class="lbl">Line under the name</span><span class="ed' + (s.text.lede != null ? ' changed' : '') + '" contenteditable="plaintext-only" data-k="' + site.key + '" data-id="lede">' + esc(s.text.lede != null ? s.text.lede : site.lede) + '</span>' +
       (s.text.lede != null ? '<div class="rw">Rewritten<button data-undo="lede" data-k="' + site.key + '">Put back the original</button></div>' : '') + '</div>';
-    var cur = -1;
-    its.forEach(function (it) {
+    var cur = -1, tops = its.filter(function (it) { return it.sec < 0; });
+    if (tops.length) html += '<div class="sec"><span class="kind">At the top of the page</span>' + tops.map(function (it) { return row(site, it, s); }).join('') + '</div>';
+    its.filter(function (it) { return it.sec >= 0; }).forEach(function (it) {
       if (it.kind === 'section') { if (cur >= 0) html += '</div>'; html += '<div class="sec">'; cur = it.sec; }
       html += row(site, it, s);
     });

@@ -36,7 +36,8 @@ a{color:inherit}
 .hero.one{height:640px}@keyframes lvin{from{opacity:0}to{opacity:1}}
 .lv iframe{border:0;transform-origin:0 0;background:#fff}
 .cap{position:absolute;left:520px;right:80px;top:528px;z-index:300;display:flex;align-items:center;gap:14px;font:12px 'DM Mono',monospace;color:var(--p-cap)}
-.cap a{height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:8px;background:var(--p-btnFill);color:var(--p-btnText);text-decoration:none;font:800 13px 'Hanken Grotesk',sans-serif;flex:none}
+.cap .sp-btn{height:38px;font-size:13px;flex:none}
+.cap a.open{height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:8px;background:var(--p-btnFill);color:var(--p-btnText);text-decoration:none;font:800 13px 'Hanken Grotesk',sans-serif;flex:none}
 .story{display:grid;grid-template-columns:300px 1fr;gap:60px;max-width:1180px;margin:0 auto;padding:60px 50px 40px}
 .side{position:sticky;top:60px;align-self:start;display:flex;flex-direction:column;gap:20px}
 .sp-facts{margin:0;display:grid;gap:12px;font-size:14px}
@@ -90,12 +91,18 @@ a{color:inherit}
 <script src="common.js"></script>
 <script>
 // Cards: the site's windows (as screenshots), then its pictures.
-// Cards: the site's versions only, as live windows. Each section's window is a version, plus any extra versions.
+// The fan: the site's top windows in order ({ ref } is a section's own window), then any other section windows.
+function fanWindows(s) {
+  var own = s.sections.filter(function (x) { return x.embed; }).map(function (x) { return x.embed; }), c = [];
+  (s.top || []).forEach(function (t) {
+    var e = t.ref ? own.filter(function (o) { return o.id === t.ref; })[0] : t;
+    if (e && c.indexOf(e) < 0) c.push(e);
+  });
+  own.forEach(function (e) { if (c.indexOf(e) < 0) c.push(e); });
+  return c;
+}
 function cardsFor(s) {
-  var c = [];
-  s.sections.forEach(function (x) { if (x.embed) c.push(x.embed); });
-  (s.versions || []).forEach(function (v) { c.push(v); });
-  return c.map(function (e) { return { addr: e.addr, img: e.img, cap: e.title, link: e.src, ew: e.w }; });
+  return fanWindows(s).map(function (e) { return { id: e.id, addr: e.addr, img: e.img, cap: e.title, link: e.src, ew: e.w }; });
 }
 SP.boot(function (s, sp) {
   var e = sp.esc, cards = cardsFor(s), h = '<header class="hero"><div class="in">';
@@ -108,15 +115,19 @@ SP.boot(function (s, sp) {
     h += '<button class="c ob" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><i></i><i></i><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
       '<span class="body"><img src="' + c.img + '" alt=""></span></button>';
   });
-  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
+  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>' +
+    // The site's song and links go beside the top window.
+    (s.song ? '<button class="sp-btn" data-song="' + s.song.src + '" data-play="' + e(s.song.play) + '" data-stop="' + e(s.song.stop) + '">' + e(s.song.play) + '</button>' : '') +
+    (s.topLinks || []).map(function (l) { return '<a class="sp-btn" href="' + l.href + '" target="_blank" rel="noopener">' + e(l.text) + ' ↗</a>'; }).join('') +
+    '</div></div></header>';
   h += '<div class="story"><aside class="side">' + sp.factsHtml(s) + '<nav class="toc">' +
     s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav></aside><div>';
-  var embedded = s.sections.filter(function (x) { return x.embed; });
+  var embedded = fanWindows(s);
   var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
   s.sections.forEach(function (x) {
     // A window already in the fan at the top isn't repeated here; its section links up to it instead.
     // Windows the holiday logos load into stay.
-    var k = x.embed ? embedded.indexOf(x) : -1, top = k >= 0 && !(x.embed.id && targets.indexOf(x.embed.id) >= 0);
+    var k = x.embed ? embedded.indexOf(x.embed) : -1, top = k >= 0 && !(x.embed.id && targets.indexOf(x.embed.id) >= 0);
     h += '<section id="' + sp.slug(x.h) + '"><h2>' + e(x.h) + '</h2>' +
       sp.body(x, top ? { noEmbed: true, btn: '<button class="sp-btn" data-card="' + k + '">See it at the top ↑</button>' } : null) + '</section>';
   });
@@ -172,6 +183,14 @@ SP.boot(function (s, sp) {
   });
   addEventListener('resize', lay);
   lay();
+  // Holiday logos whose window is at the top load into that window: it comes forward and the page scrolls up to it.
+  SP.onLogo = function (t, src, addr) {
+    var k = -1; cards.forEach(function (c, i) { if (c.id === t) k = i; });
+    if (k < 0) return false;
+    cards[k].link = src; els[k].querySelector('.ob-url').textContent = addr; cur = k; lay();
+    document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' });
+    return true;
+  };
 });
 </script>
 </body>

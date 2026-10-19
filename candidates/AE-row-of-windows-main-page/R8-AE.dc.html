@@ -8,6 +8,7 @@
 <script src="./vendor/react-dom.js"></script>
 <link rel="stylesheet" href="../../browser.css">
 <script src="../../palette.js"></script>
+<script src="../../favicon.js"></script>
 <script src="../../browsernav.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -149,6 +150,7 @@ class Component extends DCLogic {
   renderVals(){
     var i = this.state.i, cw = W[SITES[i].tier];
     PALETTE.showing(SITES[i].key);
+    siteIcon(SITES[i].key);
     var T = this.testVals();
     var F = this.state.fit;
     if (F.mob) return this.phone(i, T, F);

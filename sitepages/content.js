@@ -6,41 +6,15 @@
 // A piece's id is its place in data.js: s2 is the third section, s2.p0 its first paragraph, s2.m0 a picture,
 // s2.e its window, s2.b0 a button, s2.l0 a download list, s2.x0 a script, s2.g0 a gallery picture, s2.u0 a
 // group of pictures under a smaller heading, s2.o0 a logo, s2.fx the effect buttons and s2.song the song button.
+// The windows at the top are t0, t1…, with the song beside them as song and its links as tl0, tl1….
 (function () {
-  var KEY = 'splash-content';
+  // The key changed when the first review was published, since piece ids follow data.js's order.
+  var KEY = 'splash-content-2';
   var ORIG = JSON.parse(JSON.stringify(window.SITES));
 
   // Suggested cuts, shown in content.html for Nick to accept or ignore. Nothing here is applied by itself.
-  var SUGGEST = {
-    awesome: {
-      's2.p0': 'Explains why there are two windows; the windows and their addresses already show it.',
-      's4.p0': 'The compatibility notes could be one line; the paragraph mostly repeats the list headings.',
-      's4.l1': 'Unlisted games are leftovers that the site itself never showed.',
-      's4.l2': 'Harry’s games, not yours; a long list that buries your own.',
-      's4.l3': 'One unrelated game.',
-      's5': 'A fun trick, but a demo rather than part of the story.'
-    },
-    ask: {
-      's2.p1': 'The commented-out line is a detail; the move to Hack a HOBO is already in its own page.',
-      's5.o9': 'The everyday logo is already the site’s logo at the top.',
-      's6': 'The holiday pages already have their effects; this recreates them a second time.'
-    },
-    titans: {},
-    hobo: {
-      's1': 'Profiles were removed and didn’t shape the site.',
-      's3.p0': 'Emulator details (Ruffle, CheerpJ, DirPlayer, GitHub builds) date quickly.',
-      's4.b1': 'Version compare is a tool page; Every archived version already covers the history.'
-    },
-    bv: {},
-    engen: {
-      's2.p0': 'Long; the loss of the domain is the point, the class blog is a detail.'
-    },
-    home: {},
-    spaceatlas: {
-      's1.p0': 'Long team details; one or two sentences would do.',
-      's3.u1': 'Thirteen draft icons; the logo drafts already show the process.'
-    }
-  };
+  // (The first round was reviewed and published on Nick's choices.)
+  var SUGGEST = {};
 
   var trial = null;
   try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
@@ -49,7 +23,13 @@
 
   // Every piece of a site's content, in page order: { id, kind, label, text (rewritable), sec }.
   function items(site) {
-    var out = [];
+    var out = [], add0 = function (id, kind, label) { out.push({ id: id, kind: kind, label: label, sec: -1 }); };
+    (site.top || []).forEach(function (t, j) {
+      var e = t.ref ? site.sections.map(function (x) { return x.embed; }).filter(function (o) { return o && o.id === t.ref; })[0] : t;
+      add0('t' + j, 'top window', (e ? e.title + ' · ' + e.addr : t.ref) + (t.ref ? ' (also in its section)' : ''));
+    });
+    if (site.song) add0('song', 'top button', site.song.play);
+    (site.topLinks || []).forEach(function (l, j) { add0('tl' + j, 'top button', l.text); });
     site.sections.forEach(function (x, i) {
       var s = 's' + i, add = function (id, kind, label, text) { out.push({ id: id, kind: kind, label: label, text: text, sec: i }); };
       add(s, 'section', x.h, x.h);
@@ -75,6 +55,9 @@
     var cut = {}; (t.cut || []).forEach(function (id) { cut[id] = true; });
     var txt = t.text || {};
     if (txt.lede != null) site.lede = txt.lede;
+    if (site.top) site.top = site.top.filter(function (_, j) { return !cut['t' + j]; });
+    if (cut.song) delete site.song;
+    if (site.topLinks) site.topLinks = site.topLinks.filter(function (_, j) { return !cut['tl' + j]; });
     var keep = function (base, arr, tag) { return (arr || []).filter(function (_, j) { return !cut[base + '.' + tag + j]; }); };
     var re = function (id, v) { return txt[id] != null ? txt[id] : v; };
     site.sections = site.sections.map(function (x, i) {
@@ -118,8 +101,8 @@
         var st = t[site.key]; if (!st || (!(st.cut || []).length && !Object.keys(st.text || {}).length)) return;
         var all = {}; items(site).forEach(function (it) { all[it.id] = it; });
         lines.push(site.name);
-        (st.cut || []).forEach(function (id) { var it = all[id]; lines.push('  Cut ' + (it ? it.kind + ': ' + (it.kind === 'section' ? it.label : '“' + short(it.label, 70) + '”') + (it.kind !== 'section' ? ' (in ' + site.sections[it.sec].h + ')' : '') : id)); });
-        Object.keys(st.text || {}).forEach(function (id) { lines.push('  Rewrite ' + (id === 'lede' ? 'line under the name' : (all[id] ? all[id].kind + ' in ' + site.sections[all[id].sec].h : id)) + ':', '    ' + st.text[id]); });
+        (st.cut || []).forEach(function (id) { var it = all[id]; lines.push('  Cut ' + (it ? it.kind + ': ' + (it.kind === 'section' ? it.label : '“' + short(it.label, 70) + '”') + (it.kind !== 'section' && it.sec >= 0 ? ' (in ' + site.sections[it.sec].h + ')' : '') : id)); });
+        Object.keys(st.text || {}).forEach(function (id) { lines.push('  Rewrite ' + (id === 'lede' ? 'line under the name' : (all[id] && all[id].sec >= 0 ? all[id].kind + ' in ' + site.sections[all[id].sec].h : id)) + ':', '    ' + st.text[id]); });
         lines.push('');
       });
       if (lines.length === 2) lines.push('No changes.', '');

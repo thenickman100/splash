@@ -182,7 +182,12 @@
         }
         b.addEventListener('click', function () {
           var w = document.querySelector('[data-embed="' + t + '"]');
-          if (!w) { window.open(b.dataset.src, '_blank'); return; }
+          // No window in the sections: the design may show it elsewhere (AN's top windows), or it opens in a new tab.
+          if (!w) {
+            if (SP.onLogo && SP.onLogo(t, b.dataset.src, b.dataset.addr)) box.querySelectorAll('.sp-logo').forEach(function (x) { x.classList.toggle('on', x === b); });
+            else window.open(b.dataset.src, '_blank');
+            return;
+          }
           w.querySelector('iframe').src = b.dataset.src;
           w.querySelector('.sp-url').textContent = b.dataset.addr;
           document.querySelectorAll('[data-open="' + t + '"]').forEach(function (a) { a.href = b.dataset.src; });

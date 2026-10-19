@@ -1,6 +1,8 @@
 // Site content shared by every site-page design (AI to AN).
 // The text is v0.1's, word for word (projects/splash/*.html in splash-v0.1.zip).
 // Order is by start date; previous/next links follow it. Colors come from ../palette.js.
+// top: the windows shown at the top of the page (AN's fan), in order; { ref: id } is a section's own window.
+// song and topLinks sit beside the top window. Since Nick's content review, sections no longer repeat a top window.
 (function () {
   var H = 'https://hackahobo.info';
   var S = H + '/projects/sites/';
@@ -21,6 +23,7 @@
       thumb: 'img/awesome-lawesomel.jpg',
       addresses: ['lawesomel.webs.com', 'awesomestuffr.webstarts.com'],
       lede: 'My first website, made in middle school.',
+      top: [{ addr: 'http://lawesomel.webs.com/', src: S + 'lawesomel/index.html', w: 1280, h: 900, img: 'img/awesome-lawesomel.jpg', title: 'Awesome Stuff' }],
       sections: [
         {
           h: 'Origins',
@@ -33,17 +36,8 @@
         },
         {
           h: 'Two domains',
-          p: ['Awesome Stuff was one site on two domains. The main site was at lawesomel.webs.com, and the hacking scripts and games were in a section at awesomestuffr.webstarts.com. Webstarts had more features than webs.com, like password-protected pages. I tried to make that section look the same as the main site, but I didn’t do very well. It’s somehow still online.']
-        },
-        {
-          h: 'Main site',
-          p: ['lawesomel.webs.com, rebuilt from what I could find. The photo albums are under “Phunny/JapanStuff/MyArt,” with photos of my art projects from school and my Japan collection, taken with my camera.'],
-          embed: { addr: 'http://lawesomel.webs.com/', src: S + 'lawesomel/index.html', w: 1280, h: 900, img: 'img/awesome-lawesomel.jpg', title: 'Awesome Stuff' },
-          buttons: [{ text: 'Photo albums', href: S + 'lawesomel/apps/photos/index.html' }]
-        },
-        {
-          h: 'GameMaker games',
-          p: ['The games page from the Webstarts section is still online. It lists the games I made in GameMaker and posted to YoYo Games, along with Planetary Ballistics, the HD Masters games, and a PowerPoint game made by my friend Harry. The downloads below are the original files. The GameMaker games are Windows programs from around 2008, so they may need compatibility mode or a virtual machine running an older version of Windows to work on a modern computer. Harry’s PowerPoint games play as slide shows.'],
+          p: ['Awesome Stuff was one site on two domains. The main site was at lawesomel.webs.com, and the hacking scripts and games were in a section at awesomestuffr.webstarts.com. Webstarts had more features than webs.com, like password-protected pages. I tried to make that section look the same as the main site, but I didn’t do very well. It’s somehow still online.',
+            'The games page from the Webstarts section is still online. It lists the games I made in GameMaker and posted to YoYo Games, along with Planetary Ballistics, the HD Masters games, and a PowerPoint game made by my friend Harry. The downloads below are the original files. The GameMaker games are Windows programs from around 2008, so they may need compatibility mode or a virtual machine running an older version of Windows to work on a modern computer. Harry’s PowerPoint games play as slide shows.'],
           embed: { addr: 'http://awesomestuffr.webstarts.com/', src: S + 'awesomestuff/index.html', w: 1280, h: 900, img: 'img/awesome-webstarts.jpg', title: 'Awesome Stuff games page' },
           lists: [
             { h: 'Games I made', items: [
@@ -89,8 +83,7 @@
       addresses: ['askthenickman.webs.com', 'askthenickman.net23.net', 'askthenickman.com'],
       evolvedInto: 'Hack a HOBO',
       lede: 'A site I built in Microsoft Word and later used mostly for games.',
-      // Versions shown on pages that line up a site's versions (AN); the windows in the sections come first.
-      versions: [{ addr: 'http://askthenickman.webs.com/', src: ATN + 'index-techno.html', w: 1280, h: 800, img: 'img/ask-techno.jpg', title: 'Techno home page' }],
+      top: [{ ref: 'atn' }, { addr: 'http://askthenickman.webs.com/', src: ATN + 'index-techno.html', w: 1280, h: 800, img: 'img/ask-techno.jpg', title: 'Techno home page' }],
       sections: [
         {
           h: 'Ask a Ninja',
@@ -110,11 +103,7 @@
         },
         {
           h: 'Holidays',
-          p: ['I enjoyed websites with holiday themes, and I wanted to try it myself. I made a themed logo for each holiday, each with its own copy of the home page, and added JavaScript effects to match. The Christmas page had falling snow, and other pages had fireworks or extra mouse cursors that trailed behind the real one.']
-        },
-        {
-          h: 'Rebuilt site',
-          p: ['Askthenickman, rebuilt from the webs.com version using the files I could find. The games list, the holiday pages, the programming lessons, and the “More” page all work. Some links go to pages that no longer exist.'],
+          p: ['I enjoyed websites with holiday themes, and I wanted to try it myself. I made a themed logo for each holiday, each with its own copy of the home page, and added JavaScript effects to match. The Christmas page had falling snow, and other pages had fireworks or extra mouse cursors that trailed behind the real one.'],
           embed: { id: 'atn', addr: 'http://askthenickman.webs.com/', src: ATN + 'index.html', w: 1280, h: 800, img: 'img/ask-home.jpg', title: 'Askthenickman' }
         },
         {
@@ -154,17 +143,13 @@
       addresses: ['softball.askthenickman.com'],
       commissioned: 'My dad',
       lede: 'The first site someone asked me to build.',
+      top: [{ addr: 'http://softball.askthenickman.com/', src: S + 'titans/titans.html', w: 1366, h: 768, img: 'img/titans.jpg', title: 'Titans Softball' }],
+      song: { src: S + 'titans/centerfield.mp3', play: 'Play “Centerfield”', stop: 'Stop the song' },
       sections: [
         {
           h: 'Commission',
           p: ['My dad coached my sister’s softball team. He likes sports and is very into stats. He wanted one place where parents on the team could get information on practices and games, see photos from the games, and check their kids’ stats. It was the first site anyone asked me to build, and because it was built to his specifications, I learned how to work with a customer to find out what they need. I built it shortly before the first season, and it lived at the subdomain softball.askthenickman.com.']
         },
-        {
-          h: 'Rebuilt site',
-          p: ['Click through the tabs along the top. To protect the players’ privacy, the team leaders are shown by their initials. The roster and stat sheets had the players’ full names and their families’ phone numbers, so I left them out, and those buttons no longer go anywhere. The photo albums were on an outside photo site and aren’t included. The home page played “Centerfield” when it opened.'],
-          embed: { addr: 'http://softball.askthenickman.com/', src: S + 'titans/titans.html', w: 1366, h: 768, img: 'img/titans.jpg', title: 'Titans Softball' },
-          song: { src: S + 'titans/centerfield.mp3', play: 'Play “Centerfield”', stop: 'Stop the song' }
-        }
       ]
     },
     {
@@ -178,41 +163,27 @@
       thumb: 'img/hobo-2012.jpg',
       addresses: ['hackahobo.info'],
       evolvedFrom: 'Askthenickman',
-      lede: 'The games site that started on Askthenickman. I still work on it today.',
+      lede: 'The games site that started on Askthenickman. Still going strong to this day!',
+      top: [{ addr: 'http://www.hackahobo.info/', src: H + '/files/v1/index-v1.html', w: 1100, h: 760, img: 'img/hobo-2012.jpg', title: '2011 Edition, as of November 6, 2012' },
+        { addr: 'https://hackahobo.info/', src: H + '/index-v2.php', w: 1100, h: 760, img: 'img/hobo-2024.jpg', title: '2024 Edition' },
+        { id: 'hah', addr: 'https://hackahobo.info/?theme=original', src: H + '/?theme=original', w: 1100, h: 760, img: 'img/hobo-2026.jpg', title: '2026 Edition' }],
+      topLinks: [{ text: 'Compare 2011, 2024, and 2026', href: H + '/files/version-compare.html' }],
       sections: [
         {
           h: 'Origins',
-          p: ['When I moved the games from Askthenickman to their own site in 2011, my sister came up with the name. I wanted the site themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
+          p: ['In 2011, I started transitioning the games from Askthenickman to their own site. My sister came up with the new site’s name, Hack a HOBO. We wanted the site themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
         },
         {
           h: 'Profiles',
           p: ['When I started learning PHP, I wanted to make my own social media site, so I added profiles to Hack a HOBO. People could sign up, log in, and have their own page. It was hard to prevent spam, injection attacks, and similar problems, so I removed the profiles. I never liked gaming sites that tried to force the social media aspect anyway, so that was an easy decision.']
         },
         {
-          h: 'Hiatus',
-          p: ['The original version ran from 2011 to 2015, and then the site went on hiatus. One of the main reasons was the death of Flash. Most of the games were Flash games. For years before it ended, browsers warned that Flash was going away and started blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. In 2024, Flash was just starting to be revived through Ruffle, and I started on the 2024 Edition.']
-        },
-        {
-          h: '2024 and 2026 Editions',
+          h: 'Hack a HOBO’s Hiatus',
           p: [
+            'For years before it ended, browsers warned that Flash was going away and started blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I let the site die off. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
             'The 2024 Edition made the site modern, so it works in current browsers and on phones, and it brought the games back. The site now runs Flash games with Ruffle, Java games with CheerpJ, and Shockwave games with DirPlayer. Only a handful of the Flash games still aren’t fully working in Ruffle. DirPlayer only took off in the past year, and soon almost every Shockwave game will be fully playable. Previews of its latest GitHub build show near-perfect emulation of the complicated 3D games of the past.',
             'The 2026 Edition was an overhaul to fix design problems that had been on the site for over a decade, which I finally had ideas and fixes for. The first fix was the left sidebar, which now holds a featured game and the navigation tools. The second was game containers on the home page, which let me give the site custom holiday themes. The holidays I most wanted were Halloween and Christmas, and the containers made those themes possible by letting me use more colors. I’ve always wanted snow to collect on the game containers, and I plan to have that working by Christmas 2027.'
           ]
-        },
-        {
-          h: 'Golden age, November 6, 2012',
-          p: ['The site at its peak, rebuilt from archived copies. The chat box shows a real chat log, with offensive and personal messages removed. The forms no longer send anything.'],
-          embed: { addr: 'http://www.hackahobo.info/', src: H + '/files/v1/index-v1.html', w: 1100, h: 760, img: 'img/hobo-2012.jpg', title: 'Hack a HOBO in November 2012' },
-          buttons: [
-            { text: 'Every archived version, 2011–2014', href: H + '/files/v1/' },
-            { text: 'Compare 2011, 2024, and 2026', href: H + '/files/version-compare.html' }
-          ]
-        },
-        {
-          h: '2026 Edition',
-          p: ['The live site, with the original theme turned on. The games are playable.'],
-          embed: { id: 'hah', addr: 'https://hackahobo.info/?theme=original', src: H + '/?theme=original', w: 1100, h: 760, img: 'img/hobo-2026.jpg', title: 'Hack a HOBO today' },
-          buttons: [{ text: 'Visit today’s site', href: H + '/' }]
         },
         {
           h: 'Holiday logos',
@@ -263,6 +234,7 @@
       addresses: ['engennextgen.org'],
       commissioned: 'The club’s founder',
       lede: 'My second commission, paid for in personal training.',
+      top: [{ addr: 'http://www.engennextgen.org/', src: S + 'engen/home.php', w: 1366, h: 768, img: 'img/engen.jpg', title: 'EnGen NextGen' }],
       sections: [
         {
           h: 'Commission',
@@ -277,12 +249,7 @@
           p: ['Later I used the site for my own blog, where the club’s blog had been. I had a communications class where we had to keep a blog and were graded on our posts, and I hosted mine on engennextgen.org. When the domain expired around 2015, everything on it was lost, including the version I worked so hard on and entered in the competition. I think I kept all the files on the web host and never saved them on my own computer. The only code that survived is the first version, from August 2014, saved on an old backup drive along with two of my class posts.']
         },
         {
-          h: 'Rebuilt site',
-          p: ['Click through the tabs, and click the pictures on the home page to open them. The posts and the calendar were stored in a database that was lost with the domain. The site now runs on the files that survived, which are one of the club’s blog posts, two of my class posts, the About text, and the photos from our shoots. I rebuilt the layout from my memory of the version I entered in the competition.'],
-          embed: { addr: 'http://www.engennextgen.org/', src: S + 'engen/home.php', w: 1366, h: 768, img: 'img/engen.jpg', title: 'EnGen NextGen' }
-        },
-        {
-          h: 'Records',
+          h: 'Notable milestones',
           gallery: [
             { img: 'img/cte-first-place.jpg', cap: 'Competitive Technology Event 2015, Web Information, 1st place' },
             { img: 'img/first-day.jpg', cap: 'First day of building, August 1, 2014' }
@@ -301,20 +268,16 @@
       thumb: 'img/home.jpg',
       addresses: ['localhost/home'],
       lede: 'The start page I built for myself. I rebuilt it in 2018 and still use it.',
+      top: [{ addr: 'http://localhost/home/', src: S + 'home-original/index.php', w: 1280, h: 900, img: 'img/home.jpg', title: 'Home, first version' }],
       sections: [
         {
           h: 'First version',
           p: ['I built the first version in November 2016 with PHP and jQuery. Every time I opened a browser, it greeted me with “Welcome Nick” and the date and time, and filled in from RSS news feeds, Yahoo stock data, weather APIs, Reddit, and more. Whenever one of those APIs changed, the whole site crashed. A friend saw the page and was impressed with it, and he later picked me to lead the web design on Space Atlas.']
         },
         {
-          h: 'Rebuilt first version',
-          p: ['The first version, running on the data it had saved by May 2018. Click a stock ticker to see its chart. The orange tab showed Reddit, and because no Reddit posts were saved, it now shows a saved Defense News feed. Nothing is downloaded or saved, and the homework board can’t be changed.'],
-          embed: { addr: 'http://localhost/home/', src: S + 'home-original/index.php', w: 1280, h: 900, img: 'img/home.jpg', title: 'Home, first version' }
-        },
-        {
           h: 'Second version',
           p: ['After too many crashes, I rebuilt the page with every feed in its own module. Each module was a bubble that expanded when you opened it. It looked cleaner but was less interesting. The bubbles held the same feeds as before, plus my website bookmarks with a bubble for each category, more detailed stock data you could interact with, and notes. When I got married in 2019, I added a module to manage, track, and visualize our spending and finances. I still use it, mostly for finances.'],
-          media: [{ img: L + 'home/logo-transparent.png', cap: 'The second version’s logo', bg: L + 'home/pinstripe2.png' }]
+          media: [{ img: L + 'home/logo-transparent.png', cap: 'The second version of the site', bg: L + 'home/pinstripe2.png' }]
         }
       ]
     },
@@ -330,19 +293,15 @@
       addresses: ['thespaceatlas.org'],
       commissioned: 'Newt Gingrich, via USAFA',
       lede: 'A virtual experience about the future of space, made at the Air Force Academy for Newt Gingrich.',
+      top: [{ addr: 'http://thespaceatlas.org/', src: 'https://spaceatlas.hackahobo.info/', w: 1400, h: 850, img: 'img/spaceatlas.jpg', title: 'Space Atlas' }],
       sections: [
         {
           h: 'Assignment',
-          p: ['Around 2017, Newt Gingrich, the former Speaker of the U.S. House of Representatives and a longtime advocate of space exploration, commissioned the U.S. Air Force Academy to create a virtual experience that would teach the future of space, looking ahead to 2038. My best friend at USAFA was in the Astronautical Engineering department, and leading the team became his capstone project. I wasn’t an Astronautical Engineering major, but he knew the Home start page I had built for myself. He was impressed with it, and he picked me to lead the web design.']
+          p: ['Around 2017, Newt Gingrich, the former Speaker of the U.S. House of Representatives and a longtime advocate of space exploration, commissioned the U.S. Air Force Academy to create a virtual experience that would show the future of space, looking ahead to 2038. My best friend at USAFA was in the Astronautical Engineering department, and leading the team became his capstone project. I wasn’t an Astro major, but he knew about the Home start page I had built for myself. He was impressed with it, and he picked me to lead the web design.']
         },
         {
           h: 'Development',
           p: ['I worked most closely with our graphic artist, who designed assets for the site. My best friend and others on the team made the 3D renders in Blender, the rest did research, and another cadet took over as lead in the second semester. The project was technically very demanding, and with my friend’s leadership we managed to pull it off. The whole site was a challenge, and when it was finished it felt like a masterpiece. We presented the work to the department and at Space Symposium, and we collaborated with SpaceX, Lockheed Martin, and JPL. I’m not sure how far the project went beyond that.']
-        },
-        {
-          h: 'Earth, the Moon, and Mars',
-          p: ['Pick Earth, the Moon, or Mars, drag to spin it, and tap a marker to open one of 13 pages, from the Big Falcon Rocket, New Glenn, and Vulcan to a commercial space station, the Lunar Gateway, and bases on the Moon and Mars. The renders are large and take a moment to load. Each planet and spacecraft is a sequence of 80 Blender renders, and dragging flips through the frames, so the object appears to turn while the browser only displays flat images.'],
-          embed: { addr: 'http://thespaceatlas.org/', src: 'https://spaceatlas.hackahobo.info/', w: 1400, h: 850, img: 'img/spaceatlas.jpg', title: 'Space Atlas' }
         },
         {
           h: 'Concept work',
