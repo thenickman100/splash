@@ -32,7 +32,7 @@ To view locally, run `python3 -m http.server` in the repo root and open http://l
 
 ## Publishing
 
-Splash v1 is AG (the main page) with AN (the site pages). `python3 tools/release.py v1` builds it into
+Splash v1 is AG (the main page) with AN (the site pages). The published AG is `candidates/AG-fanned-windows-main-page/AG.html`, a plain JavaScript rewrite of the design tool's export (`R8-AG.dc.html`, which needs React and the tool's runtime); the build has no React. `python3 tools/release.py v1` builds it into
 `dist/splash-v1/` (and `dist/splash-v1.zip`, not committed) without any editing tools: code between `@edit` and
 `@end` marker lines is dropped, and lines between `@release` and `@end` are kept uncommented. The build uses
 v0.1's page names (index.html, awesomestuff.html, …) and includes the museum logos and icons it needs, so it can

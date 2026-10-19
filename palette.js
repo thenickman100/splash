@@ -917,7 +917,7 @@
   // Which page this is, from its address.
   var PAGE = (function () {
     var f = location.pathname.split('/').pop();
-    return { 'Travel.dc.html': 'K', 'R8-AG.dc.html': 'AG', 'R8-AE.dc.html': 'AE', 'AI.html': 'AI', 'AK.html': 'AK', 'AN.html': 'AN' }[f] || null;
+    return { 'Travel.dc.html': 'K', 'R8-AG.dc.html': 'AG', 'AG.html': 'AG', 'R8-AE.dc.html': 'AE', 'AI.html': 'AI', 'AK.html': 'AK', 'AN.html': 'AN' }[f] || null;
   })();
 
   // @edit

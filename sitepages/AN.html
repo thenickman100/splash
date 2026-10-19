@@ -32,7 +32,6 @@ a{color:inherit}
 .lv{position:absolute;z-index:350;overflow:hidden;background:#fff;border-radius:0 0 7px 7px;animation:lvin .3s .55s both}
 .lv iframe{position:absolute;left:0;top:0}
 .lv .sp-use{z-index:3}
-.lvnav{position:absolute;z-index:360;display:flex;gap:0.77em;font-size:13px}
 .hero.one{height:640px}@keyframes lvin{from{opacity:0}to{opacity:1}}
 .lv iframe{border:0;transform-origin:0 0;background:#fff}
 .cap{position:absolute;left:520px;right:80px;top:528px;z-index:300;display:flex;align-items:center;gap:14px;font:12px 'DM Mono',monospace;color:var(--p-cap)}
@@ -116,10 +115,12 @@ SP.boot(function (s, sp) {
   h += '<div class="title"><div class="yr">' + e(s.started.replace('c. ', '')) + '</div><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div>' +
     '<h1>' + e(s.name) + '</h1><p>' + e(s.lede) + '</p></div><div class="fan">';
   cards.forEach(function (c, k) {
-    h += '<button class="c ob" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><i></i><i></i><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
-      '<span class="body"><img src="' + c.img + '" alt=""></span></button>';
+    // Each card has its own back and forward buttons in its bar, so they move with it; the picked card's are wired
+    // to its live window. (Cards are divs, since a button can't hold buttons.)
+    h += '<div class="c ob" role="button" tabindex="0" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
+      '<span class="body"><img src="' + c.img + '" alt=""></span></div>';
   });
-  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>' +
+  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>' +
     // The site's song and links go beside the top window.
     (s.song ? '<button class="sp-btn" data-song="' + s.song.src + '" data-play="' + e(s.song.play) + '" data-stop="' + e(s.song.stop) + '">' + e(s.song.play) + '</button>' : '') +
     (s.topLinks || []).map(function (l) { return '<a class="sp-btn" href="' + l.href + '" target="_blank" rel="noopener">' + e(l.text) + ' ↗</a>'; }).join('') +
@@ -141,7 +142,7 @@ SP.boot(function (s, sp) {
   return h;
 }, function (s) {
   var cards = cardsFor(s), els = document.querySelectorAll('.c'), cur = 0, frame = null;
-  var txt = document.querySelector('.cap .txt'), open = document.querySelector('.cap .open'), lv = document.querySelector('.lv'), nav = document.querySelector('.lvnav');
+  var txt = document.querySelector('.cap .txt'), open = document.querySelector('.cap .open'), lv = document.querySelector('.lv');
   if (cards.length < 2) document.querySelector('.hero').classList.add('one');
   // The picked version sits large on the right; the others fan out close together beneath it, evenly spaced.
   var lay = function () {
@@ -171,17 +172,21 @@ SP.boot(function (s, sp) {
       if (frame) frame.remove();
       frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.insertBefore(frame, lv.firstChild);
       lv.classList.remove('using'); lv.querySelector('.sp-use').textContent = 'Tap to use this site';
-      if (window.BrowserNav) BrowserNav.attach(frame, nav.querySelector('.bn-back'), nav.querySelector('.bn-fwd'));
+      document.querySelectorAll('.fan .c .ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.disabled = true; });
+      if (window.BrowserNav) BrowserNav.attach(frame, on.querySelector('.bn-back'), on.querySelector('.bn-fwd'));
       lv.style.animation = 'none'; void lv.offsetWidth; lv.style.animation = '';
     }
     var bw = parseFloat(on.style.width) - 2, bh = parseFloat(on.style.height) - 41, sc = bw / c.ew;
     lv.style.left = (parseFloat(on.style.left) + 1) + 'px'; lv.style.top = (parseFloat(on.style.top) + 40) + 'px'; lv.style.width = bw + 'px'; lv.style.height = bh + 'px';
     frame.style.width = c.ew + 'px'; frame.style.height = Math.ceil(bh / sc) + 'px'; frame.style.transform = 'scale(' + sc + ')';
-    // Back and forward sit over the card's yellow and green dots.
-    nav.style.left = (parseFloat(on.style.left) + 34) + 'px'; nav.style.top = (parseFloat(on.style.top) + 15) + 'px';
     txt.textContent = c.cap; open.href = c.link;
   };
-  els.forEach(function (el, k) { el.addEventListener('click', function () { if (k !== cur) { cur = k; lay(); } }); });
+  els.forEach(function (el, k) {
+    var pick = function () { if (k !== cur) { cur = k; lay(); } };
+    // A thumbnail's gray buttons pick it like the rest of it; only the picked card's are back and forward.
+    el.addEventListener('click', function (e) { if (!(e.target.closest('.ob-nav') && k === cur)) pick(); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+  });
   // See it at the top: bring that section's window forward in the fan and scroll up to it.
   document.querySelectorAll('[data-card]').forEach(function (b) {
     b.addEventListener('click', function () { cur = +b.dataset.card; lay(); document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' }); });

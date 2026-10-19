@@ -6,6 +6,7 @@ editor). A published build is one main-page design plus one site-page design, wi
 
   * Code between "@edit" and "@end" marker lines (// or <!-- --> comments) is dropped. Lines between
     "@release" and "@end" are kept with their leading "// " removed, so a block can swap in a published version.
+    (Markers can also be CSS comments, /* @edit */ and /* @end */.)
   * The main page becomes index.html, and each site gets its own page under v0.1's file names, so links to
     the live museum keep working. Pages name their site and the page map in SPLASH_SITE and SPLASH_PAGES.
   * Logos and icons that the test pages load from the live museum (projects/splash/logos, icons) are
@@ -20,7 +21,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION = sys.argv[1] if len(sys.argv) > 1 else 'v1'
 OUT = os.path.join(ROOT, 'dist', 'splash-' + VERSION)
 
-MAIN = 'candidates/AG-fanned-windows-main-page/R8-AG.dc.html'  # the main page, published as index.html
+MAIN = 'candidates/AG-fanned-windows-main-page/AG.html'  # the main page, published as index.html (plain JavaScript, no React)
 SITE_PAGE = 'sitepages/AN.html'                               # the site page, published once per site
 # v0.1's page for each site.
 PAGES = {'awesome': 'awesomestuff.html', 'ask': 'askthenickman.html', 'titans': 'titans.html', 'hobo': 'hackahobo.html',
@@ -33,7 +34,7 @@ def strip(text):
     out, mode = [], None
     for line in text.split('\n'):
         t = line.strip()
-        is_marker = t.startswith('//') or t.startswith('<!--')
+        is_marker = t.startswith('//') or t.startswith('<!--') or t.startswith('/*')
         if is_marker and '@edit' in t:
             mode = 'edit'; continue
         if is_marker and '@release' in t and mode == 'edit':
@@ -95,7 +96,8 @@ def main():
     html = re.sub(r'<title>.*?</title>', '<title>Old Sites</title>', html, count=1)
     html = html.replace('<script src="palette.js"></script>', pages_script() + '<script src="palette.js"></script>', 1)
     write('index.html', html)
-    for f in ('support.js', 'vendor', 'assets'):
+    # Design-tool exports (.dc.html) also need their runtime: support.js and React in vendor/.
+    for f in ('assets',) + (('support.js', 'vendor') if MAIN.endswith('.dc.html') else ()):
         copy(os.path.join(main_dir, f), f)
 
     # Shared files.

@@ -1,27 +1,27 @@
 /* The fake browser windows, styled as in v0.1 (candidates/v0.1/museum.css, .browser). Every site's windows
    look the same, whatever the page or palette. Sizes are in em off the bar's font size (13px in v0.1), so a
    thumbnail window can set a smaller font-size and keep the look; the bar is 3em tall.
-   The three dots are gray, as in v0.1, until they mean something. On a live window the first is Safari's red
-   (it does nothing), and back and forward turn yellow and green when there is somewhere to go; browsernav.js
-   lights them with .bn-on. Thumbnails in a fan keep all three gray. The plain dot (<i>) always comes first,
+   The three dots are gray, as in v0.1, until they mean something: back and forward turn Safari's yellow and
+   green when there is somewhere to go (browsernav.js lights them with .bn-on). The first dot, Safari's close
+   button, never does anything, so it stays gray. The plain dot (<i>) always comes first,
    whatever its place in the markup. */
 .ob { border: 1px solid #34343a; border-radius: 8px; overflow: hidden; background: #d9d9d9; box-sizing: border-box; }
 .ob-chrome { box-sizing: border-box; height: 3em; flex: none; display: flex; align-items: center; gap: 0.77em; padding: 0 0.92em;
   background: linear-gradient(#ececec, #cfcfcf); border-bottom: 1px solid #a9a9a9; font-size: 13px; }
 .ob-chrome i, .ob-nav { width: 0.85em; height: 0.85em; border-radius: 50%; display: inline-block; flex: none; border: 0; padding: 0; margin: 0; box-shadow: inset 0 0 0 0.5px #0003; }
 .ob-chrome i { order: -1; background: #bbb; }
-/* A live window: its own bar (K, the site pages), or a selected window whose buttons are laid over its bar. */
-.ob-nav ~ i, .ob.on .ob-chrome i:nth-of-type(1) { background: #ff5f57; }
-.ob-nav { cursor: default; background: #bbb; transition: background 0.2s, filter 0.2s; }
+/* Buttons take the bar's font size (browsers give buttons their own), so all three dots are the same size. */
+.ob-nav { font: inherit; cursor: default; background: #bbb; transition: background 0.2s, filter 0.2s; }
 .ob-nav.bn-back.bn-on, .ob-nav.sp-back.bn-on { background: #febc2e; }
 .ob-nav.bn-fwd.bn-on, .ob-nav.sp-fwd.bn-on { background: #28c840; }
 .ob-nav.bn-on { cursor: pointer; }
+/* Unavailable buttons let clicks through to the window (on a thumbnail, a click anywhere picks it). */
+.ob-nav:disabled { pointer-events: none; }
 .ob-nav.bn-on:hover { filter: brightness(0.9); }
 .ob-url { flex: 1; min-width: 0; box-sizing: border-box; font: 1em/1.3 Arial, sans-serif; color: #333; background: #fff; border: 1px solid #9b9b9b;
   border-radius: 3px; padding: 0.23em 0.62em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left; }
 .ob-view { position: relative; overflow: hidden; background: #fff; }
 /* Touch screens: the back and forward dots stay small but take a finger-sized tap. */
 @media (pointer:coarse){ .ob-nav { position: relative; } .ob-nav::after { content: ''; position: absolute; inset: -12px -6px; } }
-/* A selected window whose back and forward buttons are laid over its bar (AG, AE, AN) hides its own yellow and
-   green dots under them. */
+/* A selected window whose back and forward buttons are laid over its bar (AE) hides its own dots under them. */
 .ob.on .ob-chrome i:nth-of-type(n+2) { visibility: hidden; }

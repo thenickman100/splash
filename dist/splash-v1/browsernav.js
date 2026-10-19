@@ -63,6 +63,7 @@
   });
 
   function attach(f, back, fwd) {
+    prune(); // windows that were taken out (a page swapping in a fresh one) drop out first
     var r = find(f);
     if (r) { r.back = back; r.fwd = fwd; state(); return; }
     r = { f: f, back: back, fwd: fwd, loads: 0, base: history.length };
