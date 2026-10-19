@@ -61,12 +61,14 @@
   }
 
   // A section's pieces, each as HTML (empty string when missing), so designs can place them.
-  function parts(sec) {
+  // opt.noEmbed leaves out the section's window (for designs that already show it at the top); opt.btn adds a button first.
+  function parts(sec, opt) {
+    opt = opt || {};
     var o = { text: '', media: '', embed: '', buttons: '', extra: '' };
     (sec.p || []).forEach(function (t) { o.text += '<p>' + esc(t) + '</p>'; });
     if (sec.media) o.media = sec.media.map(figHtml).join('');
-    if (sec.embed) o.embed = embedHtml(sec.embed);
-    var btns = [];
+    if (sec.embed && !opt.noEmbed) o.embed = embedHtml(sec.embed);
+    var btns = opt.btn ? [opt.btn] : [];
     if (sec.fx) btns.push('<button class="sp-btn" data-fx="snow">Snow</button><button class="sp-btn" data-fx="fireworks">Fireworks</button><button class="sp-btn" data-fx="trail">Cursor trail</button>');
     if (sec.embed) btns.push('<a class="sp-btn primary" data-open="' + (sec.embed.id || '') + '" href="' + sec.embed.src + '" target="_blank" rel="noopener">Open full screen ↗</a>');
     (sec.buttons || []).forEach(function (b) { btns.push('<a class="sp-btn" href="' + b.href + '" target="_blank" rel="noopener">' + esc(b.text) + ' ↗</a>'); });
@@ -98,8 +100,8 @@
     return o;
   }
   // Everything inside a section except its heading, in v0.1's order.
-  function body(sec) {
-    var o = parts(sec);
+  function body(sec, opt) {
+    var o = parts(sec, opt);
     return o.text + o.media + o.embed + o.buttons + o.extra;
   }
 

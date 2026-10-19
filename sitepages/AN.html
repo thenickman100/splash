@@ -110,8 +110,14 @@ SP.boot(function (s, sp) {
   h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
   h += '<div class="story"><aside class="side">' + sp.factsHtml(s) + '<nav class="toc">' +
     s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav></aside><div>';
+  var embedded = s.sections.filter(function (x) { return x.embed; });
+  var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
   s.sections.forEach(function (x) {
-    h += '<section id="' + sp.slug(x.h) + '"><h2>' + e(x.h) + '</h2>' + sp.body(x) + '</section>';
+    // A window already in the fan at the top isn't repeated here; its section links up to it instead.
+    // Windows the holiday logos load into stay.
+    var k = x.embed ? embedded.indexOf(x) : -1, top = k >= 0 && !(x.embed.id && targets.indexOf(x.embed.id) >= 0);
+    h += '<section id="' + sp.slug(x.h) + '"><h2>' + e(x.h) + '</h2>' +
+      sp.body(x, top ? { noEmbed: true, btn: '<button class="sp-btn" data-card="' + k + '">See it at the top ↑</button>' } : null) + '</section>';
   });
   h += '</div></div><div class="end">' +
     (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← ' + e(sp.prev.range) + '</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +
@@ -159,6 +165,10 @@ SP.boot(function (s, sp) {
     txt.textContent = c.cap; open.href = c.link;
   };
   els.forEach(function (el, k) { el.addEventListener('click', function () { if (k !== cur) { cur = k; lay(); } }); });
+  // See it at the top: bring that section's window forward in the fan and scroll up to it.
+  document.querySelectorAll('[data-card]').forEach(function (b) {
+    b.addEventListener('click', function () { cur = +b.dataset.card; lay(); document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' }); });
+  });
   addEventListener('resize', lay);
   lay();
 });

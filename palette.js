@@ -846,7 +846,7 @@
       { id: 'openFill', label: 'Open full screen button', slot: 1, neutral: '#f2f2f2', fill: true },
       { id: 'openText', label: 'Open full screen text', slot: 2, neutral: '#121212' },
       { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1, neutral: '#9a9a9a' } ] },
-    AG: { name: 'AG · Fanned windows', sites: {awesome:{year:2},ask:{readFill:3,open:1,glow:1},titans:{glow:1},hobo:{glow:3},bv:{readFill:2,readText:1,glow:1},engen:{year:3,kicker:2,open:2},home:{year:3,kicker:1,glow:1},spaceatlas:{kicker:4,readFill:3,readText:1,open:4,glow:1}}, parts: [
+    AG: { name: 'AG · Fanned windows', sites: {awesome:{year:2},ask:{readFill:3,open:1,glow:1},titans:{glow:1},hobo:{glow:3},bv:{readFill:2,readText:1,glow:1},engen:{year:3,kicker:2,readFill:4,open:2},home:{year:3,kicker:1,glow:1},spaceatlas:{kicker:4,readFill:3,readText:1,open:4,glow:1}}, parts: [
       { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
       { id: 'kicker', label: 'Year and tier line', slot: 3, neutral: '#9a9a9a' },
       { id: 'readFill', label: 'Read more button', slot: 1, neutral: '#f2f2f2', fill: true },
@@ -866,7 +866,7 @@
       { id: 'tocNum', label: 'Current chapter in the contents', slot: 1, neutral: '#141414' },
       { id: 'mark', label: 'Facts box line and selected logo', slot: 1, neutral: '#141414' } ] },
     // AN is the site page paired with AG.
-    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:1},engen:{glow:2,year:3,kick:2,btnFill:4},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
+    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:1},engen:{glow:2,year:3,kick:2,btnFill:4,bar:2},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
       { id: 'glow', label: 'Glow behind the top section', slot: 1, neutral: '#555555' },
       { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
       { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },
