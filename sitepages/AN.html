@@ -146,23 +146,29 @@ SP.boot(function (s, sp) {
   if (cards.length < 2) document.querySelector('.hero').classList.add('one');
   // The picked version sits large on the right; the others fan out close together beneath it, evenly spaced.
   var lay = function () {
-    var small = innerWidth <= 900, n = els.length, W = small ? innerWidth : 1280;
+    var small = innerWidth <= 900, n = els.length, W = small ? innerWidth : Math.min(1280, document.querySelector('.hero .in').clientWidth);
+    // On wide screens the layout is drawn for 1280 pixels and shrinks with narrower windows (f), so nothing runs off the right.
+    var f = small ? 1 : W / 1280, ml = Math.round(520 * f), mw = small ? 0 : W - ml - Math.round(80 * f), mh = Math.round(mw * 0.62);
     // On narrow screens the picked version fills the width and the others fan out just below it.
-    var sw = Math.min(W - 32, 560), sh = Math.round(sw * 0.62), w2 = small ? Math.min(150, Math.round(W * 0.34)) : 240, h2 = Math.round(w2 * 0.64);
+    var sw = Math.min(W - 32, 560), sh = Math.round(sw * 0.62), w2 = small ? Math.min(150, Math.round(W * 0.34)) : Math.round(240 * f), h2 = Math.round(w2 * 0.64);
+    var capTop = 90 + mh + 16, base = capTop + 38 + Math.round(134 * f), hero = document.querySelector('.hero'), cap = document.querySelector('.cap'), title = document.querySelector('.title');
     if (small) document.querySelector('.fan').style.height = (10 + sh + (n > 1 ? 24 + h2 + 30 : 10)) + 'px';
     else document.querySelector('.fan').style.height = '';
+    hero.style.height = small ? '' : (n > 1 ? base + 60 : capTop + 112) + 'px';
+    cap.style.left = small ? '' : ml + 'px'; cap.style.top = small ? '' : capTop + 'px';
+    title.style.maxWidth = small ? '' : Math.min(440, ml - 80) + 'px';
     els.forEach(function (el, k) {
       var st = el.style;
       if (k === cur) {
-        var w = small ? sw : 680, hh = Math.round(w * 0.62);
-        st.left = (small ? (W - w) / 2 : 520) + 'px'; st.top = (small ? 10 : 90) + 'px'; st.width = w + 'px'; st.height = hh + 'px';
+        var w = small ? sw : mw, hh = Math.round(w * 0.62);
+        st.left = (small ? (W - w) / 2 : ml) + 'px'; st.top = (small ? 10 : 90) + 'px'; st.width = w + 'px'; st.height = hh + 'px';
         st.transform = 'none'; st.zIndex = 300; el.classList.add('on'); el.style.setProperty('--a', '0deg'); el.querySelector('.cb').style.fontSize = '13px';
         return;
       }
       el.classList.remove('on'); el.querySelector('.cb').style.fontSize = '6px';
       var m = n - 1, j = k < cur ? k : k - 1, step = 11, a = (j - (m - 1) / 2) * step, rad = a * Math.PI / 180;
-      var R = small ? 700 : 900;
-      var cx = small ? W / 2 : 860, base = small ? 10 + sh + 24 + h2 - 30 : 700, x = cx + R * Math.sin(rad), y = base + R * (1 - Math.cos(rad));
+      var R = small ? 700 : Math.round(900 * f);
+      var cx = small ? W / 2 : ml + mw / 2, y0 = small ? 10 + sh + 24 + h2 - 30 : base, x = cx + R * Math.sin(rad), y = y0 + R * (1 - Math.cos(rad));
       st.left = Math.round(x - w2 / 2) + 'px'; st.top = Math.round(y - h2 + 30) + 'px'; st.width = w2 + 'px'; st.height = h2 + 'px';
       st.transform = 'rotate(' + a.toFixed(1) + 'deg)'; st.zIndex = 10 + k; el.style.setProperty('--a', a.toFixed(1) + 'deg');
     });
