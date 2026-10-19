@@ -848,7 +848,7 @@
       { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1, neutral: '#9a9a9a' } ] },
     AG: { name: 'AG · Fanned windows', sites: {awesome:{year:2},ask:{readFill:3,open:1,glow:1},titans:{glow:1},hobo:{glow:3},bv:{readFill:2,readText:1,glow:1},engen:{year:3,kicker:2,readFill:4,open:2},home:{year:3,kicker:1,readFill:5,glow:1},spaceatlas:{kicker:4,readFill:3,readText:1,open:4,glow:1}}, parts: [
       { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
-      { id: 'kicker', label: 'Year and tier line', slot: 3, neutral: '#9a9a9a' },
+      { id: 'kicker', label: 'Project type line', slot: 3, neutral: '#9a9a9a' },
       { id: 'readFill', label: 'Read more button', slot: 1, neutral: '#f2f2f2', fill: true },
       { id: 'readText', label: 'Read more text', slot: 2, neutral: '#121212' },
       { id: 'open', label: 'Open full screen outline and text', slot: 3, neutral: '#f2f2f2' },
@@ -871,7 +871,7 @@
       { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
       { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },
       { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
-      { id: 'kick', label: 'Year and tier line', slot: 0, neutral: '#9a9a9a' },
+      { id: 'kick', label: 'Project type line', slot: 0, neutral: '#9a9a9a' },
       { id: 'name', label: 'Site name', slot: 0, neutral: '#f2f2f2' },
       { id: 'lede', label: 'Line under the site name', slot: 0, neutral: '#cfcfcf' },
       { id: 'cap', label: 'Caption beside the window', slot: 0, neutral: '#9a9a9a' },

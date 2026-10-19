@@ -92,7 +92,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
    {key:'engen',name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
    {key:'home',name:'Home',yr:'2016',year:'2016',tier:'Personal',addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
    {key:'spaceatlas',name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
-   {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
+   {key:'hobo26',name:'Hack a HOBO',yr:'2024',year:'2026 Edition',tier:'Flagship',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'After a long hiatus, Hack a HOBO returned in 2024, now with Flash emulation and design overhauls.'}
   ];
   // Site colors come from ../../palette.js, each part of the page from the palette color chosen for it.
   SITES.forEach(function (s) { s.p = PALETTE.partsFor('AG', s.key); });
@@ -163,7 +163,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
   function story(s, mob) {
     var p = s.p;
     return '<div class="yr" style="font-size:' + (mob ? 60 : 88) + 'px;color:' + p.year + '">' + esc(s.yr) + '</div>' +
-      '<div class="mono kick" style="color:' + p.kicker + '">' + esc(s.year) + ' · ' + esc(s.tier) + '</div>' +
+      '<div class="mono kick" style="color:' + p.kicker + '">' + esc(s.tier) + '</div>' +
       '<div class="name" style="font-size:' + (mob ? 26 : 30) + 'px' + (mob ? ';line-height:1.05' : '') + '">' + esc(s.name) + '</div>' +
       '<p style="font-size:' + (mob ? 15 : 14) + 'px;line-height:' + (mob ? 1.5 : 1.55) + '">' + esc(s.blurb) + '</p>' +
       '<div class="btns" style="gap:' + (mob ? 8 : 10) + 'px;margin-top:' + (mob ? '6px' : 'auto') + '">' +

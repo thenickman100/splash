@@ -112,7 +112,7 @@ SP.boot(function (s, sp) {
   h += '<div class="bar"><a class="home" href="' + sp.home + '">← All sites</a><span class="sp"></span>' +
     (sp.prev ? '<a class="mono" href="' + sp.url(sp.prev.key) + '">← ' + e(sp.prev.name) + '</a>' : '') +
     (sp.next ? '<a class="mono" href="' + sp.url(sp.next.key) + '">' + e(sp.next.name) + ' →</a>' : '') + '</div>';
-  h += '<div class="title"><div class="yr">' + e(s.started.replace('c. ', '')) + '</div><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div>' +
+  h += '<div class="title"><div class="yr">' + e(s.started.replace('c. ', '')) + '</div><div class="mono kick">' + e(s.tier) + '</div>' +
     '<h1>' + e(s.name) + '</h1><p>' + e(s.lede) + '</p></div><div class="fan">';
   cards.forEach(function (c, k) {
     // Each card has its own back and forward buttons in its bar, so they move with it; the picked card's are wired
