@@ -115,7 +115,7 @@ SP.boot(function (s, sp) {
   cards.forEach(function (c, k) {
     // Each card has its own back and forward buttons in its bar, so they move with it; the picked card's are wired
     // to its live window. (Cards are divs, since a button can't hold buttons.)
-    h += '<div class="c ob" role="button" tabindex="0" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
+    h += '<div class="c ob" role="button" tabindex="0" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><button class="bn-back ob-nav" title="Back" aria-disabled="true"></button><button class="bn-fwd ob-nav" title="Forward" aria-disabled="true"></button><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
       '<span class="body"><img src="' + c.img + '" alt=""></span></div>';
   });
   h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>' +
@@ -170,7 +170,7 @@ SP.boot(function (s, sp) {
       if (frame) frame.remove();
       frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.insertBefore(frame, lv.firstChild);
       lv.classList.remove('using'); lv.querySelector('.sp-use').textContent = 'Tap to use this site';
-      document.querySelectorAll('.fan .c .ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.disabled = true; });
+      document.querySelectorAll('.fan .c .ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.setAttribute('aria-disabled', 'true'); });
       if (window.BrowserNav) BrowserNav.attach(frame, on.querySelector('.bn-back'), on.querySelector('.bn-fwd'));
       lv.style.animation = 'none'; void lv.offsetWidth; lv.style.animation = '';
     }

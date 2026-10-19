@@ -58,7 +58,7 @@ a{color:#fff}a:hover{color:#ccc}
       </div>
 
       <div class="chrome ob" data-bn style="flex-grow:1;display:flex;flex-direction:column;box-shadow:0 30px 80px #000a">
-        <div class="ob-chrome"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
+        <div class="ob-chrome"><button class="bn-back ob-nav" title="Back" aria-disabled="true"></button><button class="bn-fwd ob-nav" title="Forward" aria-disabled="true"></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
         <div class="shot ob-view" style="flex-grow:1;position:relative;overflow:hidden"><div class="live" key="{{cur.link}}" style="position:absolute;inset:0;pointer-events:{{lf.pe}}"><iframe src="{{cur.link}}" title="{{cur.name}}" style="width:{{lf.fw}}px;height:{{lf.fh}}px;transform:scale({{lf.fs}})"></iframe></div><sc-if value="{{lf.cover}}" hint-placeholder-val="{{true}}"><button onClick="{{lf.use}}" class="mono" style="position:absolute;right:14px;bottom:14px;height:34px;padding:0 14px;border:0;border-radius:999px;background:#000c;color:#fff;font-size:12px;cursor:pointer">Click to use this site</button></sc-if></div>
       </div>
 
@@ -94,7 +94,7 @@ a{color:#fff}a:hover{color:#ccc}
       <div style="font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-0.02em">{{cur.name}}</div>
       <sc-if value="{{tall}}" hint-placeholder-val="{{true}}"><p style="margin:0;font-size:14px;line-height:1.45;color:#cfcfcf">{{cur.blurb}}</p></sc-if>
       <div class="chrome ob" data-bn style="flex:1 1 0;min-height:110px;display:flex;flex-direction:column;box-shadow:0 20px 50px #000a">
-        <div class="ob-chrome" style="font-size:11px"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
+        <div class="ob-chrome" style="font-size:11px"><button class="bn-back ob-nav" title="Back" aria-disabled="true"></button><button class="bn-fwd ob-nav" title="Forward" aria-disabled="true"></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
         <div class="shot ob-view" style="flex-grow:1;position:relative;overflow:hidden"><div class="live" key="{{cur.link}}" style="position:absolute;inset:0;pointer-events:{{lf.pe}}"><iframe src="{{cur.link}}" title="{{cur.name}}" style="width:{{lm.fw}}px;height:{{lm.fh}}px;transform:scale({{lm.fs}})"></iframe></div><button onClick="{{lf.toggle}}" class="use">{{lf.label}}</button></div>
       </div>
       <sc-if value="{{atStart}}" hint-placeholder-val="{{true}}"><div class="mono hint" style="font-size:11px;color:#9a9a9a">Swipe up to travel through the years ↓</div></sc-if>
@@ -130,7 +130,7 @@ a{color:#fff}a:hover{color:#ccc}
       </div>
       </div>
       <div class="chrome ob" data-bn style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;box-shadow:0 20px 50px #000a">
-        <div class="ob-chrome" style="font-size:11px"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
+        <div class="ob-chrome" style="font-size:11px"><button class="bn-back ob-nav" title="Back" aria-disabled="true"></button><button class="bn-fwd ob-nav" title="Forward" aria-disabled="true"></button><i></i><span class="ob-url">http://{{cur.addr}}</span></div>
         <div class="shot ob-view" style="flex-grow:1;position:relative;overflow:hidden"><div class="live" key="{{cur.link}}" style="position:absolute;inset:0;pointer-events:{{lf.pe}}"><iframe src="{{cur.link}}" title="{{cur.name}}" style="width:{{lm.fw}}px;height:{{lm.fh}}px;transform:scale({{lm.fs}})"></iframe></div><button onClick="{{lf.toggle}}" class="use">{{lf.label}}</button></div>
       </div>
     </div>

@@ -15,8 +15,6 @@
 .ob-nav.bn-back.bn-on, .ob-nav.sp-back.bn-on { background: #febc2e; }
 .ob-nav.bn-fwd.bn-on, .ob-nav.sp-fwd.bn-on { background: #28c840; }
 .ob-nav.bn-on { cursor: pointer; }
-/* Unavailable buttons let clicks through to the window (on a thumbnail, a click anywhere picks it). */
-.ob-nav:disabled { pointer-events: none; }
 .ob-nav.bn-on:hover { filter: brightness(0.9); }
 .ob-url { flex: 1; min-width: 0; box-sizing: border-box; font: 1em/1.3 Arial, sans-serif; color: #333; background: #fff; border: 1px solid #9b9b9b;
   border-radius: 3px; padding: 0.23em 0.62em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left; }

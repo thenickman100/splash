@@ -42,7 +42,7 @@
     var id = e.id || 'e' + (embeds++);
     // v0.1's browser look (../browser.css): the same on every site. The first two dots are back and forward.
     return '<div class="sp-win ob" data-embed="' + id + '">' +
-      '<div class="sp-chrome ob-chrome"><button class="ob-nav sp-back" title="Back" disabled></button><button class="ob-nav sp-fwd" title="Forward" disabled></button><i></i><span class="sp-url ob-url">' + esc(e.addr) + '</span></div>' +
+      '<div class="sp-chrome ob-chrome"><button class="ob-nav sp-back" title="Back" aria-disabled="true"></button><button class="ob-nav sp-fwd" title="Forward" aria-disabled="true"></button><i></i><span class="sp-url ob-url">' + esc(e.addr) + '</span></div>' +
       '<div class="sp-vp sp-usebox" data-w="' + e.w + '" data-h="' + e.h + '" style="aspect-ratio:' + e.w + '/' + e.h + ';background-image:url(' + e.img + ')">' +
       '<iframe src="' + e.src + '" title="' + esc(e.title) + '" loading="lazy" style="width:' + e.w + 'px;height:' + e.h + 'px"></iframe>' +
       '<button class="sp-use" type="button">Tap to use this site</button></div></div>';
@@ -133,6 +133,15 @@
   }
 
   function wire() {
+    // Links to a section scroll there without adding a history entry, so the browser's back and the windows' own
+    // back and forward aren't thrown off by section jumps.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+      var t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))); if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      try { history.replaceState(history.state, '', a.getAttribute('href')); } catch (x) {}
+    });
     // Back and forward in each window (../browsernav.js).
     if (window.BrowserNav) document.querySelectorAll('.sp-win').forEach(function (w) {
       var f = w.querySelector('iframe'); if (f) BrowserNav.attach(f, w.querySelector('.sp-back'), w.querySelector('.sp-fwd'));

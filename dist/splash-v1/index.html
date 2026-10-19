@@ -123,7 +123,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
     // picked window's are wired to its live site. (Windows are divs, since a button can't hold buttons.)
     cardEls = SITES.map(function (s, k) {
       var b = document.createElement('div'); b.className = 'c ob'; b.setAttribute('role', 'button'); b.tabIndex = 0; b.setAttribute('aria-label', s.name + ', ' + s.yr);
-      b.innerHTML = '<span class="bar ob-chrome"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button><i></i><span class="ob-url">' + esc(s.addr) + '</span></span><span class="body"><img src="' + s.img + '" alt=""></span>';
+      b.innerHTML = '<span class="bar ob-chrome"><button class="bn-back ob-nav" title="Back" aria-disabled="true"></button><button class="bn-fwd ob-nav" title="Forward" aria-disabled="true"></button><i></i><span class="ob-url">' + esc(s.addr) + '</span></span><span class="body"><img src="' + s.img + '" alt=""></span>';
       var pick = function () { if (k !== state.i) { state.i = k; state.use = null; draw(); } };
       // A thumbnail's gray buttons pick it like the rest of it; only the picked window's buttons are back and forward.
       b.addEventListener('click', function (e) { if (!(e.target.closest('.ob-nav') && k === state.i)) pick(); });
@@ -150,7 +150,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
   function live(s, c, bar, mob, card) {
     if (!liveBox || liveBox.dataset.key !== s.key) {
       if (liveBox) liveBox.remove();
-      cardEls.forEach(function (el) { el.querySelectorAll('.ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.disabled = true; }); });
+      cardEls.forEach(function (el) { el.querySelectorAll('.ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.setAttribute('aria-disabled', 'true'); }); });
       liveBox = document.createElement('div'); liveBox.className = 'livebox'; liveBox.dataset.key = s.key;
       liveBox.innerHTML = '<div class="live" style="top:' + bar + 'px"><iframe src="' + s.link + '" title="' + esc(s.name) + '"></iframe></div>' +
         (mob ? '<button class="use"></button>' : '');
