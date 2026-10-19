@@ -314,7 +314,7 @@
         {
           h: 'Second version',
           p: ['After too many crashes, I rebuilt the page with every feed in its own module. Each module was a bubble that expanded when you opened it. It looked cleaner but was less interesting. The bubbles held the same feeds as before, plus my website bookmarks with a bubble for each category, more detailed stock data you could interact with, and notes. When I got married in 2019, I added a module to manage, track, and visualize our spending and finances. I still use it, mostly for finances.'],
-          media: [{ img: L + 'home/logo-transparent.png', cap: 'The second version’s logo', dark: true }]
+          media: [{ img: L + 'home/logo-transparent.png', cap: 'The second version’s logo', bg: L + 'home/pinstripe2.png' }]
         }
       ]
     },

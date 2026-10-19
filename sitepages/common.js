@@ -51,7 +51,9 @@
       '<button class="sp-use" type="button">Tap to use this site</button></div></div>';
   }
   function figHtml(m) {
-    return '<figure class="sp-fig' + (m.dark ? ' dark' : '') + '"><img src="' + m.img + '" alt="' + esc(m.cap) + '" loading="lazy">' +
+    // bg: a logo on a clear background is shown over the site's own background tile, as on the site.
+    return '<figure class="sp-fig' + (m.dark ? ' dark' : '') + (m.bg ? ' tile' : '') + '"><img src="' + m.img + '" alt="' + esc(m.cap) + '" loading="lazy"' +
+      (m.bg ? ' style="background:url(' + m.bg + ');padding:28px;box-sizing:border-box"' : '') + '>' +
       (m.cap ? '<figcaption>' + esc(m.cap) + '</figcaption>' : '') + '</figure>';
   }
   function galleryHtml(g, cls) {
@@ -134,8 +136,10 @@
     '.sp-fig img,.sp-gallery img{cursor:zoom-in}' +
     '.sp-logo{cursor:pointer}' +
     '.sp-viewer{position:fixed;inset:0;z-index:10000;background:#000e;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:40px 60px}' +
-    '.sp-viewer.open{display:flex}.sp-viewer img{max-width:100%;max-height:calc(100vh - 140px);object-fit:contain}' +
-    '.sp-viewer .cap{color:#eee;font:14px/1.4 system-ui,sans-serif;text-align:center;max-width:720px}' +
+    // The picture keeps its own size (no flex shrinking), so the caption always sits below it.
+    '.sp-viewer.open{display:flex}.sp-viewer img{flex:none;display:block;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;box-sizing:border-box}' +
+    '.sp-viewer .sp-vcap{flex:none;color:#eee;font:14px/1.4 system-ui,sans-serif;text-align:center;max-width:720px}' +
+    '@media (max-width:759px){.sp-viewer{padding:60px 12px 70px}.sp-viewer img{max-height:calc(100vh - 220px)}.sp-viewer .l,.sp-viewer .r{top:auto;bottom:14px}.sp-viewer .l{left:calc(50% - 56px)}.sp-viewer .r{right:calc(50% - 56px)}}' +
     '.sp-viewer .n{position:absolute;top:16px;left:20px;color:#aaa;font:12px ui-monospace,monospace}' +
     '.sp-viewer button{position:absolute;border:0;background:#fff2;color:#fff;width:44px;height:44px;border-radius:50%;font-size:26px;cursor:pointer;line-height:1}' +
     '.sp-viewer .x{top:12px;right:16px}.sp-viewer .l{left:12px;top:50%}.sp-viewer .r{right:12px;top:50%}' +
@@ -285,13 +289,13 @@
     var imgs = Array.prototype.slice.call(document.querySelectorAll('.sp-fig img'));
     if (imgs.length) {
       var v = document.createElement('div'); v.className = 'sp-viewer';
-      v.innerHTML = '<span class="n"></span><button class="x" aria-label="Close">×</button><button class="l" aria-label="Previous">‹</button><img alt=""><div class="cap"></div><button class="r" aria-label="Next">›</button>';
+      v.innerHTML = '<span class="n"></span><button class="x" aria-label="Close">×</button><button class="l" aria-label="Previous">‹</button><img alt=""><div class="sp-vcap"></div><button class="r" aria-label="Next">›</button>';
       document.body.appendChild(v);
-      var big = v.querySelector('img'), cap = v.querySelector('.cap'), n = v.querySelector('.n'), cur = 0;
+      var big = v.querySelector('img'), cap = v.querySelector('.sp-vcap'), n = v.querySelector('.n'), cur = 0;
       var show = function (k) {
         cur = (k + imgs.length) % imgs.length;
         var im = imgs[cur], fc = im.closest('figure').querySelector('figcaption');
-        big.src = im.currentSrc || im.src; cap.textContent = fc ? fc.textContent : ''; n.textContent = (cur + 1) + ' / ' + imgs.length;
+        big.src = im.currentSrc || im.src; big.style.background = im.style.background; big.style.padding = im.style.padding; cap.textContent = fc ? fc.textContent : ''; n.textContent = (cur + 1) + ' / ' + imgs.length;
       };
       var open = function (k) { show(k); v.classList.add('open'); document.body.style.overflow = 'hidden'; };
       var close = function () { v.classList.remove('open'); document.body.style.overflow = ''; };

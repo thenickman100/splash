@@ -365,9 +365,7 @@
     "edge": [
      false
     ]
-   }
-  ],
-  "extra": [
+   },
    {
     "hex": "#007c9e",
     "what": "Deep teal of the menu frame and section titles",
@@ -402,7 +400,8 @@
      false
     ]
    }
-  ]
+  ],
+  "extra": []
  },
  "bv": {
   "name": "BV Homework",
@@ -516,6 +515,28 @@
     "edge": [
      false
     ]
+   },
+   {
+    "hex": "#fafdfe",
+    "what": "Graph-paper background pattern",
+    "src": "css.css\nbody { background: linear-gradient(to right, white, transparent 15%, transparent 85%, white), url([['bg.png']]); background-repeat: repeat; }",
+    "px": [
+     [
+      0,
+      180
+     ]
+    ],
+    "img": [
+     "engen-x1"
+    ],
+    "edge": [
+     false
+    ],
+    "pattern": {
+     "file": "palette/patterns/engen-bg.png",
+     "repeat": "repeat",
+     "base": "#fafdfe"
+    }
    }
   ],
   "extra": [
@@ -586,28 +607,6 @@
     "edge": [
      false
     ]
-   },
-   {
-    "hex": "#fafdfe",
-    "what": "Graph-paper background pattern",
-    "src": "css.css\nbody { background: linear-gradient(to right, white, transparent 15%, transparent 85%, white), url([['bg.png']]); background-repeat: repeat; }",
-    "px": [
-     [
-      0,
-      180
-     ]
-    ],
-    "img": [
-     "engen-x1"
-    ],
-    "edge": [
-     false
-    ],
-    "pattern": {
-     "file": "palette/patterns/engen-bg.png",
-     "repeat": "repeat",
-     "base": "#fafdfe"
-    }
    }
   ]
  },
@@ -838,51 +837,51 @@
     });
   }
   // Parts: every place a page uses a site color, and which palette color (1 = color 1) it takes. A fill part
-  // can also take a pattern. Each site has its own choices: slot is the default, and a page's sites list
+  // can also take a pattern, and every part can take N (slot 0, its neutral): the page's own gray, white or black
+  // rather than a site color. Each site has its own choices: slot is the default, and a page's sites list
   // ({ site: { part: slot } }) holds a site's published changes. The Palette panel can try others in this browser.
   var PARTS = {
     K: { name: 'K · Scroll through time', parts: [
-      { id: 'year', label: 'Big year', slot: 1 },
-      { id: 'openFill', label: 'Open full screen button', slot: 1, fill: true },
-      { id: 'openText', label: 'Open full screen text', slot: 2 },
-      { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1 } ] },
+      { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
+      { id: 'openFill', label: 'Open full screen button', slot: 1, neutral: '#f2f2f2', fill: true },
+      { id: 'openText', label: 'Open full screen text', slot: 2, neutral: '#121212' },
+      { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1, neutral: '#9a9a9a' } ] },
     AG: { name: 'AG · Fanned windows', sites: {awesome:{year:2},ask:{readFill:3,open:1,glow:1},titans:{glow:1},hobo:{glow:3},bv:{readFill:2,readText:1,glow:1},engen:{year:3,kicker:2,open:2},home:{year:3,kicker:1,glow:1},spaceatlas:{kicker:4,readFill:3,readText:1,open:4,glow:1}}, parts: [
-      { id: 'year', label: 'Big year', slot: 1 },
-      { id: 'kicker', label: 'Year and tier line', slot: 3 },
-      { id: 'readFill', label: 'Read more button', slot: 1, fill: true },
-      { id: 'readText', label: 'Read more text', slot: 2 },
-      { id: 'open', label: 'Open full screen outline and text', slot: 3 },
-      { id: 'glow', label: 'Glow at the bottom of the page', slot: 2 } ] },
+      { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
+      { id: 'kicker', label: 'Year and tier line', slot: 3, neutral: '#9a9a9a' },
+      { id: 'readFill', label: 'Read more button', slot: 1, neutral: '#f2f2f2', fill: true },
+      { id: 'readText', label: 'Read more text', slot: 2, neutral: '#121212' },
+      { id: 'open', label: 'Open full screen outline and text', slot: 3, neutral: '#f2f2f2' },
+      { id: 'glow', label: 'Glow at the bottom of the page', slot: 2, neutral: '#555555' } ] },
     AE: { name: 'AE · Row of windows', parts: [
-      { id: 'year', label: 'Big year', slot: 1 } ] },
+      { id: 'year', label: 'Big year', slot: 1, neutral: '#141414' } ] },
     AI: { name: 'AI · Split screen', parts: [
-      { id: 'sideFill', label: 'Side panel', slot: 1, fill: true },
-      { id: 'sideText', label: 'Side panel text', slot: 2 },
-      { id: 'num', label: 'Section numbers', slot: 1 },
-      { id: 'mark', label: 'Selected logo and link underline', slot: 1 } ] },
+      { id: 'sideFill', label: 'Side panel', slot: 1, neutral: '#141414', fill: true },
+      { id: 'sideText', label: 'Side panel text', slot: 2, neutral: '#f4f4f4' },
+      { id: 'num', label: 'Section numbers', slot: 1, neutral: '#5f5f5f' },
+      { id: 'mark', label: 'Selected logo and link underline', slot: 1, neutral: '#141414' } ] },
     AK: { name: 'AK · Chapters', parts: [
-      { id: 'kicker', label: 'Line above the site name', slot: 1 },
-      { id: 'num', label: 'Chapter numbers', slot: 1 },
-      { id: 'tocNum', label: 'Current chapter in the contents', slot: 1 },
-      { id: 'mark', label: 'Facts box line and selected logo', slot: 1 } ] },
-    // AN is the site page paired with AG, so its year, glow, year line and buttons start from AG's choices for each site.
-    // A part with a neutral color can also take N (slot 0): the page's own gray or white rather than a site color.
-    AN: { name: 'AN · Fan page', sites: {awesome:{year:2,glow:2,kick:3},ask:{kick:3,btnFill:3},titans:{kick:3},hobo:{glow:3,kick:3},bv:{kick:3,btnFill:2,btnText:1},engen:{year:3,glow:2,kick:2},home:{year:3,kick:1},spaceatlas:{kick:4,btnFill:3,btnText:1}}, parts: [
-      { id: 'glow', label: 'Glow behind the top section', slot: 1 },
+      { id: 'kicker', label: 'Line above the site name', slot: 1, neutral: '#5f5f5f' },
+      { id: 'num', label: 'Chapter numbers', slot: 1, neutral: '#141414' },
+      { id: 'tocNum', label: 'Current chapter in the contents', slot: 1, neutral: '#141414' },
+      { id: 'mark', label: 'Facts box line and selected logo', slot: 1, neutral: '#141414' } ] },
+    // AN is the site page paired with AG.
+    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:1},engen:{glow:2,year:3,kick:2,btnFill:4},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
+      { id: 'glow', label: 'Glow behind the top section', slot: 1, neutral: '#555555' },
       { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
       { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },
-      { id: 'year', label: 'Big year', slot: 1 },
+      { id: 'year', label: 'Big year', slot: 1, neutral: '#f2f2f2' },
       { id: 'kick', label: 'Year and tier line', slot: 0, neutral: '#9a9a9a' },
       { id: 'name', label: 'Site name', slot: 0, neutral: '#f2f2f2' },
       { id: 'lede', label: 'Line under the site name', slot: 0, neutral: '#cfcfcf' },
       { id: 'cap', label: 'Caption beside the window', slot: 0, neutral: '#9a9a9a' },
-      { id: 'btnFill', label: 'Buttons', slot: 1, fill: true },
-      { id: 'btnText', label: 'Button text', slot: 2 },
+      { id: 'btnFill', label: 'Buttons', slot: 1, neutral: '#f2f2f2', fill: true },
+      { id: 'btnText', label: 'Button text', slot: 2, neutral: '#121212' },
       { id: 'factLabel', label: 'Fact labels (Started, Address)', slot: 0, neutral: '#9a9a9a' },
       { id: 'factValue', label: 'Facts', slot: 0, neutral: '#f2f2f2' },
       { id: 'toc', label: 'Contents links', slot: 0, neutral: '#cfcfcf' },
-      { id: 'link', label: 'Link and contents hover', slot: 1 },
-      { id: 'bar', label: 'Bar above each section heading', slot: 1 },
+      { id: 'link', label: 'Link and contents hover', slot: 1, neutral: '#f2f2f2' },
+      { id: 'bar', label: 'Bar above each section heading', slot: 1, neutral: '#9a9a9a' },
       { id: 'h2', label: 'Section headings', slot: 0, neutral: '#f2f2f2' },
       { id: 'h3', label: 'Smaller headings', slot: 0, neutral: '#f2f2f2' },
       { id: 'body', label: 'Story text', slot: 0, neutral: '#cfcfcf' },
@@ -893,7 +892,7 @@
       { id: 'logoFill', label: 'Logo boxes', slot: 0, neutral: '#ffffff', fill: true },
       { id: 'logoText', label: 'Logo box labels', slot: 0, neutral: '#4a4a4a' },
       { id: 'logoLine', label: 'Logo box border', slot: 0, neutral: '#ffffff' },
-      { id: 'mark', label: 'Selected logo border', slot: 1 },
+      { id: 'mark', label: 'Selected logo border', slot: 1, neutral: '#f2f2f2' },
       { id: 'endLabel', label: 'Years at the bottom', slot: 0, neutral: '#9a9a9a' },
       { id: 'endName', label: 'Previous and next site names at the bottom', slot: 0, neutral: '#f2f2f2' } ] }
   };
