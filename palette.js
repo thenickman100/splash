@@ -818,7 +818,7 @@
  }
 };
 
-  // Trial order: the palette page can reorder colors in this browser only. It is saved in localStorage as
+  // Trial order: the palette page can reorder colors in this browser only. It is saved in browser storage as
   // { site: { colors: [img keys], extra: [img keys] } } and applied here, so every page in this browser
   // shows the trial order until it is reset. The published order above is untouched.
   var KEY = 'splash-palette-order', PUBLISHED = {};
@@ -866,7 +866,7 @@
       { id: 'tocNum', label: 'Current chapter in the contents', slot: 1, neutral: '#141414' },
       { id: 'mark', label: 'Facts box line and selected logo', slot: 1, neutral: '#141414' } ] },
     // AN is the site page paired with AG.
-    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,logoFill:1,logoLine:5},bv:{year:2,kick:1,btnFill:3,btnText:0},engen:{glow:2,year:3,kick:2,btnFill:4,bar:2},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
+    AN: { name: 'AN · Fan page', sites: {awesome:{glow:2,year:2,kick:3,link:2},ask:{kick:3,btnFill:3,logoFill:2,logoText:3,logoLine:1},titans:{kick:3},hobo:{glow:3,kick:3,btnFill:4,logoFill:1,logoText:2,logoLine:2},bv:{year:2,kick:1,btnFill:3,btnText:0},engen:{glow:2,year:3,kick:2,btnFill:4,bar:2},home:{year:3,kick:1,btnFill:5},spaceatlas:{kick:4,bar:4}}, parts: [
       { id: 'glow', label: 'Glow behind the top section', slot: 1, neutral: '#555555' },
       { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
       { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },
@@ -896,10 +896,14 @@
       { id: 'endLabel', label: 'Years at the bottom', slot: 0, neutral: '#9a9a9a' },
       { id: 'endName', label: 'Previous and next site names at the bottom', slot: 0, neutral: '#f2f2f2' } ] }
   };
+  // @edit (tools/release.py keeps only the @release lines below, uncommented, in a published build)
   // Trial parts are saved as { page: { site: { part: slot } } }.
   var PKEY = 'splash-palette-parts-sites', partTrial = null;
   try { partTrial = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch (e) {}
   try { localStorage.removeItem('splash-palette-parts'); } catch (e) {} // the old all-sites format
+  // @release
+  // var partTrial = null;
+  // @end
   function sk(key) { return key === 'hobo26' ? 'hobo' : key; }
   function slotOf(page, id, key) {
     key = sk(key);
@@ -916,6 +920,7 @@
     return { 'Travel.dc.html': 'K', 'R8-AG.dc.html': 'AG', 'R8-AE.dc.html': 'AE', 'AI.html': 'AI', 'AK.html': 'AK', 'AN.html': 'AN' }[f] || null;
   })();
 
+  // @edit
   // After a panel change reloads the page, it comes back on the same site and scroll position.
   var RKEY = 'splash-pal-return', back = null;
   try { back = JSON.parse(sessionStorage.getItem(RKEY) || 'null'); sessionStorage.removeItem(RKEY); } catch (e) {}
@@ -924,6 +929,9 @@
   var trial = null;
   try { trial = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
   if (trial) arrange(trial);
+  // @release
+  // var back = null, trial = null;
+  // @end
 
   // Pattern files sit next to this script, so resolve them from its own address (pages load it from different folders).
   var BASE = (document.currentScript && document.currentScript.src || '').replace(/palette\.js[^/]*$/, '');
@@ -948,6 +956,7 @@
   function ranked(key) { return site(key).colors.map(function (c) { return c.hex; }); }
   window.PALETTE = {
     sites: SITES,
+    // @edit
     // Trial order controls, used by palette.html.
     trial: !!trial,
     published: PUBLISHED,
@@ -988,20 +997,25 @@
     partsCss: '.pal-part{display:flex;align-items:center;gap:8px;padding:5px 14px}.pal-pl{flex:1 1 0;min-width:0;font-size:12.5px;line-height:1.3}' +
       '.pal-slots{flex:none;display:flex;gap:3px}.pal-slot{width:24px;height:24px;padding:0!important;border-radius:6px!important;border:1px solid #0003!important;font:700 11px ui-monospace,monospace!important;cursor:pointer}' +
       '.pal-slot.pal-n{margin-right:5px}.pal-slot.on{outline:2px solid #111;outline-offset:1px}.pal-slot.none{border-style:dashed!important;color:#999!important}',
+    // @end
     page: PAGE,
     // Pages that switch sites in place say which one they show, so the panel shows that site's colors.
     showing: function (key) { if (key === this.shown) return; this.shown = key; if (this.onShow) this.onShow(key); },
     shown: null,
     // The site to start on, for pages that pick their site in place: the one showing before a panel reload, or ?site=.
     resume: back && back.site || new URLSearchParams(location.search).get('site'),
+    // @edit
     // Reload the page, keeping the site shown and the scroll position (the page's own and [data-keep-scroll]).
     reloadHere: function () {
       var el = document.querySelector('[data-keep-scroll]');
       try { sessionStorage.setItem(RKEY, JSON.stringify({ path: location.pathname + location.search, site: this.shown, y: scrollY, sc: el ? el.scrollTop : 0 })); } catch (e) {}
       location.reload();
     },
+    // @end
     parts: PARTS,
+    // @edit
     partsTrial: !!partTrial,
+    // @end
     slotOf: slotOf,
     key: sk,
     // The color (or for a fill part, the background) a page part takes for a site.
@@ -1013,6 +1027,7 @@
     },
     // Every part of a page for a site, as { id: value }.
     partsFor: function (page, key) { var o = {}, me = this; (PARTS[page] ? PARTS[page].parts : []).forEach(function (d) { o[d.id] = me.part(page, d.id, key); }); return o; },
+    // @edit
     partOrder: function () {
       var o = {};
       Object.keys(PARTS).forEach(function (pg) { o[pg] = {}; Object.keys(SITES).forEach(function (k) { o[pg][k] = {}; PARTS[pg].parts.forEach(function (d) { o[pg][k][d.id] = slotOf(pg, d.id, k); }); }); });
@@ -1023,6 +1038,7 @@
       try { localStorage.setItem(PKEY, JSON.stringify(o)); } catch (e) {} this.partsTrial = true;
     },
     clearParts: function () { partTrial = null; try { localStorage.removeItem(PKEY); } catch (e) {} this.partsTrial = false; },
+    // @end
     order: function () { var o = {}; Object.keys(SITES).forEach(function (k) { o[k] = { colors: SITES[k].colors.map(function (c) { return c.img[0]; }), extra: SITES[k].extra.map(function (c) { return c.img[0]; }) }; }); return o; },
     contrast: contrast,
     ranked: ranked,
@@ -1039,6 +1055,7 @@
     third: function (key) { var r = ranked(key); return r[2] || r[1] || r[0]; }
   };
 
+  // @edit
   // Palette panel: a Palette button on every page that loads this file, for trying a different order in place.
   // A change saves the trial order and reloads the page so it redraws in the new colors; the panel reopens.
   function panel() {
@@ -1126,4 +1143,5 @@
       if (ok && tries > 4 || ++tries > 40) clearInterval(put);
     }, 100);
   }
+  // @end
 })();

@@ -86,7 +86,9 @@ a{color:inherit}
 <div id="app"></div>
 <script src="../palette.js"></script>
 <script src="data.js"></script>
+<!-- @edit -->
 <script src="content.js"></script>
+<!-- @end -->
 <script src="../browsernav.js"></script>
 <script src="common.js"></script>
 <script>
@@ -175,7 +177,8 @@ SP.boot(function (s, sp) {
     var bw = parseFloat(on.style.width) - 2, bh = parseFloat(on.style.height) - 41, sc = bw / c.ew;
     lv.style.left = (parseFloat(on.style.left) + 1) + 'px'; lv.style.top = (parseFloat(on.style.top) + 40) + 'px'; lv.style.width = bw + 'px'; lv.style.height = bh + 'px';
     frame.style.width = c.ew + 'px'; frame.style.height = Math.ceil(bh / sc) + 'px'; frame.style.transform = 'scale(' + sc + ')';
-    nav.style.left = (parseFloat(on.style.left) + 13) + 'px'; nav.style.top = (parseFloat(on.style.top) + 15) + 'px';
+    // Back and forward sit over the card's yellow and green dots.
+    nav.style.left = (parseFloat(on.style.left) + 34) + 'px'; nav.style.top = (parseFloat(on.style.top) + 15) + 'px';
     txt.textContent = c.cap; open.href = c.link;
   };
   els.forEach(function (el, k) { el.addEventListener('click', function () { if (k !== cur) { cur = k; lay(); } }); });

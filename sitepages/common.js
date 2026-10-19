@@ -3,23 +3,34 @@
 (function () {
   var q = new URLSearchParams(location.search);
   var keys = SITES.map(function (s) { return s.key; });
-  var at = Math.max(0, keys.indexOf(q.get('site') || 'hobo'));
+  // A published page names its site (SPLASH_SITE); the test pages take it from ?site=.
+  var at = Math.max(0, keys.indexOf(window.SPLASH_SITE || q.get('site') || 'hobo'));
   var site = SITES[at];
   var file = location.pathname.split('/').pop() || 'AL.html';
-  var design = file.replace(/\.html$/, '');
+  // The design (AN, AI…) is the file name on the test pages; a published page, named for its site, says it (SPLASH_DESIGN).
+  var design = window.SPLASH_DESIGN || file.replace(/\.html$/, '');
 
+  // @edit
   // "from" is the main page that opened this one; only paths inside this repo are allowed.
   var from = q.get('from') || '';
   if (!/^\.\.\/candidates\/[\w.-]+\/[\w.-]+\.html$/.test(from)) from = '';
   var home = from || '../index.html';
+  // @release
+  // // Published: the main page is index.html, and each site has its own page (SPLASH_PAGES, set by the page).
+  // var from = '', home = 'index.html';
+  // @end
 
   function esc(t) {
     return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
+  // @edit
   function pageUrl(k, d) {
     var u = (d ? SITE_DESIGNS[d].file : file) + '?site=' + k;
     return from ? u + '&from=' + encodeURIComponent(from) : u;
   }
+  // @release
+  // function pageUrl(k) { return SPLASH_PAGES[k]; }
+  // @end
   var prev = at > 0 ? SITES[at - 1] : null;
   var next = at < SITES.length - 1 ? SITES[at + 1] : null;
 
@@ -111,6 +122,7 @@
     return null;
   }
 
+  // @edit
   // Test bar: switch site-page design for the same site, and go back to the main page.
   function testBar() {
     var b = document.createElement('div');
@@ -122,14 +134,17 @@
     document.body.appendChild(b);
     try { localStorage.setItem('splash-sitepage', design); } catch (e) {}
   }
+  // @end
 
   var css = '' +
+    // @edit
     '.sp-test{position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:2px;padding:4px 6px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px ui-monospace,monospace;max-width:calc(100vw - 20px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}' +
     '.sp-test span{padding-right:6px;letter-spacing:.05em}.sp-test .sep{width:1px;height:16px;background:#fff4;margin:0 6px;padding:0}' +
     '.sp-test a{height:26px;min-width:32px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#fff;font:700 11px ui-monospace,monospace;text-decoration:none}' +
     '.sp-test a.on{background:#ffd23f;color:#111}.sp-test .sm{display:none}.sp-test a .lg{padding:0}' +
     // Phones: the test bar moves to the bottom (the Palette button sits to its right) and leaves room below the page.
     '@media (max-width:759px),(max-height:479px){.sp-test{top:auto;bottom:calc(10px + env(safe-area-inset-bottom));left:calc(50% - 26px);max-width:calc(100vw - 80px)}.sp-test .lg{display:none}.sp-test .sm{display:inline}body{padding-bottom:64px}}' +
+    // @end
     // Touch screens: a live window takes touches only after a tap, so swiping over it scrolls the page. Done gives the page back.
     '.sp-use{display:none}' +
     '@media (pointer:coarse){.sp-usebox iframe{pointer-events:none}.sp-usebox.using iframe{pointer-events:auto}' +
@@ -345,7 +360,9 @@
       var ic = document.createElement('link'); ic.rel = 'icon'; ic.type = 'image/x-icon'; ic.href = site.favicon; document.head.appendChild(ic);
       var st = document.createElement('style'); st.textContent = css; document.head.insertBefore(st, document.head.firstChild);
       document.getElementById('app').innerHTML = render(site, window.SP);
+      // @edit
       testBar();
+      // @end
       wire();
       if (after) after(site, window.SP);
     }

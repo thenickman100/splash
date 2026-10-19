@@ -29,3 +29,12 @@ The candidates link to the restored sites on hackahobo.info (`/projects/sites/..
 Every push to `main` deploys the repo to GitHub Pages through `.github/workflows/pages.yml`.
 
 To view locally, run `python3 -m http.server` in the repo root and open http://localhost:8000.
+
+## Publishing
+
+Splash v1 is AG (the main page) with AN (the site pages). `python3 tools/release.py v1` builds it into
+`dist/splash-v1/` (and `dist/splash-v1.zip`, not committed) without any editing tools: code between `@edit` and
+`@end` marker lines is dropped, and lines between `@release` and `@end` are kept uncommented. The build uses
+v0.1's page names (index.html, awesomestuff.html, …) and includes the museum logos and icons it needs, so it can
+replace v0.1 at projects/splash/. The editing tools stay in this repo for the next designs: change `MAIN` and
+`SITE_PAGE` in `tools/release.py` to publish a different pairing.

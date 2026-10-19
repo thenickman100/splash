@@ -37,11 +37,13 @@ a{color:#f2f2f2}a:hover{color:#ccc}
 </helmet>
 <sc-if value="{{desk}}" hint-placeholder-val="{{true}}">
 <div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.p_glow}} 45%,#121212),#121212 60%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
+  <!-- @edit -->
   <div class="tb" style="position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span class="lbl" style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span><span class="lbs" style="padding-right:6px;letter-spacing:.05em;display:none">READ MORE</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
     <a href="../../index.html" style="height:26px;padding:0 10px;display:flex;align-items:center;margin-left:4px;border-left:1px solid #fff4;color:#fff;font:700 11px monospace;text-decoration:none">ALL</a>
   </div>
+  <!-- @end -->
   <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
     <div style="font-size:24px;font-weight:800">Old Sites</div>
     <div class="mono" style="font-size:11px;color:#9a9a9a">Pick a window from the row below, left to right in time</div>
@@ -64,16 +66,18 @@ a{color:#f2f2f2}a:hover{color:#ccc}
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
-  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:13px;top:15px;display:flex;gap:10px;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:34px;top:15px;display:flex;gap:0.77em;font-size:13px;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
 </div>
 </sc-if>
 <sc-if value="{{mob}}" hint-placeholder-val="{{false}}">
 <div style="min-height:{{H}}px;box-sizing:border-box;padding-bottom:calc(70px + env(safe-area-inset-bottom));background:radial-gradient(ellipse 120% 50% at 50% {{glowY}}px,color-mix(in srgb,{{cur.p_glow}} 40%,#121212),#121212 70%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
+  <!-- @edit -->
   <div class="tb" style="position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:999;display:flex;align-items:center;gap:3px;padding:4px 5px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px monospace">
     <span class="lbl" style="padding-right:6px;letter-spacing:.05em">TEST · READ MORE OPENS</span><span class="lbs" style="padding-right:6px;letter-spacing:.05em;display:none">READ MORE</span>
     <sc-for list="{{spOpts}}" as="o" hint-placeholder-count="6"><button onClick="{{o.pick}}" style="height:26px;min-width:34px;border:0;border-radius:999px;cursor:pointer;font:700 11px monospace;background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
     <a href="../../index.html" style="height:26px;padding:0 10px;display:flex;align-items:center;margin-left:4px;border-left:1px solid #fff4;color:#fff;font:700 11px monospace;text-decoration:none">ALL</a>
   </div>
+  <!-- @end -->
   <div style="padding:16px 16px 0;display:flex;align-items:baseline;gap:10px"><div style="font-size:20px;font-weight:800">Old Sites</div><div class="mono" style="font-size:10px;color:#9a9a9a">Tap a window to pick a site</div></div>
   <div style="position:relative;height:{{stageH}}px;overflow:hidden">
   <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
@@ -82,7 +86,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
       <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
     </button>
   </sc-for>
-  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:11px;top:12px;font-size:11px;display:flex;gap:10px;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:{{live.pe}}"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div><button onClick="{{live.toggle}}" class="use">{{live.label}}</button></div>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:29px;top:12px;font-size:11px;display:flex;gap:0.77em;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:{{live.pe}}"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div><button onClick="{{live.toggle}}" class="use">{{live.label}}</button></div>
 </div>
   <div class="txt" key="{{cur.key}}" style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
     <div style="font-size:60px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.p_year}}">{{cur.yr}}</div>
@@ -99,7 +103,6 @@ a{color:#f2f2f2}a:hover{color:#ccc}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
 var H = 'https://hackahobo.info';
-// splash test: Read more opens the site page chosen in the test bar, for the site on screen.
 // splash test: fill the real browser window. The design is drawn for 1280×800; u scales it (CSS zoom) and
 // W×H is the canvas, in design pixels, that fills the window. Fixed pages fit both sides, scroll pages fit the width.
 // Phones (under 760px wide, or under 480px tall when held sideways) get their own layout at real size: mob is set and nothing is scaled.
@@ -109,11 +112,18 @@ function screenFit(fixed){ var w = innerWidth, h = innerHeight; if (w < 760 || h
 var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
 function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t, w: win.w, h: win.h, bar: bar }, liveFit(key, win.w - 2, win.h - bar - 1)); }
+// @edit
 var SPD = ['AI','AK','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
 // AG is paired with AN, so Read more opens AN unless another design is picked in the test bar here.
 function spPick(){ try { var v = localStorage.getItem('splash-sitepage-AG'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AN'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
 function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage-AG', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
+// @release
+// // Published: Read more opens the site's own page (SPLASH_PAGES, set by the page).
+// function spPick(){ return 'AN'; }
+// function spHref(sp, key){ return SPLASH_PAGES[key === 'hobo26' ? 'hobo' : key]; }
+// function spOpts(){ return []; }
+// @end
 var SITES = [
  {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
  {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},

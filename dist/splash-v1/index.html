@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Sites</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<link rel="stylesheet" href="browser.css">
+<script>var SPLASH_PAGES = {"awesome": "awesomestuff.html", "ask": "askthenickman.html", "titans": "titans.html", "hobo": "hackahobo.html", "bv": "bvhomework.html", "engen": "engen.html", "home": "welcomenick.html", "spaceatlas": "spaceatlas.html"};</script>
+<script src="palette.js"></script>
+<script src="favicon.js"></script>
+<script src="browsernav.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+html,body{overflow:hidden}
+body{margin:0;background:#121212}
+a{color:#f2f2f2}a:hover{color:#ccc}
+.mono{font-family:'DM Mono',monospace}
+.c{position:absolute;padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:left;font:inherit;transform-origin:center bottom;box-shadow:0 10px 30px #0008;transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),width .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.c:not(.on):hover{transform:rotate(var(--a)) translateY(-26px)!important}
+.c .body{flex-grow:1;overflow:hidden;background:#000}
+.c.on{cursor:default}
+.c.on .body{overflow-y:auto;scrollbar-width:thin}
+.txt{animation:t .45s ease}
+@keyframes t{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.live{animation:lv .35s .5s both}@keyframes lv{from{opacity:0}to{opacity:1}}
+.live iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff}
+/* Phones: the test bar sits at the bottom, left of the Palette button; the page scrolls if it is taller than the screen. */
+@media (max-width:759px),(max-height:479px){html,body{overflow:visible}.tb{white-space:nowrap;position:fixed!important;top:auto!important;bottom:calc(10px + env(safe-area-inset-bottom));left:calc(50% - 26px)!important}.tb .lbl{display:none}.tb .lbs{display:inline!important}}
+.use{position:absolute;right:10px;bottom:10px;z-index:2;height:34px;padding:0 14px;border:1px solid #fff8;border-radius:999px;background:#000c;color:#fff;font:600 12px monospace;cursor:pointer;pointer-events:auto}
+</style>
+</helmet>
+<sc-if value="{{desk}}" hint-placeholder-val="{{true}}">
+<div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.p_glow}} 45%,#121212),#121212 60%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
+  <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
+    <div style="font-size:24px;font-weight:800">Old Sites</div>
+    <div class="mono" style="font-size:11px;color:#9a9a9a">Pick a window from the row below, left to right in time</div>
+  </div>
+
+  <div class="txt" key="{{cur.key}}" style="position:absolute;left:{{tx}}px;top:70px;right:50px;height:440px;display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:88px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.p_year}}">{{cur.yr}}</div>
+    <div class="mono" style="font-size:11px;color:{{cur.p_kicker}}">{{cur.year}} · {{cur.tier}}</div>
+    <div style="font-size:30px;font-weight:800;line-height:1">{{cur.name}}</div>
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#cfcfcf">{{cur.blurb}}</p>
+    <div style="display:flex;gap:10px;margin-top:auto">
+      <a href="{{spHref}}" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.p_readFill}};color:{{cur.p_readText}};text-decoration:none;font-weight:800">Read more →</a>
+      <a href="{{cur.link}}" target="_blank" style="flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid {{cur.p_open}};color:{{cur.p_open}};text-decoration:none;font-weight:600">Open full screen ↗</a>
+    </div>
+  </div>
+
+  <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
+    <button class="c ob {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
+      <span class="bar ob-chrome" style="font-size:{{c.fs}}px"><i></i><i></i><i></i><span class="ob-url">{{c.addr}}</span></span>
+      <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
+    </button>
+  </sc-for>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:34px;top:15px;display:flex;gap:0.77em;font-size:13px;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:auto"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div></div>
+</div>
+</sc-if>
+<sc-if value="{{mob}}" hint-placeholder-val="{{false}}">
+<div style="min-height:{{H}}px;box-sizing:border-box;padding-bottom:calc(70px + env(safe-area-inset-bottom));background:radial-gradient(ellipse 120% 50% at 50% {{glowY}}px,color-mix(in srgb,{{cur.p_glow}} 40%,#121212),#121212 70%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
+  <div style="padding:16px 16px 0;display:flex;align-items:baseline;gap:10px"><div style="font-size:20px;font-weight:800">Old Sites</div><div class="mono" style="font-size:10px;color:#9a9a9a">Tap a window to pick a site</div></div>
+  <div style="position:relative;height:{{stageH}}px;overflow:hidden">
+  <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
+    <button class="c ob {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
+      <span class="bar ob-chrome" style="font-size:{{c.fs}}px"><i></i><i></i><i></i><span class="ob-url">{{c.addr}}</span></span>
+      <span class="body"><img src="{{c.img}}" alt="" style="width:100%;display:block"></span>
+    </button>
+  </sc-for>
+  <div data-bn key="{{live.src}}" style="position:absolute;left:{{live.l}}px;top:{{live.t}}px;width:{{live.w}}px;height:{{live.h}}px;z-index:400;pointer-events:none"><div style="position:absolute;left:29px;top:12px;font-size:11px;display:flex;gap:0.77em;pointer-events:auto"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div><div class="live" style="position:absolute;left:1px;right:1px;top:{{live.bar}}px;bottom:1px;overflow:hidden;background:#fff;pointer-events:{{live.pe}}"><iframe src="{{live.src}}" title="{{live.title}}" style="width:{{live.fw}}px;height:{{live.fh}}px;transform:scale({{live.fs}})"></iframe></div><button onClick="{{live.toggle}}" class="use">{{live.label}}</button></div>
+</div>
+  <div class="txt" key="{{cur.key}}" style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:60px;font-weight:800;line-height:.85;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;color:{{cur.p_year}}">{{cur.yr}}</div>
+    <div class="mono" style="font-size:11px;color:{{cur.p_kicker}}">{{cur.year}} · {{cur.tier}}</div>
+    <div style="font-size:26px;font-weight:800;line-height:1.05">{{cur.name}}</div>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:#cfcfcf">{{cur.blurb}}</p>
+    <div style="display:flex;gap:8px;margin-top:6px">
+      <a href="{{spHref}}" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:{{cur.p_readFill}};color:{{cur.p_readText}};text-decoration:none;font-weight:800">Read more →</a>
+      <a href="{{cur.link}}" target="_blank" style="flex:1;height:46px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid {{cur.p_open}};color:{{cur.p_open}};text-decoration:none;font-weight:600">Open full screen ↗</a>
+    </div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+var H = 'https://hackahobo.info';
+// splash test: fill the real browser window. The design is drawn for 1280×800; u scales it (CSS zoom) and
+// W×H is the canvas, in design pixels, that fills the window. Fixed pages fit both sides, scroll pages fit the width.
+// Phones (under 760px wide, or under 480px tall when held sideways) get their own layout at real size: mob is set and nothing is scaled.
+function screenFit(fixed){ var w = innerWidth, h = innerHeight; if (w < 760 || h < 480) return { u: 1, W: w, H: h, mob: true }; var u = fixed ? Math.min(w / 1280, h / 800) : Math.min(w / 1280, 1.25); return { u: u, W: Math.round(w / u), H: Math.round(h / u) }; }
+// splash test: big windows show the live site, scaled to fit, like v0.1. DIMS is the width and height each
+// site was built for (from v0.1's windows).
+var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
+function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
+function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t, w: win.w, h: win.h, bar: bar }, liveFit(key, win.w - 2, win.h - bar - 1)); }
+// Published: Read more opens the site's own page (SPLASH_PAGES, set by the page).
+function spPick(){ return 'AN'; }
+function spHref(sp, key){ return SPLASH_PAGES[key === 'hobo26' ? 'hobo' : key]; }
+function spOpts(){ return []; }
+var SITES = [
+ {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
+ {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},
+ {key:'titans',name:'Titans Softball',yr:'2010',year:'c. 2010',tier:'Side project',addr:'softball.askthenickman.com',img:'./assets/d40d39122d302efabd22bab1dfba7d0b.jpg',link:H+'/projects/sites/titans/titans.html',blurb:'My dad coached my sister’s softball team and wanted a central hub for the parents. It was the first commissioned site I made.'},
+ {key:'hobo',name:'Hack a HOBO',yr:'2011',year:'2011 – today · shown on Nov 6, 2012',tier:'Flagship',addr:'hackahobo.info',img:'./assets/46e9fbc735e6f13e79add42bea6309f1.jpg',link:H+'/files/v1/index-v1.html',blurb:'My sister came up with the name. I started it in middle school, and through high school it was a way for kids to get around blocked gaming sites at school.'},
+ {key:'bv',name:'BV Homework',yr:'2013',year:'2013',tier:'Side project',addr:'BVHomework.html',img:'./assets/a5654f5475f2b4df8ec9f935b2936711.jpg',link:H+'/projects/sites/bv-homework/BVHomework.html',blurb:'BV is for Blue Valley. I started it to share answers to homework problems at Blue Valley High School, and stopped working on it for fear of getting in trouble.'},
+ {key:'engen',name:'EnGen NextGen',yr:'2014',year:'c. 2014',tier:'Side project',addr:'engennextgen.org',img:'./assets/6547e29fd8f0f8a39623faf8329b0705.jpg',link:H+'/projects/sites/engen/home.php',blurb:'I made this site for an engineering club in exchange for personal training. It won first place at the college’s web design competition.'},
+ {key:'home',name:'Home',yr:'2016',year:'2016',tier:'Personal',addr:'localhost/home',img:'./assets/1a78f76048579d3a0a51a2934c39379c.jpg',link:H+'/projects/sites/home-original/index.php',blurb:'My own start page. It greeted me with Welcome Nick and pulled news feeds, Yahoo stock data, weather and reddit.'},
+ {key:'spaceatlas',name:'Space Atlas',yr:'2018',year:'2018',tier:'Notable',addr:'thespaceatlas.org',img:'./assets/2bfca578c0f94732e4a6e16ae09412f6.jpg',link:'https://spaceatlas.hackahobo.info/',blurb:'A capstone project in the Air Force Academy’s Astronautical Engineering department about the future of space, looking ahead to 2038. I led web design.'},
+ {key:'hobo26',name:'Hack a HOBO',yr:'2026',year:'2026 Edition',tier:'Flagship',addr:'hackahobo.info',img:'./assets/460a63e67a3d643c61ef3f5ef7994aa9.jpg',link:H+'/?theme=original',blurb:'Hack a HOBO went on hiatus after the death of Flash. The 2024 Edition brought the games back through emulators, and the 2026 Edition is an overhaul. It is still running.'}
+];
+// splash test: site colors come from palette.js: color 1 for the site's color, color 2 for text on it.
+function partsOf(page, key){ var o = PALETTE.partsFor(page, key), r = {}; for (var k in o) r['p_' + k] = o[k]; return r; }
+SITES.forEach((s) => { Object.assign(s, partsOf('AG', s.key)); });
+// After a Palette panel change reloads the page, start on the site that was showing.
+function startAt(i){ var k = SITES.findIndex((s) => s.key === PALETTE.resume); return k >= 0 ? k : i; }
+var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140}, CWM = {Flagship:96,Notable:84,'Side project':70,Personal:64};
+class Component extends DCLogic {
+  testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
+  constructor(p){ super(p); addEventListener('resize', () => this.setState({ fit: screenFit(true) })); this.state = { fit: screenFit(true),  i: startAt(3) }; }
+  renderVals(){
+    var i = this.state.i, n = SITES.length;
+    PALETTE.showing(SITES[i].key);
+    siteIcon(SITES[i].key);
+    var T = this.testVals();
+    var F = this.state.fit;
+    if (F.mob) return this.phone(i, T, F);
+    var R = {
+      mob: false, desk: true,
+      u: F.u, W: F.W, H: F.H, tx: 100 + 730 + Math.round((F.W - 1280) * 0.6),
+      spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts,
+      cur: SITES[i],
+      cards: SITES.map((s, k) => {
+        if (k === i) return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', fs: 13, pick: () => {} };
+        var a = -26 + k * (52 / (n - 1)), rad = a * Math.PI / 180, R = 1050, cx = this.state.fit.W / 2, cy = 1760 + (this.state.fit.H - 800);
+        var w = CW[s.tier], h = Math.round(w * 0.64);
+        var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
+        return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', fs: 7, pick: () => this.setState({ i: k }) };
+      })
+    };
+    R.live = liveWin(R.cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 40);
+    return R;
+  }
+  // Phones: the picked window fills the width at the top and the others fan out in a small arc beneath it.
+  // On a touch screen the live window takes touches only after Tap to use, so swiping over it scrolls the page.
+  phone(i, T, F){
+    // Held sideways the window is capped so it fits the screen height.
+    var n = SITES.length, W = F.W, cw = Math.min(W - 32, Math.round((F.H - 130) / 0.62)), ch = Math.round(cw * 0.62) + 34, fanTop = 12 + ch + 22;
+    var A = 22, R = Math.round((W / 2 - 44) / Math.sin(A * Math.PI / 180)), on = this.state.use === SITES[i].key;
+    var cards = SITES.map((s, k) => {
+      if (k === i) return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round((W - cw) / 2), t: 12, w: cw, h: ch, a: 0, z: 300, cls: 'on', fs: 11, pick: () => {} };
+      var a = -A + k * (2 * A / (n - 1)), rad = a * Math.PI / 180, w = CWM[s.tier], h = Math.round(w * 0.64);
+      var x = W / 2 + R * Math.sin(rad), y = fanTop + R * (1 - Math.cos(rad));
+      return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', fs: 5, pick: () => this.setState({ i: k, use: null }) };
+    });
+    var live = Object.assign(liveWin(cards[i], SITES[i].key, SITES[i].link, SITES[i].name, 34),
+      { pe: on ? 'auto' : 'none', label: on ? 'Done' : 'Tap to use this site', toggle: () => this.setState({ use: on ? null : SITES[i].key }) });
+    return { mob: true, desk: false, u: 1, W: W, H: F.H, stageH: fanTop + 61 + Math.round(R * (1 - Math.cos(A * Math.PI / 180))) + 18, glowY: fanTop + 40,
+      spHref: spHref(T.sp, SITES[i].key), spOpts: T.spOpts, cur: SITES[i], cards: cards, live: live };
+  }
+}
+</script>
+</body>
+</html>

@@ -14,7 +14,8 @@
   var stepUntil = 0; // until then, changes are our own back/forward arriving
   var len = history.length;
   var active = null; // the window last clicked into
-  var polled = 0;    // when the history check last recorded an entry itself
+  var guessed = -1;  // a step the history check credited by guess (index in log), until a window's load confirms it
+  var guessAt = 0;
 
   function state() {
     frames.forEach(function (r) {
@@ -26,16 +27,25 @@
   function find(f) { for (var i = 0; i < frames.length; i++) if (frames[i].f === f) return frames[i]; return null; }
   function record(r) { log = log.slice(0, at); log.push(r); at = log.length; state(); }
   function stepping() { return Date.now() < stepUntil; }
+  function guessOpen() { return guessed >= 0 && guessed === at - 1 && Date.now() - guessAt < 15000; }
 
   // A window's page loaded. Count it unless it was our own step, or a reload that added no history entry
   // (history.length didn't change and nothing ahead was dropped; past the cap the length can't tell, so count it).
   function loaded(r) {
     r.loads++;
     var L = history.length;
-    if (r.loads === 1) { len = L; return; }
     if (stepping()) { len = L; return state(); }
-    // The history check already saw this step; make sure it is credited to this window.
-    if (Date.now() - polled < 1500 && at > 0) { log[at - 1] = r; polled = 0; len = L; return state(); }
+    // A window's first load is its opening page, unless history grew since it was set up: then its opening page
+    // never finished loading (some keep fetching) and this load is a step. A step the history check already
+    // credited by guess is left as it is.
+    if (r.loads === 1) {
+      // (Past the 50-entry cap growth can't show, so a window someone has clicked into counts.)
+      if (!guessOpen() && ((L > r.base && L < CAP && L > len) || (L >= CAP && r.touched))) record(r);
+      len = L; return state();
+    }
+    // The history check already saw this step and guessed whose it was: the first window to finish loading
+    // owns it (slow pages can take several seconds).
+    if (guessOpen()) { log[guessed] = r; guessed = -1; len = L; return state(); }
     var ahead = log.length - at;
     if (L > len || (ahead > 0 && L === len - ahead + 1) || L >= CAP) record(r);
     len = L;
@@ -45,17 +55,17 @@
   setInterval(function () {
     var L = history.length;
     if (stepping()) { len = L; return; }
-    if (L > len) { var r = active && frames.indexOf(active) >= 0 ? active : frames[frames.length - 1]; if (r) { record(r); polled = Date.now(); } }
+    if (L > len) { var r = active && frames.indexOf(active) >= 0 ? active : frames[frames.length - 1]; if (r) { record(r); guessed = at - 1; guessAt = Date.now(); } }
     len = L;
   }, 300);
   addEventListener('blur', function () {
-    setTimeout(function () { var r = find(document.activeElement); if (r) active = r; }, 0);
+    setTimeout(function () { var r = find(document.activeElement); if (r) { active = r; r.touched = true; } }, 0);
   });
 
   function attach(f, back, fwd) {
     var r = find(f);
     if (r) { r.back = back; r.fwd = fwd; state(); return; }
-    r = { f: f, back: back, fwd: fwd, loads: 0 };
+    r = { f: f, back: back, fwd: fwd, loads: 0, base: history.length };
     frames.push(r);
     f.addEventListener('load', function () { loaded(r); });
     state();
@@ -90,5 +100,6 @@
     prune();
   }
   setInterval(scan, 500);
-  window.BrowserNav = { attach: attach };
+  // debug() reports the record, for tests: which window made each entry, where we are, and the history length seen.
+  window.BrowserNav = { attach: attach, debug: function () { return { log: log.map(function (r) { return frames.indexOf(r); }), at: at, len: len, frames: frames.length, loads: frames.map(function (r) { return r.loads; }) }; } };
 })();

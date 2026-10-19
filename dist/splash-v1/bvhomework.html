@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Sites</title>
+<link rel="stylesheet" href="browser.css">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* AN · Fan page. The site's windows and pictures fan out at the top like the AG and V main pages;
+   pick one to bring it forward. The story follows in two columns. */
+:root{--surface:#121212;--bg:#121212;--ink:#f2f2f2;--soft:#cfcfcf;--muted:#9a9a9a;--line:#ffffff1f;--accent:#5be37c}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',sans-serif}
+a{color:inherit}
+.mono{font-family:'DM Mono',monospace}
+.hero{position:relative;height:760px;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,var(--p-glow) 30%,#121212),#121212 62%)}
+.hero .in{position:relative;height:100%;max-width:1280px;margin:0 auto}
+.bar{position:absolute;left:60px;right:60px;top:24px;display:flex;align-items:baseline;gap:18px;z-index:400}
+.bar .home{font-weight:800;text-decoration:none;color:var(--p-home)}.bar .sp{flex-grow:1}.bar .mono{font-size:12px;text-decoration:none;color:var(--p-prevnext)}
+.title{position:absolute;left:60px;top:86px;z-index:300;max-width:440px}
+.title .yr{font-size:96px;font-weight:800;line-height:.85;letter-spacing:-0.04em;color:var(--p-year)}
+.title .kick{margin-top:10px;font-size:11px;color:var(--p-kick)}
+.title h1{margin:8px 0 10px;font-size:42px;font-weight:800;line-height:1;letter-spacing:-0.02em;color:var(--p-name)}
+.title p{margin:0;font-size:16px;line-height:1.55;color:var(--p-lede)}
+.c{position:absolute;padding:0;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:left;font:inherit;transform-origin:center bottom;box-shadow:0 10px 30px #0008;
+  transition:left .6s cubic-bezier(.2,.8,.2,1),top .6s cubic-bezier(.2,.8,.2,1),width .6s cubic-bezier(.2,.8,.2,1),height .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.c:not(.on):hover{transform:rotate(var(--a)) translateY(-22px)!important}
+.c .body{flex-grow:1;overflow:hidden;background:#fff;display:flex;align-items:flex-start;justify-content:center}
+.c .body img{width:100%;display:block}
+.c.fit .body{align-items:center}.c.fit .body img{width:auto;max-width:100%;max-height:100%;object-fit:contain}
+.c.on{cursor:default}.c.on .body{overflow-y:auto;scrollbar-width:thin}
+.lv{position:absolute;z-index:350;overflow:hidden;background:#fff;border-radius:0 0 7px 7px;animation:lvin .3s .55s both}
+.lv iframe{position:absolute;left:0;top:0}
+.lv .sp-use{z-index:3}
+.lvnav{position:absolute;z-index:360;display:flex;gap:0.77em;font-size:13px}
+.hero.one{height:640px}@keyframes lvin{from{opacity:0}to{opacity:1}}
+.lv iframe{border:0;transform-origin:0 0;background:#fff}
+.cap{position:absolute;left:520px;right:80px;top:528px;z-index:300;display:flex;align-items:center;gap:14px;font:12px 'DM Mono',monospace;color:var(--p-cap)}
+.cap .sp-btn{height:38px;font-size:13px;flex:none}
+.cap a.open{height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:8px;background:var(--p-btnFill);color:var(--p-btnText);text-decoration:none;font:800 13px 'Hanken Grotesk',sans-serif;flex:none}
+.story{display:grid;grid-template-columns:300px 1fr;gap:60px;max-width:1180px;margin:0 auto;padding:60px 50px 40px}
+.side{position:sticky;top:60px;align-self:start;display:flex;flex-direction:column;gap:20px}
+.sp-facts{margin:0;display:grid;gap:12px;font-size:14px}
+.sp-facts div{display:grid;gap:2px}.sp-facts dt{font:11px 'DM Mono',monospace;color:var(--p-factLabel)}.sp-facts dd{margin:0;font-weight:600;color:var(--p-factValue)}
+.sp-addr{display:block;white-space:nowrap}
+.toc{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:14px}
+.toc a{text-decoration:none;color:var(--p-toc);font-size:14px;padding:5px 0}.toc a:hover{color:var(--p-link)}
+.story section{padding-bottom:40px;max-width:760px}
+.story h2{margin:0 0 16px;font-size:32px;font-weight:800;letter-spacing:-0.02em;color:var(--p-h2)}
+.story h2::before{content:'';display:block;width:34px;height:4px;border-radius:2px;background:var(--p-bar);margin-bottom:14px}
+.story h3{margin:24px 0 8px;font-size:19px;color:var(--p-h3)}
+.story p{margin:0 0 16px;font-size:17px;line-height:1.68;color:var(--p-body)}
+.story .sp-win{margin:20px 0 4px;overflow:hidden}
+.sp-btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.sp-btn{height:42px;padding:0 18px;display:inline-flex;align-items:center;border-radius:8px;border:1px solid var(--p-btnLine);background:transparent;color:var(--p-btnOther);text-decoration:none;font:600 14px 'Hanken Grotesk',sans-serif;cursor:pointer}
+.sp-btn.primary{background:var(--p-btnFill);border-color:transparent;color:var(--p-btnText);font-weight:800}
+.sp-fig{margin:20px 0}.sp-fig img{max-width:100%;display:block;border-radius:8px;background:#fff}
+.sp-fig.dark img{background:#0c0c0c;padding:18px;box-sizing:border-box}
+.sp-fig figcaption{margin-top:8px;font:12px 'DM Mono',monospace;color:var(--p-figcap)}
+.sp-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:10px 0 18px}
+.sp-gallery .sp-fig{margin:0}.sp-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.sp-icons{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}.sp-icons img{aspect-ratio:1;object-fit:contain}
+.sp-list{columns:3 170px;padding:0;margin:0 0 8px;list-style:none;font:13.5px/1.9 'DM Mono',monospace}
+.sp-list a{text-decoration:none;color:var(--p-listLink);border-bottom:1px solid var(--line)}.sp-list a:hover{color:var(--p-link)}.sp-list span{color:var(--muted)}
+.sp-code{white-space:pre-wrap;word-break:break-all;background:#0c0c0c;color:#e0e0e0;padding:14px;border-radius:8px;font:12px/1.6 'DM Mono',monospace;border:1px solid var(--line)}
+.sp-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:10px 0 16px}
+.sp-logo{border:2px solid var(--p-logoLine);background:var(--p-logoFill);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:center;font:10px 'DM Mono',monospace;color:var(--p-logoText)}
+.sp-logo img{width:100%;height:62px;object-fit:contain}.sp-logo.on{border-color:var(--p-mark)}
+.end{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.end a{padding:34px 50px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
+.end a+a{border-left:1px solid var(--line);text-align:right}.end .mono{font-size:11px;color:var(--p-endLabel)}.end b{font-size:30px;font-weight:800;color:var(--p-endName)}
+@media (max-width:900px){
+  .hero,.hero.one{height:auto;padding:56px 16px 20px}.hero .in{height:auto}
+  .bar{position:static;margin-bottom:20px}.bar .mono{display:none}
+  .title{position:static;max-width:none}.title .yr{font-size:70px}
+  .fan{position:relative;height:300px;margin:24px -16px 0;overflow:hidden}
+  .cap{position:static;margin-top:14px;flex-wrap:wrap}
+  .story{grid-template-columns:1fr;padding:36px 16px;gap:30px}.side{position:static}
+  .end a{padding:24px 16px}.end b{font-size:21px}
+}
+/* Phones: the test bar is at the bottom, so the top needs no room for it. */
+@media (max-width:759px){.hero,.hero.one{padding-top:24px}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="palette.js"></script>
+<script>var SPLASH_SITE = "bv", SPLASH_DESIGN = "AN", SPLASH_PAGES = {"awesome": "awesomestuff.html", "ask": "askthenickman.html", "titans": "titans.html", "hobo": "hackahobo.html", "bv": "bvhomework.html", "engen": "engen.html", "home": "welcomenick.html", "spaceatlas": "spaceatlas.html"};</script>
+<script src="data.js"></script>
+<script src="browsernav.js"></script>
+<script src="common.js"></script>
+<script>
+// Cards: the site's windows (as screenshots), then its pictures.
+// The fan: the site's top windows in order ({ ref } is a section's own window), then any other section windows
+// except the ones holiday logos load into, which stay with their logos.
+function fanWindows(s) {
+  var own = s.sections.filter(function (x) { return x.embed; }).map(function (x) { return x.embed; }), c = [];
+  var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
+  (s.top || []).forEach(function (t) {
+    var e = t.ref ? own.filter(function (o) { return o.id === t.ref; })[0] : t;
+    if (e && c.indexOf(e) < 0) c.push(e);
+  });
+  own.forEach(function (e) { if (c.indexOf(e) < 0 && !(e.id && targets.indexOf(e.id) >= 0)) c.push(e); });
+  return c;
+}
+function cardsFor(s) {
+  return fanWindows(s).map(function (e) { return { id: e.id, addr: e.addr, img: e.img, cap: e.title, link: e.src, ew: e.w }; });
+}
+SP.boot(function (s, sp) {
+  var e = sp.esc, cards = cardsFor(s), h = '<header class="hero"><div class="in">';
+  h += '<div class="bar"><a class="home" href="' + sp.home + '">← All sites</a><span class="sp"></span>' +
+    (sp.prev ? '<a class="mono" href="' + sp.url(sp.prev.key) + '">← ' + e(sp.prev.name) + '</a>' : '') +
+    (sp.next ? '<a class="mono" href="' + sp.url(sp.next.key) + '">' + e(sp.next.name) + ' →</a>' : '') + '</div>';
+  h += '<div class="title"><div class="yr">' + e(s.started.replace('c. ', '')) + '</div><div class="mono kick">' + e(s.range) + ' · ' + e(s.tier) + '</div>' +
+    '<h1>' + e(s.name) + '</h1><p>' + e(s.lede) + '</p></div><div class="fan">';
+  cards.forEach(function (c, k) {
+    h += '<button class="c ob" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><i></i><i></i><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
+      '<span class="body"><img src="' + c.img + '" alt=""></span></button>';
+  });
+  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a>' +
+    // The site's song and links go beside the top window.
+    (s.song ? '<button class="sp-btn" data-song="' + s.song.src + '" data-play="' + e(s.song.play) + '" data-stop="' + e(s.song.stop) + '">' + e(s.song.play) + '</button>' : '') +
+    (s.topLinks || []).map(function (l) { return '<a class="sp-btn" href="' + l.href + '" target="_blank" rel="noopener">' + e(l.text) + ' ↗</a>'; }).join('') +
+    '</div></div></header>';
+  h += '<div class="story"><aside class="side">' + sp.factsHtml(s) + '<nav class="toc">' +
+    s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav></aside><div>';
+  var embedded = fanWindows(s);
+  var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
+  s.sections.forEach(function (x) {
+    // A window already in the fan at the top isn't repeated here; its section links up to it instead.
+    // Windows the holiday logos load into stay.
+    var k = x.embed ? embedded.indexOf(x.embed) : -1, top = k >= 0 && !(x.embed.id && targets.indexOf(x.embed.id) >= 0);
+    h += '<section id="' + sp.slug(x.h) + '"><h2>' + e(x.h) + '</h2>' +
+      sp.body(x, top ? { noEmbed: true, btn: '<button class="sp-btn" data-card="' + k + '">See it at the top ↑</button>' } : null) + '</section>';
+  });
+  h += '</div></div><div class="end">' +
+    (sp.prev ? '<a href="' + sp.url(sp.prev.key) + '"><span class="mono">← ' + e(sp.prev.range) + '</span><b>' + e(sp.prev.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">← Back to</span><b>All sites</b></a>') +
+    (sp.next ? '<a href="' + sp.url(sp.next.key) + '"><span class="mono">' + e(sp.next.range) + ' →</span><b>' + e(sp.next.name) + '</b></a>' : '<a href="' + sp.home + '"><span class="mono">Back to</span><b>All sites</b></a>') + '</div>';
+  return h;
+}, function (s) {
+  var cards = cardsFor(s), els = document.querySelectorAll('.c'), cur = 0, frame = null;
+  var txt = document.querySelector('.cap .txt'), open = document.querySelector('.cap .open'), lv = document.querySelector('.lv'), nav = document.querySelector('.lvnav');
+  if (cards.length < 2) document.querySelector('.hero').classList.add('one');
+  // The picked version sits large on the right; the others fan out close together beneath it, evenly spaced.
+  var lay = function () {
+    var small = innerWidth <= 900, n = els.length, W = small ? innerWidth : 1280;
+    // On narrow screens the picked version fills the width and the others fan out just below it.
+    var sw = Math.min(W - 32, 560), sh = Math.round(sw * 0.62), w2 = small ? Math.min(150, Math.round(W * 0.34)) : 240, h2 = Math.round(w2 * 0.64);
+    if (small) document.querySelector('.fan').style.height = (10 + sh + (n > 1 ? 24 + h2 + 30 : 10)) + 'px';
+    else document.querySelector('.fan').style.height = '';
+    els.forEach(function (el, k) {
+      var st = el.style;
+      if (k === cur) {
+        var w = small ? sw : 680, hh = Math.round(w * 0.62);
+        st.left = (small ? (W - w) / 2 : 520) + 'px'; st.top = (small ? 10 : 90) + 'px'; st.width = w + 'px'; st.height = hh + 'px';
+        st.transform = 'none'; st.zIndex = 300; el.classList.add('on'); el.style.setProperty('--a', '0deg'); el.querySelector('.cb').style.fontSize = '13px';
+        return;
+      }
+      el.classList.remove('on'); el.querySelector('.cb').style.fontSize = '6px';
+      var m = n - 1, j = k < cur ? k : k - 1, step = 11, a = (j - (m - 1) / 2) * step, rad = a * Math.PI / 180;
+      var R = small ? 700 : 900;
+      var cx = small ? W / 2 : 860, base = small ? 10 + sh + 24 + h2 - 30 : 700, x = cx + R * Math.sin(rad), y = base + R * (1 - Math.cos(rad));
+      st.left = Math.round(x - w2 / 2) + 'px'; st.top = Math.round(y - h2 + 30) + 'px'; st.width = w2 + 'px'; st.height = h2 + 'px';
+      st.transform = 'rotate(' + a.toFixed(1) + 'deg)'; st.zIndex = 10 + k; el.style.setProperty('--a', a.toFixed(1) + 'deg');
+    });
+    var c = cards[cur], on = els[cur];
+    // A fresh window per version, so back and forward stay within one version.
+    if (!frame || frame.dataset.src !== c.link) {
+      if (frame) frame.remove();
+      frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.insertBefore(frame, lv.firstChild);
+      lv.classList.remove('using'); lv.querySelector('.sp-use').textContent = 'Tap to use this site';
+      if (window.BrowserNav) BrowserNav.attach(frame, nav.querySelector('.bn-back'), nav.querySelector('.bn-fwd'));
+      lv.style.animation = 'none'; void lv.offsetWidth; lv.style.animation = '';
+    }
+    var bw = parseFloat(on.style.width) - 2, bh = parseFloat(on.style.height) - 41, sc = bw / c.ew;
+    lv.style.left = (parseFloat(on.style.left) + 1) + 'px'; lv.style.top = (parseFloat(on.style.top) + 40) + 'px'; lv.style.width = bw + 'px'; lv.style.height = bh + 'px';
+    frame.style.width = c.ew + 'px'; frame.style.height = Math.ceil(bh / sc) + 'px'; frame.style.transform = 'scale(' + sc + ')';
+    // Back and forward sit over the card's yellow and green dots.
+    nav.style.left = (parseFloat(on.style.left) + 34) + 'px'; nav.style.top = (parseFloat(on.style.top) + 15) + 'px';
+    txt.textContent = c.cap; open.href = c.link;
+  };
+  els.forEach(function (el, k) { el.addEventListener('click', function () { if (k !== cur) { cur = k; lay(); } }); });
+  // See it at the top: bring that section's window forward in the fan and scroll up to it.
+  document.querySelectorAll('[data-card]').forEach(function (b) {
+    b.addEventListener('click', function () { cur = +b.dataset.card; lay(); document.querySelector('.hero').scrollIntoView({ behavior: 'smooth' }); });
+  });
+  addEventListener('resize', lay);
+  lay();
+  // Holiday logos whose window is at the top load into that window, which comes forward (the page stays put).
+  SP.onLogo = function (t, src, addr) {
+    var k = -1; cards.forEach(function (c, i) { if (c.id === t) k = i; });
+    if (k < 0) return false;
+    cards[k].link = src; els[k].querySelector('.ob-url').textContent = addr; cur = k; lay();
+    return true;
+  };
+});
+</script>
+</body>
+</html>

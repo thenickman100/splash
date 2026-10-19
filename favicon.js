@@ -1,15 +1,19 @@
 // The browser tab's icon follows the site picked on a main page: siteIcon(key) swaps in that site's own
 // favicon, the same ones the site pages use (sitepages/data.js).
 (function () {
-  var IC = 'https://hackahobo.info/projects/splash/icons/';
   var BASE = (document.currentScript && document.currentScript.src || '').replace(/favicon\.js[^/]*$/, '');
+  // @edit
+  var IC = 'https://hackahobo.info/projects/splash/icons/', IMG = BASE + 'sitepages/img/';
+  // @release
+  // var IC = BASE + 'icons/', IMG = BASE + 'img/';
+  // @end
   var ICONS = {
     awesome: IC + 'awesomestuff/favicon.ico',
     ask: IC + 'askthenickman/favicon.ico',
-    titans: BASE + 'sitepages/img/softball.ico',
+    titans: IMG + 'softball.ico',
     hobo: IC + 'hackahobo/favicon.ico',
     hobo26: IC + 'hackahobo/favicon.ico',
-    bv: BASE + 'sitepages/img/blank.ico',
+    bv: IMG + 'blank.ico',
     engen: IC + 'engen/favicon_red.ico',
     home: IC + 'home-original/favicon.ico',
     spaceatlas: IC + 'spaceatlas/favicon.ico'
