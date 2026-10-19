@@ -16,7 +16,7 @@ a{color:inherit}
 .site{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:22px}
 .site h2{margin:0 0 2px;font-size:22px}
 .site .page{margin:0 0 14px;font:12.5px ui-monospace,monospace;color:var(--muted);word-break:break-all}
-.row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid var(--line)}
 .sw{border-radius:10px;height:96px;display:flex;align-items:flex-start;padding:8px 10px;font:700 15px ui-monospace,monospace;border:1px solid #0002}
 .hex{font:700 17px ui-monospace,monospace}
 .what{margin:2px 0 8px}
@@ -31,7 +31,7 @@ a{color:inherit}
 .alt{display:inline-flex;align-items:center;gap:8px;margin:0 14px 10px 0;font-size:13px}
 .alt i{width:28px;height:28px;border-radius:6px;border:1px solid #0002;display:inline-block}
 .alt code{font:600 12.5px ui-monospace,monospace}
-@media (max-width:640px){.row{grid-template-columns:76px 1fr;gap:12px}.sw{height:76px}}
+@media (max-width:640px){.row{grid-template-columns:76px minmax(0,1fr);gap:12px}.sw{height:76px}.pix figure{max-width:100%}.pix img{height:auto;max-height:150px;max-width:100%}}
 .bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 14px;margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:14px}
 .bar .sp{flex:1}
 button{font:600 13px system-ui,sans-serif;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}

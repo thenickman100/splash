@@ -1036,9 +1036,13 @@
       '#pal .pal-c{display:flex;align-items:center;gap:8px;padding:5px 14px}#pal .pal-c .pal-sw{flex:none;width:26px;height:26px;border-radius:6px;border:1px solid #0002;font:700 10px ui-monospace,monospace;display:flex;align-items:center;justify-content:center}' +
       '#pal .pal-c .pal-t{flex:1;min-width:0}#pal .pal-c code{font:600 12px ui-monospace,monospace}#pal .pal-c .pal-w{color:#5b6270;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
       '#pal .pal-c button{padding:4px 7px}#pal .pal-lbl{padding:6px 14px 2px;color:#5b6270;font-size:11px;text-transform:uppercase;letter-spacing:.05em}' +
-      P.partsCss + '#pal textarea{width:calc(100% - 28px);margin:8px 14px;height:180px;font:11px/1.45 ui-monospace,monospace;border:1px solid #d6dbe1;border-radius:8px;padding:8px}';
+      P.partsCss +
+      // Phones: a round button bottom right (just the dot), and the panel as a sheet above it.
+      '@media (max-width:759px),(max-height:479px){#pal-btn{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:42px;height:42px;padding:0;display:flex;align-items:center;justify-content:center}#pal-btn i{width:14px;height:14px;margin:0}#pal-btn .pal-l{display:none}' +
+      '#pal{left:8px;right:8px;width:auto;bottom:calc(60px + env(safe-area-inset-bottom));max-height:70vh}#pal .pal-slot{width:30px;height:30px}#pal .pal-c button{padding:7px 10px}}' +
+      '#pal textarea{width:calc(100% - 28px);margin:8px 14px;height:180px;font:11px/1.45 ui-monospace,monospace;border:1px solid #d6dbe1;border-radius:8px;padding:8px}';
     document.head.appendChild(st);
-    var btn = document.createElement('button'); btn.id = 'pal-btn'; btn.innerHTML = '<i></i>Palette' + (P.trial || P.partsTrial ? ' · trial' : '');
+    var btn = document.createElement('button'); btn.id = 'pal-btn'; btn.innerHTML = '<i></i><span class="pal-l">Palette' + (P.trial || P.partsTrial ? ' · trial' : '') + '</span>'; btn.title = 'Palette';
     var box = document.createElement('div'); box.id = 'pal'; box.hidden = true;
     document.body.appendChild(box); document.body.appendChild(btn);
     var open = {}; try { open = JSON.parse(sessionStorage.getItem('splash-pal-open') || '{}'); } catch (e) {}

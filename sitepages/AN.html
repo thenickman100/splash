@@ -31,6 +31,7 @@ a{color:inherit}
 .c.on{cursor:default}.c.on .body{overflow-y:auto;scrollbar-width:thin}
 .lv{position:absolute;z-index:350;overflow:hidden;background:#fff;border-radius:0 0 7px 7px;animation:lvin .3s .55s both}
 .lv iframe{position:absolute;left:0;top:0}
+.lv .sp-use{z-index:3}
 .lvnav{position:absolute;z-index:360;display:flex;gap:0.77em;font-size:13px}
 .hero.one{height:640px}@keyframes lvin{from{opacity:0}to{opacity:1}}
 .lv iframe{border:0;transform-origin:0 0;background:#fff}
@@ -68,7 +69,7 @@ a{color:inherit}
 .end a{padding:34px 50px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
 .end a+a{border-left:1px solid var(--line);text-align:right}.end .mono{font-size:11px;color:var(--muted)}.end b{font-size:30px;font-weight:800}
 @media (max-width:900px){
-  .hero{height:auto;padding:56px 16px 20px}.hero .in{height:auto}
+  .hero,.hero.one{height:auto;padding:56px 16px 20px}.hero .in{height:auto}
   .bar{position:static;margin-bottom:20px}.bar .mono{display:none}
   .title{position:static;max-width:none}.title .yr{font-size:70px}
   .fan{position:relative;height:300px;margin:24px -16px 0;overflow:hidden}
@@ -76,6 +77,8 @@ a{color:inherit}
   .story{grid-template-columns:1fr;padding:36px 16px;gap:30px}.side{position:static}
   .end a{padding:24px 16px}.end b{font-size:21px}
 }
+/* Phones: the test bar is at the bottom, so the top needs no room for it. */
+@media (max-width:759px){.hero,.hero.one{padding-top:24px}}
 </style>
 </head>
 <body>
@@ -104,7 +107,7 @@ SP.boot(function (s, sp) {
     h += '<button class="c ob" data-k="' + k + '" aria-label="' + e(c.cap) + '"><span class="cb ob-chrome"><i></i><i></i><i></i><span class="ob-url">' + e(c.addr) + '</span></span>' +
       '<span class="body"><img src="' + c.img + '" alt=""></span></button>';
   });
-  h += '<div class="lv"></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
+  h += '<div class="lv sp-usebox"><button class="sp-use" type="button">Tap to use this site</button></div><div class="lvnav"><button class="bn-back ob-nav" title="Back" disabled></button><button class="bn-fwd ob-nav" title="Forward" disabled></button></div></div><div class="cap"><span class="txt"></span><span style="flex-grow:1"></span><a class="open" href="#" target="_blank" rel="noopener">Open full screen ↗</a></div></div></header>';
   h += '<div class="story"><aside class="side">' + sp.factsHtml(s) + '<nav class="toc">' +
     s.sections.map(function (x) { return '<a href="#' + sp.slug(x.h) + '">' + e(x.h) + '</a>'; }).join('') + '</nav></aside><div>';
   s.sections.forEach(function (x) {
@@ -121,18 +124,22 @@ SP.boot(function (s, sp) {
   // The picked version sits large on the right; the others fan out close together beneath it, evenly spaced.
   var lay = function () {
     var small = innerWidth <= 900, n = els.length, W = small ? innerWidth : 1280;
+    // On narrow screens the picked version fills the width and the others fan out just below it.
+    var sw = Math.min(W - 32, 560), sh = Math.round(sw * 0.62), w2 = small ? Math.min(150, Math.round(W * 0.34)) : 240, h2 = Math.round(w2 * 0.64);
+    if (small) document.querySelector('.fan').style.height = (10 + sh + (n > 1 ? 24 + h2 + 30 : 10)) + 'px';
+    else document.querySelector('.fan').style.height = '';
     els.forEach(function (el, k) {
       var st = el.style;
       if (k === cur) {
-        var w = small ? Math.min(W - 60, 520) : 680, hh = Math.round(w * 0.62);
+        var w = small ? sw : 680, hh = Math.round(w * 0.62);
         st.left = (small ? (W - w) / 2 : 520) + 'px'; st.top = (small ? 10 : 90) + 'px'; st.width = w + 'px'; st.height = hh + 'px';
         st.transform = 'none'; st.zIndex = 300; el.classList.add('on'); el.style.setProperty('--a', '0deg'); el.querySelector('.cb').style.fontSize = '13px';
         return;
       }
       el.classList.remove('on'); el.querySelector('.cb').style.fontSize = '6px';
       var m = n - 1, j = k < cur ? k : k - 1, step = 11, a = (j - (m - 1) / 2) * step, rad = a * Math.PI / 180;
-      var w2 = small ? 150 : 240, h2 = Math.round(w2 * 0.64), R = small ? 700 : 900;
-      var cx = small ? W / 2 : 860, base = small ? 360 : 700, x = cx + R * Math.sin(rad), y = base + R * (1 - Math.cos(rad));
+      var R = small ? 700 : 900;
+      var cx = small ? W / 2 : 860, base = small ? 10 + sh + 24 + h2 - 30 : 700, x = cx + R * Math.sin(rad), y = base + R * (1 - Math.cos(rad));
       st.left = Math.round(x - w2 / 2) + 'px'; st.top = Math.round(y - h2 + 30) + 'px'; st.width = w2 + 'px'; st.height = h2 + 'px';
       st.transform = 'rotate(' + a.toFixed(1) + 'deg)'; st.zIndex = 10 + k; el.style.setProperty('--a', a.toFixed(1) + 'deg');
     });
@@ -140,7 +147,8 @@ SP.boot(function (s, sp) {
     // A fresh window per version, so back and forward stay within one version.
     if (!frame || frame.dataset.src !== c.link) {
       if (frame) frame.remove();
-      frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.appendChild(frame);
+      frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.insertBefore(frame, lv.firstChild);
+      lv.classList.remove('using'); lv.querySelector('.sp-use').textContent = 'Tap to use this site';
       if (window.BrowserNav) BrowserNav.attach(frame, nav.querySelector('.bn-back'), nav.querySelector('.bn-fwd'));
       lv.style.animation = 'none'; void lv.offsetWidth; lv.style.animation = '';
     }

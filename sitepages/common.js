@@ -46,8 +46,9 @@
     // v0.1's browser look (../browser.css): the same on every site. The first two dots are back and forward.
     return '<div class="sp-win ob" data-embed="' + id + '">' +
       '<div class="sp-chrome ob-chrome"><button class="ob-nav sp-back" title="Back" disabled></button><button class="ob-nav sp-fwd" title="Forward" disabled></button><i></i><span class="sp-url ob-url">' + esc(e.addr) + '</span></div>' +
-      '<div class="sp-vp" data-w="' + e.w + '" data-h="' + e.h + '" style="aspect-ratio:' + e.w + '/' + e.h + ';background-image:url(' + e.img + ')">' +
-      '<iframe src="' + e.src + '" title="' + esc(e.title) + '" loading="lazy" style="width:' + e.w + 'px;height:' + e.h + 'px"></iframe></div></div>';
+      '<div class="sp-vp sp-usebox" data-w="' + e.w + '" data-h="' + e.h + '" style="aspect-ratio:' + e.w + '/' + e.h + ';background-image:url(' + e.img + ')">' +
+      '<iframe src="' + e.src + '" title="' + esc(e.title) + '" loading="lazy" style="width:' + e.w + 'px;height:' + e.h + 'px"></iframe>' +
+      '<button class="sp-use" type="button">Tap to use this site</button></div></div>';
   }
   function figHtml(m) {
     return '<figure class="sp-fig' + (m.dark ? ' dark' : '') + '"><img src="' + m.img + '" alt="' + esc(m.cap) + '" loading="lazy">' +
@@ -111,9 +112,9 @@
     var b = document.createElement('div');
     b.className = 'sp-test';
     // Only the favorite designs are offered.
-    b.innerHTML = '<span>TEST · SITE PAGE</span>' + ['AI', 'AK', 'AN'].map(function (d) {
+    b.innerHTML = '<span class="lg">TEST · SITE PAGE</span><span class="sm">PAGE</span>' + ['AI', 'AK', 'AN'].map(function (d) {
       return '<a href="' + pageUrl(site.key, d) + '" title="' + SITE_DESIGNS[d].name + '"' + (d === design ? ' class="on"' : '') + '>' + d + '</a>';
-    }).join('') + '<span class="sep"></span><a href="' + home + '">' + (from ? 'BACK TO ' + from.split('/')[2].split('-')[0] : 'ALL CANDIDATES') + '</a>';
+    }).join('') + '<span class="sep"></span><a href="' + home + '">' + (from ? '<span class="lg">BACK TO </span>' + from.split('/')[2].split('-')[0] : 'ALL<span class="lg"> CANDIDATES</span>') + '</a>';
     document.body.appendChild(b);
     try { localStorage.setItem('splash-sitepage', design); } catch (e) {}
   }
@@ -122,7 +123,13 @@
     '.sp-test{position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:2px;padding:4px 6px 4px 12px;border-radius:999px;background:#000000cc;color:#fff;font:500 10px ui-monospace,monospace;max-width:calc(100vw - 20px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}' +
     '.sp-test span{padding-right:6px;letter-spacing:.05em}.sp-test .sep{width:1px;height:16px;background:#fff4;margin:0 6px;padding:0}' +
     '.sp-test a{height:26px;min-width:32px;padding:0 8px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#fff;font:700 11px ui-monospace,monospace;text-decoration:none}' +
-    '.sp-test a.on{background:#ffd23f;color:#111}' +
+    '.sp-test a.on{background:#ffd23f;color:#111}.sp-test .sm{display:none}.sp-test a .lg{padding:0}' +
+    // Phones: the test bar moves to the bottom (the Palette button sits to its right) and leaves room below the page.
+    '@media (max-width:759px),(max-height:479px){.sp-test{top:auto;bottom:calc(10px + env(safe-area-inset-bottom));left:calc(50% - 26px);max-width:calc(100vw - 80px)}.sp-test .lg{display:none}.sp-test .sm{display:inline}body{padding-bottom:64px}}' +
+    // Touch screens: a live window takes touches only after a tap, so swiping over it scrolls the page. Done gives the page back.
+    '.sp-use{display:none}' +
+    '@media (pointer:coarse){.sp-usebox iframe{pointer-events:none}.sp-usebox.using iframe{pointer-events:auto}' +
+    '.sp-use{display:block;position:absolute;right:10px;bottom:10px;z-index:2;height:34px;padding:0 14px;border:1px solid #fff8;border-radius:999px;background:#000c;color:#fff;font:600 12px ui-monospace,monospace}}' +
     '.sp-vp{position:relative;overflow:hidden;background:#fff top/cover no-repeat}.sp-vp iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:transparent}' +
     '.sp-fig img,.sp-gallery img{cursor:zoom-in}' +
     '.sp-logo{cursor:pointer}' +
@@ -150,6 +157,9 @@
     // Back and forward in each window (../browsernav.js).
     if (window.BrowserNav) document.querySelectorAll('.sp-win').forEach(function (w) {
       var f = w.querySelector('iframe'); if (f) BrowserNav.attach(f, w.querySelector('.sp-back'), w.querySelector('.sp-fwd'));
+    });
+    document.querySelectorAll('.sp-use').forEach(function (b) {
+      b.addEventListener('click', function () { var on = b.parentNode.classList.toggle('using'); b.textContent = on ? 'Done' : 'Tap to use this site'; });
     });
     addEventListener('resize', fit);
     fit();

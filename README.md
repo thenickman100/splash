@@ -14,6 +14,8 @@ On the focus pages, each part that uses a site color (big year, buttons, marks, 
 
 The browser windows have working back and forward buttons (`browsernav.js`), using the page's own history since the old sites load from another domain.
 
+On phones (under 760px wide, or under 480px tall when held sideways), start pages K, AG and AE switch to their own phone layouts, and the site pages stack into one column. The test bar and the Palette button move to the bottom of the screen. On touch screens a live window takes touches only after Tap to use this site, so swiping over it scrolls the page; Done hands the page back. AE also moves between sites with a swipe across the row.
+
 The focus for now is start pages K, AG and AE and site pages AI, AK and AN; `index.html` lists them first.
 
 Every main page has a test bar for choosing which site-page design Read more opens. The choice is remembered in the browser.
