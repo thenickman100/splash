@@ -9,7 +9,7 @@
 // The windows at the top are t0, t1…, with the song beside them as song and its links as tl0, tl1….
 (function () {
   // The key changes each time a review is published, since piece ids follow data.js's order.
-  var KEY = 'splash-content-3';
+  var KEY = 'splash-content-4';
   var ORIG = JSON.parse(JSON.stringify(window.SITES));
 
   // Suggested cuts, shown in content.html for Nick to accept or ignore. Nothing here is applied by itself.

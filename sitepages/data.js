@@ -23,7 +23,8 @@
       thumb: 'img/awesome-lawesomel.jpg',
       addresses: ['lawesomel.webs.com', 'awesomestuffr.webstarts.com'],
       lede: 'My first website, made in middle school.',
-      top: [{ addr: 'http://lawesomel.webs.com/', src: S + 'lawesomel/index.html', w: 1280, h: 900, img: 'img/awesome-lawesomel.jpg', title: 'Awesome Stuff' }],
+      top: [{ addr: 'http://lawesomel.webs.com/', src: S + 'lawesomel/index.html', w: 1280, h: 900, img: 'img/awesome-lawesomel.jpg', title: 'Awesome Stuff' },
+        { addr: 'http://awesomestuffr.webstarts.com/', src: S + 'awesomestuff/index.html', w: 1280, h: 900, img: 'img/awesome-webstarts.jpg', title: 'Awesome Stuff games page' }],
       sections: [
         {
           h: 'Origins',
@@ -208,15 +209,11 @@
       thumb: 'img/bv.jpg',
       addresses: [],
       lede: 'A homework-answers site I never launched.',
+      top: [{ addr: 'BV Homework', src: S + 'bv-homework/BVHomework.html', w: 1280, h: 900, img: 'img/bv.jpg', title: 'BV Homework draft' }],
       sections: [
         {
           h: 'Idea',
           p: ['BV Homework, named for Blue Valley High School, was going to be a place to share answers to everyone’s homework problems. Its pitch was “Blue Valley students, unite against the tyranny of busy work.” I stopped working on it before it launched because I was afraid of getting in trouble.']
-        },
-        {
-          h: 'Draft',
-          p: ['The site as I left it in April 2013.'],
-          embed: { addr: 'BV Homework', src: S + 'bv-homework/BVHomework.html', w: 1280, h: 900, img: 'img/bv.jpg', title: 'BV Homework draft' }
         }
       ]
     },
@@ -317,7 +314,7 @@
               { img: 'img/sa-logo-design.jpg', cap: 'Logo design with a rocket in place of the A' },
               { img: 'img/sa-final-logo.png', cap: 'Final logo', dark: true }
             ] },
-            { h: 'Icons', p: 'Icons I drafted for the spacecraft and bases.', icons: [
+            { h: 'Icons', p: 'Icons our graphic artist drafted for the spacecraft and bases.', icons: [
               'another-rocket1', 'arm-thing1', 'debris-manager1', 'dream-chaser', 'glen1', 'moon-base', 'not-much-better',
               'other-satelite1', 'rocket-logo-3', 'rocket-logo-4', 'satellite2', 'space-thing1', 'tank-thing1'
             ].map(function (n) { return { img: 'img/sa-icons/custom-' + n + '.png', cap: '', dark: true }; }) }
