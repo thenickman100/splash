@@ -184,6 +184,11 @@
     document.querySelectorAll('.sp-use').forEach(function (b) {
       b.addEventListener('click', function () { var on = b.parentNode.classList.toggle('using'); b.textContent = on ? 'Done' : 'Tap to use this site'; });
     });
+    // Once a window's site has loaded, its own page background goes behind it (replacing the screenshot shown while
+    // loading), so a page shorter than the window doesn't end in the screenshot or white.
+    if (window.PALETTE) document.querySelectorAll('.sp-vp iframe').forEach(function (f) {
+      f.addEventListener('load', function () { f.style.background = PALETTE.pageBg(site.key); });
+    });
     addEventListener('resize', fit);
     fit();
     if (window.ResizeObserver) { var ro = new ResizeObserver(fit); document.querySelectorAll('.sp-vp').forEach(function (v) { ro.observe(v); }); }

@@ -962,6 +962,14 @@
     css: css,
     // Background for ranked slot i (0 is color 1): a solid color or a pattern. Use it for fills.
     bg: function (key, i) { var c = site(key).colors[i || 0] || site(key).colors[0]; return css(c); },
+    // The site's own page background (a color, or its pattern), for the backing of its live windows: where a page
+    // ends before the window does, the rest matches the site instead of showing white.
+    pageBg: function (key) {
+      var hex = { awesome: '#30341d', ask: '#000000', titans: '#ffc200', hobo: '#ffffff', bv: '#81c8ff', engen: '#fafdfe', home: '#f0f0f0', spaceatlas: '#000000' }[sk(key)];
+      if (!hex) return '#ffffff';
+      var all = site(key).colors.concat(site(key).extra), c = all.filter(function (x) { return x.hex === hex; })[0];
+      return c ? css(c) : hex;
+    },
     // Color 1, the site's main color, for fills such as bars and buttons.
     main: function (key) { return ranked(key)[0]; },
     // Roles follow the order directly, so any reorder shows on every page:

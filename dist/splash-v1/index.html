@@ -155,6 +155,8 @@ a{color:#f2f2f2}a:hover{color:#ccc}
       liveBox.innerHTML = '<div class="live" style="top:' + bar + 'px"><iframe src="' + s.link + '" title="' + esc(s.name) + '"></iframe></div>' +
         (mob ? '<button class="use"></button>' : '');
       if (mob) liveBox.querySelector('.use').addEventListener('click', function () { state.use = state.use === s.key ? null : s.key; draw(); });
+      // Behind the site, its own page background, so a page shorter than the window doesn't end in white.
+      liveBox.querySelector('.live').style.background = liveBox.querySelector('iframe').style.background = PALETTE.pageBg(s.key);
       fan.appendChild(liveBox);
       BrowserNav.attach(liveBox.querySelector('iframe'), card.querySelector('.bn-back'), card.querySelector('.bn-fwd'));
     }

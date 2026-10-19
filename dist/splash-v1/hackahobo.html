@@ -169,6 +169,8 @@ SP.boot(function (s, sp) {
     if (!frame || frame.dataset.src !== c.link) {
       if (frame) frame.remove();
       frame = document.createElement('iframe'); frame.dataset.src = c.link; frame.src = c.link; frame.title = c.cap; lv.insertBefore(frame, lv.firstChild);
+      // Behind the site, its own page background, so a page shorter than the window doesn't end in white.
+      lv.style.background = frame.style.background = PALETTE.pageBg(s.key);
       lv.classList.remove('using'); lv.querySelector('.sp-use').textContent = 'Tap to use this site';
       document.querySelectorAll('.fan .c .ob-nav').forEach(function (n) { n.classList.remove('bn-on'); n.setAttribute('aria-disabled', 'true'); });
       if (window.BrowserNav) BrowserNav.attach(frame, on.querySelector('.bn-back'), on.querySelector('.bn-fwd'));
