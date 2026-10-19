@@ -1,0 +1,15 @@
+/* Fonts for phones and other devices without Windows' fonts.
+   Each @font-face keeps the font's old name, so no page changes: a computer that has the real font (Comic Sans
+   MS, Impact, ...) still uses it (local), and anything without it gets a free look-alike from fonts/.
+   Look-alikes, all from Google Fonts under the SIL Open Font License (fonts/OFL-*.txt):
+     Comic Sans MS   -> Comic Neue      (made as a Comic Sans stand-in)
+     Impact          -> Anton
+     Bodoni MT Black -> Bodoni Moda Black
+     Berlin Sans FB  -> Fredoka
+     Lucida Console  -> Cousine */
+@font-face { font-family: "Comic Sans MS"; font-weight: 400; src: local("Comic Sans MS"), local("ComicSansMS"), url("fonts/comic-neue-400.woff2") format("woff2"); }
+@font-face { font-family: "Comic Sans MS"; font-weight: 700; src: local("Comic Sans MS Bold"), local("ComicSansMS-Bold"), url("fonts/comic-neue-700.woff2") format("woff2"); }
+@font-face { font-family: "Impact"; src: local("Impact"), url("fonts/anton.woff2") format("woff2"); }
+@font-face { font-family: "Bodoni MT Black"; font-weight: 100 900; src: local("Bodoni MT Black"), local("BodoniMTBlack"), url("fonts/bodoni-moda-900.woff2") format("woff2"); }
+@font-face { font-family: "Berlin Sans FB"; font-weight: 100 900; src: local("Berlin Sans FB"), local("BerlinSansFB-Reg"), url("fonts/fredoka.woff2") format("woff2"); }
+@font-face { font-family: "Lucida Console"; src: local("Lucida Console"), local("LucidaConsole"), url("fonts/cousine-400.woff2") format("woff2"); }
