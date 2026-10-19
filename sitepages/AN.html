@@ -92,8 +92,8 @@ a{color:inherit}
 <script src="common.js"></script>
 <script>
 // Cards: the site's windows (as screenshots), then its pictures.
-// The fan: the site's top windows in order ({ ref } is a section's own window), then any other section windows
-// except the ones holiday logos load into, which stay with their logos.
+// The fan: the site's top windows in order ({ ref } is a section's own window). A site without a top list fans out
+// its section windows instead, except the ones holiday logos load into, which stay with their logos.
 function fanWindows(s) {
   var own = s.sections.filter(function (x) { return x.embed; }).map(function (x) { return x.embed; }), c = [];
   var targets = s.sections.map(function (x) { return x.logos && x.logos.target; }).filter(Boolean);
@@ -101,7 +101,7 @@ function fanWindows(s) {
     var e = t.ref ? own.filter(function (o) { return o.id === t.ref; })[0] : t;
     if (e && c.indexOf(e) < 0) c.push(e);
   });
-  own.forEach(function (e) { if (c.indexOf(e) < 0 && !(e.id && targets.indexOf(e.id) >= 0)) c.push(e); });
+  if (!s.top) own.forEach(function (e) { if (c.indexOf(e) < 0 && !(e.id && targets.indexOf(e.id) >= 0)) c.push(e); });
   return c;
 }
 function cardsFor(s) {

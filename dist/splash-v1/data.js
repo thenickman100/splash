@@ -28,7 +28,8 @@
       sections: [
         {
           h: 'Origins',
-          p: ['My best friend in middle school had already made a few sites on webs.com, including Radical Dragon and Harry Hackers, and he showed me how to make one. Webs.com was the craze back then, and millions of sites lived there. I liked talking about tech, so I started Awesome Stuff at lawesomel.webs.com as a place to rank the things I liked.']
+          p: ['My best friend in middle school had already made a few sites on webs.com, including Radical Dragon and Harry Hackers, and he showed me how to make one. Webs.com was the craze back then, and millions of sites lived there. I liked talking about tech, so I started Awesome Stuff at lawesomel.webs.com as a place to rank the things I liked.'],
+          embed: { addr: 'http://harryhackers.webs.com/', src: S + 'harryhackers/index.html', w: 1280, h: 800, img: 'img/awesome-harryhackers.jpg', title: 'Harry Hackers' }
         },
         {
           h: 'Contents',
