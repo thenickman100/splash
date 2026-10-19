@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site page content</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#15181d;--muted:#5b6270;--card:#fff;--line:#dde1e7;--code:#eef0f3;--cut:#b42318;--sug:#fff4cc;--sugline:#e6c34a;--edit:#e7f0ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038;--code:#24272e;--cut:#ff8a7a;--sug:#3a3216;--sugline:#8a7426;--edit:#1d2a40}}
+:root[data-theme="dark"]{--bg:#111317;--fg:#eceef2;--muted:#9aa1ad;--card:#1b1e24;--line:#2c3038;--code:#24272e;--cut:#ff8a7a;--sug:#3a3216;--sugline:#8a7426;--edit:#1d2a40}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:36px 16px 60px}
+h1{margin:0 0 6px;font-size:30px}
+.intro{margin:0 0 24px;color:var(--muted);max-width:720px}
+a{color:inherit}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 14px;margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:14px}
+.bar .sp{flex:1}
+button{font:600 13px system-ui,sans-serif;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.site{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:22px}
+.site>header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:6px}
+.site h2{margin:0;font-size:22px}
+.site .count{font-size:13px;color:var(--muted)}
+.site .tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.links{font-size:13px;color:var(--muted);margin:0 0 12px}.links a{margin-right:6px}
+.lede{margin:0 0 14px}
+.lbl{font:600 11px ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ed{display:block;margin-top:3px;padding:6px 8px;border-radius:6px;border:1px solid transparent;outline:none;white-space:pre-wrap}
+.ed:hover{border-color:var(--line)}.ed:focus{border-color:#4a7dff;background:var(--bg)}
+.ed.changed{background:var(--edit)}
+.sec{border-top:1px solid var(--line);padding:12px 0 6px}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:8px 10px;border-radius:8px;margin:2px 0}
+.it.head{padding-left:0;padding-right:0}
+.it.head .ed{font-size:18px;font-weight:700}
+.it.child{margin-left:18px;border-left:3px solid var(--line);border-radius:0 8px 8px 0}
+.kind{font:600 11px ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.txt{font-size:14.5px}
+.it .sug{grid-column:1/-1;font-size:13px;padding:4px 8px;border-radius:6px;background:var(--sug);border:1px solid var(--sugline)}
+.tog{min-width:64px}
+.tog.cut{background:var(--cut);border-color:var(--cut);color:#fff}
+.it.isCut>div:first-child{opacity:.45;text-decoration:line-through}
+.it.isCut .ed{pointer-events:none}
+.it.off{opacity:.35;pointer-events:none}
+.rw{font-size:12px;color:var(--muted)}.rw button{padding:2px 8px;font-size:12px;margin-left:6px}
+.dlg{position:fixed;inset:0;z-index:20;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px}
+.dlg[hidden]{display:none}
+.dlg .box{background:var(--card);color:var(--fg);border-radius:14px;padding:18px;width:min(720px,100%);box-sizing:border-box}
+.dlg h3{margin:0 0 4px}.dlg p{margin:0 0 10px;color:var(--muted);font-size:14px}
+.dlg textarea{width:100%;height:46vh;box-sizing:border-box;font:12px/1.5 ui-monospace,monospace;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.dlg .btns{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+@media (max-width:640px){.it{grid-template-columns:1fr}.it.child{margin-left:6px}.tog{justify-self:start}}
+</style>
+</head>
+<body>
+<main>
+<h1>Site page content</h1>
+<p class="intro">Everything on each site's page, in order. Cut what isn't needed and click any text to rewrite it. Your changes are kept in this browser and show on every site page here (AI, AK, AN), so you can see them in place. Yellow notes are my suggested cuts; nothing is cut until you choose it. When you like it, Export and send it to Claude to publish. <a href="index.html">← Back to the candidates</a></p>
+<div id="bar" class="bar"></div>
+<div id="list"></div>
+<div id="dlg" class="dlg" hidden><div class="box"><h3>Export content</h3><p>Copy this and send it to Claude to publish it.</p><textarea id="exp" readonly></textarea><div class="btns"><button id="copy">Copy</button><button id="close">Close</button></div></div></div>
+</main>
+<script src="sitepages/data.js"></script>
+<script src="sitepages/content.js"></script>
+<script>
+(function () {
+  var C = window.CONTENT, SITES = C.original;
+  function esc(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function st(k) { var t = C.get(); return t[k] || { cut: [], text: {} }; }
+  function put(k, s) {
+    var t = C.get(); t = JSON.parse(JSON.stringify(t));
+    if (!s.cut.length && !Object.keys(s.text).length) delete t[k]; else t[k] = s;
+    C.save(Object.keys(t).length ? t : null);
+  }
+  function count(k) { var s = st(k), n = s.cut.length, r = Object.keys(s.text).length; return (n ? n + ' cut' : '') + (n && r ? ', ' : '') + (r ? r + ' rewritten' : '') || 'No changes'; }
+
+  function row(site, it, s) {
+    var cut = s.cut.indexOf(it.id) >= 0, sec = 's' + it.sec, secCut = it.kind !== 'section' && s.cut.indexOf(sec) >= 0;
+    var sug = (C.suggest[site.key] || {})[it.id], edit = it.text != null, changed = s.text[it.id] != null;
+    var body = it.kind === 'section'
+      ? '<span class="kind">Section</span><span class="ed' + (changed ? ' changed' : '') + '" contenteditable="plaintext-only" data-k="' + site.key + '" data-id="' + it.id + '">' + esc(changed ? s.text[it.id] : it.text) + '</span>'
+      : '<span class="kind">' + it.kind + '</span>' + (edit
+        ? '<span class="ed txt' + (changed ? ' changed' : '') + '" contenteditable="plaintext-only" data-k="' + site.key + '" data-id="' + it.id + '">' + esc(changed ? s.text[it.id] : it.text) + '</span>'
+        : '<div class="txt">' + esc(it.label) + '</div>');
+    return '<div class="it ' + (it.kind === 'section' ? 'head' : 'child') + (cut ? ' isCut' : '') + (secCut ? ' off' : '') + '">' +
+      '<div>' + body + (changed ? '<div class="rw">Rewritten<button data-undo="' + it.id + '" data-k="' + site.key + '">Put back the original</button></div>' : '') + '</div>' +
+      '<button class="tog' + (cut ? ' cut' : '') + '" data-k="' + site.key + '" data-cut="' + it.id + '">' + (cut ? 'Cut' : 'Keep') + '</button>' +
+      (sug && !cut ? '<div class="sug">Suggested cut: ' + esc(sug) + '</div>' : '') + '</div>';
+  }
+  function section(site) {
+    var s = st(site.key), its = C.items(site), html = '', sugN = Object.keys(C.suggest[site.key] || {}).filter(function (id) { return s.cut.indexOf(id) < 0; }).length;
+    html += '<header><h2>' + esc(site.name) + '</h2><span class="count">' + count(site.key) + '</span><span class="tools">' +
+      (sugN ? '<button data-sugall="' + site.key + '">Cut all ' + sugN + ' suggested</button>' : '') +
+      (s.cut.length || Object.keys(s.text).length ? '<button data-reset="' + site.key + '">Reset this site</button>' : '') + '</span></header>' +
+      '<div class="links">See it: <a href="sitepages/AN.html?site=' + site.key + '">AN</a> <a href="sitepages/AI.html?site=' + site.key + '">AI</a> <a href="sitepages/AK.html?site=' + site.key + '">AK</a></div>' +
+      '<div class="lede"><span class="lbl">Line under the name</span><span class="ed' + (s.text.lede != null ? ' changed' : '') + '" contenteditable="plaintext-only" data-k="' + site.key + '" data-id="lede">' + esc(s.text.lede != null ? s.text.lede : site.lede) + '</span>' +
+      (s.text.lede != null ? '<div class="rw">Rewritten<button data-undo="lede" data-k="' + site.key + '">Put back the original</button></div>' : '') + '</div>';
+    var cur = -1;
+    its.forEach(function (it) {
+      if (it.kind === 'section') { if (cur >= 0) html += '</div>'; html += '<div class="sec">'; cur = it.sec; }
+      html += row(site, it, s);
+    });
+    return html + '</div>';
+  }
+  function bar() {
+    document.getElementById('bar').innerHTML = (C.trial() ? '<b>Trial content on</b> in this browser. Every site page here shows it.' : 'Showing the published content.') +
+      '<span class="sp"></span><button id="export">Export</button>' + (C.trial() ? '<button id="resetall">Reset all</button>' : '');
+  }
+  function draw(k) {
+    if (k) document.getElementById('site-' + k).innerHTML = section(SITES.filter(function (s) { return s.key === k; })[0]);
+    else document.getElementById('list').innerHTML = SITES.map(function (s) { return '<section class="site" id="site-' + s.key + '">' + section(s) + '</section>'; }).join('');
+    bar();
+  }
+  function orig(site, id) {
+    if (id === 'lede') return site.lede;
+    var it = C.items(site).filter(function (x) { return x.id === id; })[0]; return it ? it.text : null;
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    var k = t.dataset.k, s = k ? JSON.parse(JSON.stringify(st(k))) : null;
+    if (t.dataset.cut) { var i = s.cut.indexOf(t.dataset.cut); if (i >= 0) s.cut.splice(i, 1); else s.cut.push(t.dataset.cut); put(k, s); draw(k); }
+    else if (t.dataset.undo) { delete s.text[t.dataset.undo]; put(k, s); draw(k); }
+    else if (t.dataset.sugall) { k = t.dataset.sugall; s = JSON.parse(JSON.stringify(st(k))); Object.keys(C.suggest[k]).forEach(function (id) { if (s.cut.indexOf(id) < 0) s.cut.push(id); }); put(k, s); draw(k); }
+    else if (t.dataset.reset) { put(t.dataset.reset, { cut: [], text: {} }); draw(t.dataset.reset); }
+    else if (t.id === 'resetall') { C.save(null); draw(); }
+    else if (t.id === 'export') { document.getElementById('exp').value = C.exportText(); document.getElementById('dlg').hidden = false; }
+    else if (t.id === 'close') document.getElementById('dlg').hidden = true;
+    else if (t.id === 'copy') { var ta = document.getElementById('exp'); (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { t.textContent = 'Copied'; }, function () { ta.select(); document.execCommand('copy'); t.textContent = 'Copied'; }); }
+  });
+  // Rewrites save when you leave the text; matching the original again drops the rewrite.
+  document.addEventListener('focusout', function (e) {
+    var el = e.target; if (!el.classList || !el.classList.contains('ed')) return;
+    var k = el.dataset.k, id = el.dataset.id, site = SITES.filter(function (s) { return s.key === k; })[0], s = JSON.parse(JSON.stringify(st(k)));
+    var v = el.textContent.replace(/\s+\n/g, '\n').trim(), o = orig(site, id);
+    if (v === String(o).trim() || !v) delete s.text[id]; else s.text[id] = v;
+    if (JSON.stringify(s.text) !== JSON.stringify(st(k).text)) { put(k, s); draw(k); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') document.getElementById('dlg').hidden = true; });
+  draw();
+})();
+</script>
+</body>
+</html>
