@@ -40,7 +40,6 @@ a{color:#f2f2f2}a:hover{color:#ccc}
 <div style="width:{{W}}px;height:{{H}}px;zoom:{{u}};position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,{{cur.p_glow}} 45%,#121212),#121212 60%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
   <div style="position:absolute;left:60px;top:24px;display:flex;align-items:baseline;gap:16px">
     <div style="font-size:24px;font-weight:800">Old Sites</div>
-    <div class="mono" style="font-size:11px;color:#9a9a9a">Pick a window from the row below, left to right in time</div>
   </div>
 
   <div class="txt" key="{{cur.key}}" style="position:absolute;left:{{tx}}px;top:70px;right:50px;height:440px;display:flex;flex-direction:column;gap:10px">
@@ -65,7 +64,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
 </sc-if>
 <sc-if value="{{mob}}" hint-placeholder-val="{{false}}">
 <div style="min-height:{{H}}px;box-sizing:border-box;padding-bottom:calc(70px + env(safe-area-inset-bottom));background:radial-gradient(ellipse 120% 50% at 50% {{glowY}}px,color-mix(in srgb,{{cur.p_glow}} 40%,#121212),#121212 70%);color:#f2f2f2;font-family:'Hanken Grotesk',sans-serif">
-  <div style="padding:16px 16px 0;display:flex;align-items:baseline;gap:10px"><div style="font-size:20px;font-weight:800">Old Sites</div><div class="mono" style="font-size:10px;color:#9a9a9a">Tap a window to pick a site</div></div>
+  <div style="padding:16px 16px 0;display:flex;align-items:baseline;gap:10px"><div style="font-size:20px;font-weight:800">Old Sites</div></div>
   <div style="position:relative;height:{{stageH}}px;overflow:hidden">
   <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
     <button class="c ob {{c.cls}}" onClick="{{c.pick}}" aria-label="{{c.name}}, {{c.yr}}" style="left:{{c.l}}px;top:{{c.t}}px;width:{{c.w}}px;height:{{c.h}}px;transform:rotate({{c.a}}deg);--a:{{c.a}}deg;z-index:{{c.z}}">
@@ -119,7 +118,9 @@ function partsOf(page, key){ var o = PALETTE.partsFor(page, key), r = {}; for (v
 SITES.forEach((s) => { Object.assign(s, partsOf('AG', s.key)); });
 // After a Palette panel change reloads the page, start on the site that was showing.
 function startAt(i){ var k = SITES.findIndex((s) => s.key === PALETTE.resume); return k >= 0 ? k : i; }
-var CW = {Flagship:230,Notable:190,'Side project':150,Personal:140}, CWM = {Flagship:96,Notable:84,'Side project':70,Personal:64};
+// Fan window widths, by how finished each site is: the most polished largest, the draft smallest.
+var RANK = {hobo26:1, spaceatlas:1, ask:2, awesome:2, hobo:2, titans:3, home:3, engen:4, bv:5};
+var CW = {1:250, 2:220, 3:190, 4:165, 5:140}, CWM = {1:104, 2:92, 3:80, 4:70, 5:60};
 class Component extends DCLogic {
   testVals(){ var sp = this.state.sp || spPick(); return { sp: sp, spOpts: spOpts(this, sp) }; }
   constructor(p){ super(p); addEventListener('resize', () => this.setState({ fit: screenFit(true) })); this.state = { fit: screenFit(true),  i: startAt(3) }; }
@@ -138,7 +139,7 @@ class Component extends DCLogic {
       cards: SITES.map((s, k) => {
         if (k === i) return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: 60, t: 70, w: 730 + Math.round((this.state.fit.W - 1280) * 0.6), h: 440 + Math.round((this.state.fit.H - 800) * 0.5), a: 0, z: 300, cls: 'on', fs: 13, pick: () => {} };
         var a = -26 + k * (52 / (n - 1)), rad = a * Math.PI / 180, R = 1050, cx = this.state.fit.W / 2, cy = 1760 + (this.state.fit.H - 800);
-        var w = CW[s.tier], h = Math.round(w * 0.64);
+        var w = CW[RANK[s.key]], h = Math.round(w * 0.64);
         var x = cx + R * Math.sin(rad), y = cy - R * Math.cos(rad);
         return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y - h), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', fs: 7, pick: () => this.setState({ i: k }) };
       })
@@ -154,7 +155,7 @@ class Component extends DCLogic {
     var A = 22, R = Math.round((W / 2 - 44) / Math.sin(A * Math.PI / 180)), on = this.state.use === SITES[i].key;
     var cards = SITES.map((s, k) => {
       if (k === i) return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round((W - cw) / 2), t: 12, w: cw, h: ch, a: 0, z: 300, cls: 'on', fs: 11, pick: () => {} };
-      var a = -A + k * (2 * A / (n - 1)), rad = a * Math.PI / 180, w = CWM[s.tier], h = Math.round(w * 0.64);
+      var a = -A + k * (2 * A / (n - 1)), rad = a * Math.PI / 180, w = CWM[RANK[s.key]], h = Math.round(w * 0.64);
       var x = W / 2 + R * Math.sin(rad), y = fanTop + R * (1 - Math.cos(rad));
       return { name: s.name, yr: s.yr, addr: s.addr, img: s.img, l: Math.round(x - w / 2), t: Math.round(y), w: w, h: h, a: a.toFixed(1), z: 10 + k, cls: '', fs: 5, pick: () => this.setState({ i: k, use: null }) };
     });
