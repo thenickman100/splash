@@ -516,7 +516,9 @@
     "edge": [
      false
     ]
-   },
+   }
+  ],
+  "extra": [
    {
     "hex": "#c7c7c7",
     "what": "Gray gears in the logo",
@@ -584,9 +586,7 @@
     "edge": [
      false
     ]
-   }
-  ],
-  "extra": [
+   },
    {
     "hex": "#fafdfe",
     "what": "Graph-paper background pattern",
@@ -682,9 +682,7 @@
     "edge": [
      false
     ]
-   }
-  ],
-  "extra": [
+   },
    {
     "hex": "#f0f0f0",
     "what": "Patterned background",
@@ -707,7 +705,8 @@
      "base": "#f0f0f0"
     }
    }
-  ]
+  ],
+  "extra": []
  },
  "spaceatlas": {
   "name": "Space Atlas",
@@ -780,9 +779,7 @@
     "edge": [
      false
     ]
-   }
-  ],
-  "extra": [
+   },
    {
     "hex": "#49aae3",
     "what": "Earth blue",
@@ -817,7 +814,8 @@
      false
     ]
    }
-  ]
+  ],
+  "extra": []
  }
 };
 
@@ -848,7 +846,7 @@
       { id: 'openFill', label: 'Open full screen button', slot: 1, fill: true },
       { id: 'openText', label: 'Open full screen text', slot: 2 },
       { id: 'marks', label: 'Timeline marks on the right (each site\'s own)', slot: 1 } ] },
-    AG: { name: 'AG · Fanned windows', parts: [
+    AG: { name: 'AG · Fanned windows', sites: {awesome:{year:2},ask:{readFill:3,open:1,glow:1},titans:{glow:1},hobo:{glow:3},bv:{readFill:2,readText:1,glow:1},engen:{year:3,kicker:2,open:2},home:{year:3,kicker:1,glow:1},spaceatlas:{kicker:4,readFill:3,readText:1,open:4,glow:1}}, parts: [
       { id: 'year', label: 'Big year', slot: 1 },
       { id: 'kicker', label: 'Year and tier line', slot: 3 },
       { id: 'readFill', label: 'Read more button', slot: 1, fill: true },
@@ -867,14 +865,37 @@
       { id: 'num', label: 'Chapter numbers', slot: 1 },
       { id: 'tocNum', label: 'Current chapter in the contents', slot: 1 },
       { id: 'mark', label: 'Facts box line and selected logo', slot: 1 } ] },
-    AN: { name: 'AN · Fan page', parts: [
+    // AN is the site page paired with AG, so its year, glow, year line and buttons start from AG's choices for each site.
+    // A part with a neutral color can also take N (slot 0): the page's own gray or white rather than a site color.
+    AN: { name: 'AN · Fan page', sites: {awesome:{year:2,glow:2,kick:3},ask:{kick:3,btnFill:3},titans:{kick:3},hobo:{glow:3,kick:3},bv:{kick:3,btnFill:2,btnText:1},engen:{year:3,glow:2,kick:2},home:{year:3,kick:1},spaceatlas:{kick:4,btnFill:3,btnText:1}}, parts: [
       { id: 'glow', label: 'Glow behind the top section', slot: 1 },
+      { id: 'home', label: 'All sites link', slot: 0, neutral: '#f2f2f2' },
+      { id: 'prevnext', label: 'Previous and next site links at the top', slot: 0, neutral: '#9a9a9a' },
       { id: 'year', label: 'Big year', slot: 1 },
+      { id: 'kick', label: 'Year and tier line', slot: 0, neutral: '#9a9a9a' },
+      { id: 'name', label: 'Site name', slot: 0, neutral: '#f2f2f2' },
+      { id: 'lede', label: 'Line under the site name', slot: 0, neutral: '#cfcfcf' },
+      { id: 'cap', label: 'Caption beside the window', slot: 0, neutral: '#9a9a9a' },
       { id: 'btnFill', label: 'Buttons', slot: 1, fill: true },
       { id: 'btnText', label: 'Button text', slot: 2 },
-      { id: 'bar', label: 'Bar above each section heading', slot: 1 },
+      { id: 'factLabel', label: 'Fact labels (Started, Address)', slot: 0, neutral: '#9a9a9a' },
+      { id: 'factValue', label: 'Facts', slot: 0, neutral: '#f2f2f2' },
+      { id: 'toc', label: 'Contents links', slot: 0, neutral: '#cfcfcf' },
       { id: 'link', label: 'Link and contents hover', slot: 1 },
-      { id: 'mark', label: 'Selected logo', slot: 1 } ] }
+      { id: 'bar', label: 'Bar above each section heading', slot: 1 },
+      { id: 'h2', label: 'Section headings', slot: 0, neutral: '#f2f2f2' },
+      { id: 'h3', label: 'Smaller headings', slot: 0, neutral: '#f2f2f2' },
+      { id: 'body', label: 'Story text', slot: 0, neutral: '#cfcfcf' },
+      { id: 'figcap', label: 'Picture captions', slot: 0, neutral: '#9a9a9a' },
+      { id: 'btnLine', label: 'Other buttons outline', slot: 0, neutral: '#444444' },
+      { id: 'btnOther', label: 'Other buttons text', slot: 0, neutral: '#f2f2f2' },
+      { id: 'listLink', label: 'Download list links', slot: 0, neutral: '#f2f2f2' },
+      { id: 'logoFill', label: 'Logo boxes', slot: 0, neutral: '#ffffff', fill: true },
+      { id: 'logoText', label: 'Logo box labels', slot: 0, neutral: '#4a4a4a' },
+      { id: 'logoLine', label: 'Logo box border', slot: 0, neutral: '#ffffff' },
+      { id: 'mark', label: 'Selected logo border', slot: 1 },
+      { id: 'endLabel', label: 'Years at the bottom', slot: 0, neutral: '#9a9a9a' },
+      { id: 'endName', label: 'Previous and next site names at the bottom', slot: 0, neutral: '#f2f2f2' } ] }
   };
   // Trial parts are saved as { page: { site: { part: slot } } }.
   var PKEY = 'splash-palette-parts-sites', partTrial = null;
@@ -884,9 +905,9 @@
   function slotOf(page, id, key) {
     key = sk(key);
     var t = partTrial && partTrial[page] && partTrial[page][key];
-    if (t && t[id]) return t[id];
+    if (t && t[id] != null) return t[id];
     var pub = PARTS[page] && PARTS[page].sites && PARTS[page].sites[key];
-    if (pub && pub[id]) return pub[id];
+    if (pub && pub[id] != null) return pub[id];
     var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
     return d ? d.slot : 1;
   }
@@ -940,12 +961,12 @@
         lines.push(t.name + ': ' + t.colors.map(function (c, i) { return (i + 1) + ' ' + c.hex + ' (' + c.what + ')'; }).join(', '));
         if (t.extra.length) lines.push('  other: ' + t.extra.map(function (c) { return c.hex + ' (' + c.what + ')'; }).join(', '));
       });
-      lines.push('', 'Parts (which color each part of a page takes, per site):');
+      lines.push('', 'Parts (which color each part of a page takes, per site; N is neutral, the page\'s own color):');
       var po = this.partOrder();
       Object.keys(PARTS).forEach(function (pg) {
         lines.push(PARTS[pg].name);
         Object.keys(SITES).forEach(function (k) {
-          lines.push('  ' + SITES[k].name + ': ' + PARTS[pg].parts.map(function (d) { return d.label + ' ' + po[pg][k][d.id]; }).join(', '));
+          lines.push('  ' + SITES[k].name + ': ' + PARTS[pg].parts.map(function (d) { return d.label + ' ' + (po[pg][k][d.id] || 'N'); }).join(', '));
         });
       });
       lines.push('', 'order: ' + JSON.stringify(this.order()), 'parts: ' + JSON.stringify(po));
@@ -956,6 +977,7 @@
       var cs = site(key).colors, n = 0; Object.keys(SITES).forEach(function (k) { n = Math.max(n, SITES[k].colors.length); });
       return PARTS[page].parts.map(function (d) {
         var cur = slotOf(page, d.id, key), chips = '';
+        if (d.neutral) chips += '<button class="pal-slot pal-n' + (cur === 0 ? ' on' : '') + '" data-page="' + page + '" data-site="' + sk(key) + '" data-part="' + d.id + '" data-slot="0" title="Neutral: the page\'s own ' + d.neutral + ', not a site color" style="background:' + d.neutral + ';color:' + (contrast(d.neutral, '#000000') < contrast(d.neutral, '#ffffff') ? '#fff' : '#111') + '">N</button>';
         for (var i = 1; i <= n; i++) {
           var c = cs[i - 1], bgc = c ? (d.fill ? css(c) : c.hex) : 'transparent';
           var fg = c && contrast(c.hex, '#000000') < contrast(c.hex, '#ffffff') ? '#fff' : '#111';
@@ -964,9 +986,9 @@
         return '<div class="pal-part"><span class="pal-pl">' + d.label + '</span><span class="pal-slots">' + chips + '</span></div>';
       }).join('');
     },
-    partsCss: '.pal-part{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 14px;flex-wrap:wrap}.pal-pl{font-size:12.5px}' +
-      '.pal-slots{display:flex;gap:3px}.pal-slot{width:24px;height:24px;padding:0!important;border-radius:6px!important;border:1px solid #0003!important;font:700 11px ui-monospace,monospace!important;cursor:pointer}' +
-      '.pal-slot.on{outline:2px solid #111;outline-offset:1px}.pal-slot.none{border-style:dashed!important;color:#999!important}',
+    partsCss: '.pal-part{display:flex;align-items:center;gap:8px;padding:5px 14px}.pal-pl{flex:1 1 0;min-width:0;font-size:12.5px;line-height:1.3}' +
+      '.pal-slots{flex:none;display:flex;gap:3px}.pal-slot{width:24px;height:24px;padding:0!important;border-radius:6px!important;border:1px solid #0003!important;font:700 11px ui-monospace,monospace!important;cursor:pointer}' +
+      '.pal-slot.pal-n{margin-right:5px}.pal-slot.on{outline:2px solid #111;outline-offset:1px}.pal-slot.none{border-style:dashed!important;color:#999!important}',
     page: PAGE,
     // Pages that switch sites in place say which one they show, so the panel shows that site's colors.
     showing: function (key) { if (key === this.shown) return; this.shown = key; if (this.onShow) this.onShow(key); },
@@ -985,8 +1007,9 @@
     key: sk,
     // The color (or for a fill part, the background) a page part takes for a site.
     part: function (page, id, key) {
-      var cs = site(key).colors, c = cs[Math.min(slotOf(page, id, key), cs.length) - 1];
-      var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0];
+      var d = PARTS[page] && PARTS[page].parts.filter(function (x) { return x.id === id; })[0], n = slotOf(page, id, key);
+      if (n === 0 && d && d.neutral) return d.neutral;
+      var cs = site(key).colors, c = cs[Math.min(Math.max(n, 1), cs.length) - 1];
       return d && d.fill ? css(c) : c.hex;
     },
     // Every part of a page for a site, as { id: value }.

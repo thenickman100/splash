@@ -109,9 +109,10 @@ var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],
 function liveFit(key, w, h){ var d = DIMS[key] || [1280,800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
 function liveWin(win, key, link, name, bar){ return Object.assign({ src: link, title: name, l: win.l, t: win.t, w: win.w, h: win.h, bar: bar }, liveFit(key, win.w - 2, win.h - bar - 1)); }
 var SPD = ['AI','AK','AN'], SPFROM = '../candidates/AG-fanned-windows-main-page/R8-AG.dc.html';
-function spPick(){ try { var v = localStorage.getItem('splash-sitepage'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AI'; }
+// AG is paired with AN, so Read more opens AN unless another design is picked in the test bar here.
+function spPick(){ try { var v = localStorage.getItem('splash-sitepage-AG'); if (SPD.indexOf(v) >= 0) return v; } catch (e) {} return 'AN'; }
 function spHref(sp, key){ return '../../sitepages/' + sp + '.html?site=' + (key === 'hobo26' ? 'hobo' : key) + '&from=' + encodeURIComponent(SPFROM); }
-function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
+function spOpts(cmp, sp){ return SPD.map((k) => ({ label: k, bg: k === sp ? '#ffd23f' : 'transparent', fg: k === sp ? '#111' : '#fff', pick: () => { try { localStorage.setItem('splash-sitepage-AG', k); } catch (e) {} cmp.setState({ sp: k }); } })); }
 var SITES = [
  {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Flagship',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
  {key:'ask',name:'Askthenickman',yr:'2009',year:'c. 2009',tier:'Flagship',addr:'askthenickman.webs.com',img:'./assets/bd8317b58facd85c48c77a2576dd4e30.jpg',link:H+'/projects/sites/askthenickman/index.html',blurb:'I enjoyed the podcast Ask a Ninja and wanted to make my own version. I made the site in Microsoft Word with word art and exported it to HTML. Over time I used it mostly for gaming, and it was the origin of Hack a HOBO.'},

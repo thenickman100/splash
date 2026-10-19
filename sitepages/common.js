@@ -114,7 +114,7 @@
     // Only the favorite designs are offered.
     b.innerHTML = '<span class="lg">TEST · SITE PAGE</span><span class="sm">PAGE</span>' + ['AI', 'AK', 'AN'].map(function (d) {
       return '<a href="' + pageUrl(site.key, d) + '" title="' + SITE_DESIGNS[d].name + '"' + (d === design ? ' class="on"' : '') + '>' + d + '</a>';
-    }).join('') + '<span class="sep"></span><a href="' + home + '">' + (from ? '<span class="lg">BACK TO </span>' + from.split('/')[2].split('-')[0] : 'ALL<span class="lg"> CANDIDATES</span>') + '</a>';
+    }).join('') + '<span class="sep"></span><a href="' + home + '">' + (from ? '<span class="lg">BACK TO&nbsp;</span>' + from.split('/')[2].split('-')[0] : 'ALL<span class="lg">&nbsp;CANDIDATES</span>') + '</a>';
     document.body.appendChild(b);
     try { localStorage.setItem('splash-sitepage', design); } catch (e) {}
   }
