@@ -93,7 +93,7 @@
         },
         {
           h: 'Microsoft Word',
-          p: ['I made the first pages in Microsoft Word, with WordArt and gradient shapes. Word could export a document to HTML, which sounded neat, so I figured out how to do it and uploaded the HTML to webs.com. That’s why the logo says .WEBS.COM. For a while the site also lived at askthenickman.net23.net. Then my neighbor taught me how to register a domain, and he registered askthenickman.com for me.']
+          p: ['I made the first pages in Microsoft Word, with WordArt and gradient shapes. Word could export a document to HTML, which sounded neat, so I figured out how to do it and uploaded the HTML to webs.com. That’s why the logo says .WEBS.COM. For a while the site also lived at askthenickman.net23.net. Then my neighbor taught me how to register a domain, and he registered askthenickman.com for me on March 22, 2011.']
         },
         {
           h: 'Contents',
