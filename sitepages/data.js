@@ -3,6 +3,7 @@
 // Order is by start date; previous/next links follow it. Colors come from ../palette.js.
 // top: the windows shown at the top of the page (AN's fan), in order; { ref: id } is a section's own window.
 // song and topLinks sit beside the top window. Since Nick's content review, sections no longer repeat a top window.
+// startedOn, when known more closely than the year, is what the facts box shows as Started.
 (function () {
   var H = 'https://hackahobo.info';
   var S = H + '/projects/sites/';
@@ -75,8 +76,9 @@
     {
       key: 'ask',
       name: 'Askthenickman',
-      range: 'c. 2009',
-      started: 'c. 2009',
+      range: 'c. 2010',
+      started: 'c. 2010',
+      startedOn: 'c. November 2010',
       tier: 'Hobby site',
       favicon: IC + 'askthenickman/favicon.ico',
       logo: L + 'askthenickman/original-cropped.png',
@@ -88,18 +90,18 @@
       sections: [
         {
           h: 'Ask a Ninja',
-          p: ['I enjoyed the video podcast Ask a Ninja, where a ninja answers viewers’ questions, and I thought it would be cool to make my own version. I was just a kid, so it never worked out. I made a few home videos with my sister for the site and uploaded some videos I made in classes at school.'],
+          p: ['I enjoyed the video podcast Ask a Ninja, where a ninja answers viewers’ questions, and I thought it would be cool to make my own version. I was just a kid, so it never worked out. I made a few home videos with my sister for the site and uploaded some videos I made in classes at school. Two of the first, Wilson’s Betrayal and Surfin’, are dated November 23, 2010.'],
           media: [{ img: 'img/ask-a-ninja.png', cap: 'Ask a Ninja, the video podcast that inspired the site' }]
         },
         {
           h: 'Microsoft Word',
-          p: ['I made the first pages in Microsoft Word, with WordArt and gradient shapes. Word could export a document to HTML, which sounded neat, so I figured out how to do it and uploaded the HTML to webs.com. That’s why the logo says .WEBS.COM. For a while the site also lived at askthenickman.net23.net. Then my neighbor taught me how to register a domain, and he registered askthenickman.com for me on March 22, 2011.']
+          p: ['I made the first pages in Microsoft Word, with WordArt and gradient shapes. Word could export a document to HTML, which sounded neat, so I figured out how to do it and uploaded the HTML to webs.com. That’s why the logo says .WEBS.COM. Starting around February 27, 2011, the site also lived at askthenickman.net23.net. Then my neighbor taught me how to register a domain, and he registered askthenickman.com for me on March 22, 2011.']
         },
         {
           h: 'Contents',
           p: [
             'I posted whatever I was into. That included Flash games, the secret phone numbers from The Hitchhiker’s Guide to the Galaxy, one of those chat rooms where you talked with random strangers, and Fundiferous Nothing, comics my middle school friend Jackie drew for me, which are also in the Awesome Stuff photo albums. The Programming section started as a school project where I had to research something and present it to the class. I researched all the languages needed to make websites (HTML, CSS, JavaScript, and XML) and put what I learned on the site as lesson pages, one for each tag and topic.',
-            'Over time I posted more games than anything else, until Askthenickman was mostly a games site. In 2011 I moved the games to their own site, Hack a HOBO. The Askthenickman games page ended up loading its game menu from hackahobo.info, and it still has a commented-out line that once sent visitors straight to the new site.'
+            'Over time I posted more games than anything else, until Askthenickman was mostly a games site. In June 2011 I moved the games to their own site, Hack a HOBO. The Askthenickman games page ended up loading its game menu from hackahobo.info, and it still has a commented-out line that once sent visitors straight to the new site.'
           ]
         },
         {
@@ -135,8 +137,8 @@
     {
       key: 'titans',
       name: 'Titans Softball',
-      range: 'c. 2010',
-      started: 'c. 2010',
+      range: 'c. 2011',
+      started: 'c. 2011',
       tier: 'Commission',
       favicon: 'img/softball.ico',
       logo: L + 'titans/titansheader.png',
@@ -149,7 +151,7 @@
       sections: [
         {
           h: 'Commission',
-          p: ['My dad coached my sister’s softball team. He likes sports and is very into stats. He wanted one place where parents on the team could get information on practices and games, see photos from the games, and check their kids’ stats. It was the first site anyone asked me to build, and because it was built to his specifications, I learned how to work with a customer to find out what they need. I built it shortly before the first season, and it lived at the subdomain softball.askthenickman.com.']
+          p: ['My dad coached my sister’s softball team. He likes sports and is very into stats. He wanted one place where parents on the team could get information on practices and games, see photos from the games, and check their kids’ stats. It was the first site anyone asked me to build, and because it was built to his specifications, I learned how to work with a customer to find out what they need. I built it in 2011, shortly before the first season, and it lived at the subdomain softball.askthenickman.com.']
         },
       ]
     },
@@ -158,6 +160,7 @@
       name: 'Hack a HOBO',
       range: '2011 – today',
       started: '2011',
+      startedOn: 'June 20, 2011',
       tier: 'Hobby site',
       favicon: IC + 'hackahobo/favicon.ico',
       logo: L + 'hackahobo/hackahobo-logo-stretched.png',
@@ -171,7 +174,7 @@
       sections: [
         {
           h: 'Origins',
-          p: ['In 2011, I started transitioning the games from Askthenickman to their own site. My sister came up with the new site’s name, Hack a HOBO. We wanted it themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
+          p: ['On June 20, 2011, I started transitioning the games from Askthenickman to their own site. My sister came up with the new site’s name, Hack a HOBO. We wanted it themed around cavemen, and I thought “hobo” was another word for a caveman. The “Hack” probably came from the hacking tutorials on Awesome Stuff. The first layout was based on Facebook’s design in early 2011, with a blue bar across the top, small navigation buttons on the right, and content in boxes underneath. I started Hack a HOBO in middle school and kept it going through high school as a way for kids to get around blocked gaming sites at school.']
         },
         {
           h: 'Profiles',
@@ -180,7 +183,7 @@
         {
           h: 'Hack a HOBO’s Hiatus',
           p: [
-            'For years before it ended, browsers warned that Flash was going away and started blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I let the site die off. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
+            'The hackahobo.info domain expired on June 20, 2015, four years to the day after I started the site. Soon after, browsers started warning that Flash was going away and blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I left it offline. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
             'The 2024 Edition made the site modern, so it works in current browsers and on phones, and it brought the games back. The site now runs Flash games with Ruffle, Java games with CheerpJ, and Shockwave games with DirPlayer. Only a handful of the Flash games still aren’t fully working in Ruffle. DirPlayer only took off in the past year, and soon almost every Shockwave game will be fully playable. Previews of its latest GitHub build show near-perfect emulation of the complicated 3D games of the past.',
             'The 2026 Edition was an overhaul to fix design problems that had been on the site for over a decade, which I finally had ideas and fixes for. The first fix was the left sidebar, which now holds a featured game and the navigation tools. The second was game containers on the home page, which let me give the site custom holiday themes. The holidays I most wanted were Halloween and Christmas, and the containers made those themes possible by letting me use more colors in the design. I’ve always wanted snow to collect on the game containers, and I plan to have that working by Christmas 2027.'
           ]

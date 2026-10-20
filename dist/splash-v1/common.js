@@ -22,7 +22,7 @@
 
   // Facts box rows, in the writing guide's order. Rows that don't apply are left out.
   function facts(s) {
-    var r = [['Started', s.started]];
+    var r = [['Started', s.startedOn || s.started]];
     if (s.addresses.length) r.push([s.addresses.length > 1 ? 'Addresses' : 'Address', s.addresses]);
     if (s.commissioned) r.push(['Commissioned by', s.commissioned]);
     if (s.evolvedFrom) r.push(['Evolved from', s.evolvedFrom]);
