@@ -19,6 +19,9 @@
   // // Published: the main page is index.html, and each site has its own page (SPLASH_PAGES, set by the page).
   // var from = '', home = 'index.html';
   // @end
+  // All sites returns the main page to this site: it reads #key. ?back= names the window that was showing there
+  // when it isn't the site's own (Hack a HOBO's 2026 Edition).
+  home += '#' + (/^\w+$/.test(q.get('back') || '') ? q.get('back') : site.key);
 
   function esc(t) {
     return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -210,7 +213,7 @@
             else window.open(b.dataset.src, '_blank');
             return;
           }
-          w.querySelector('iframe').src = b.dataset.src;
+          var fr = w.querySelector('iframe'); if (window.BrowserNav) BrowserNav.load(fr, b.dataset.src); else fr.src = b.dataset.src;
           w.querySelector('.sp-url').textContent = b.dataset.addr;
           document.querySelectorAll('[data-open="' + t + '"]').forEach(function (a) { a.href = b.dataset.src; });
           box.querySelectorAll('.sp-logo').forEach(function (x) { x.classList.toggle('on', x === b); });

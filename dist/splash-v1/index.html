@@ -55,7 +55,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
   var DIMS = {awesome:[1280,900],ask:[1280,800],titans:[1366,768],hobo:[1100,760],hobo26:[1100,760],bv:[1280,900],engen:[1366,768],home:[1280,900],spaceatlas:[1400,850]};
   function liveFit(key, w, h) { var d = DIMS[key] || [1280, 800], s = w / d[0]; return { fw: d[0], fh: Math.ceil(h / s), fs: s.toFixed(4) }; }
   // Published: Read more opens the site's own page (SPLASH_PAGES, set by the page).
-  function spHref(key) { return SPLASH_PAGES[key === 'hobo26' ? 'hobo' : key]; }
+  function spHref(key) { return key === 'hobo26' ? SPLASH_PAGES.hobo + '?back=hobo26' : SPLASH_PAGES[key]; }
   function testBar() { return ''; }
   var SITES = [
    {key:'awesome',name:'Awesome Stuff',yr:'2008',year:'c. 2008',tier:'Hobby site',addr:'lawesomel.webs.com',img:'./assets/756e4d2b18729a09e80407e94dcda67b.jpg',link:H+'/projects/sites/lawesomel/index.html',blurb:'I liked talking about tech, so I made a site where I ranked things I liked. Later it held script kiddie hacking tutorials, my photos and the games I made in GameMaker.'},
@@ -74,8 +74,12 @@ a{color:#f2f2f2}a:hover{color:#ccc}
   var RANK = {hobo26:1, spaceatlas:1, ask:2, awesome:2, hobo:2, titans:3, home:3, engen:4, bv:5};
   var CW = {1:250, 2:220, 3:190, 4:165, 5:140}, CWM = {1:104, 2:92, 3:80, 4:70, 5:60};
 
-  // The site shown: ?site= (or the one showing before a Palette panel reload), otherwise the 2011 Hack a HOBO.
-  var start = SITES.map(function (s) { return s.key; }).indexOf(PALETTE.resume);
+  // The site shown: the address's #key, then ?site= (or the one showing before a Palette panel reload), otherwise the
+  // 2011 Hack a HOBO. Picking a site rewrites #key in place (no new history entry, nothing stored), so coming back
+  // to this page, by the back button or a site page's All sites link, shows the site it was on.
+  var KEYS = SITES.map(function (s) { return s.key; });
+  function hashSite() { return KEYS.indexOf(decodeURIComponent(location.hash.slice(1))); }
+  var start = hashSite() >= 0 ? hashSite() : KEYS.indexOf(PALETTE.resume);
   var state = { i: start >= 0 ? start : 3, use: null };
 
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -175,6 +179,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
     if (m !== mode) build(m);
     PALETTE.showing(s.key);
     siteIcon(s.key);
+    if (location.hash !== '#' + s.key) history.replaceState(history.state, '', '#' + s.key);
     var V = F.mob ? phone(i, F) : desk(i, F), glow = 'color-mix(in srgb,' + s.p.glow + ' ' + (F.mob ? 40 : 45) + '%,#121212)';
     if (F.mob) {
       stage.style.minHeight = F.H + 'px';
@@ -199,6 +204,7 @@ a{color:#f2f2f2}a:hover{color:#ccc}
   }
 
   addEventListener('resize', draw);
+  addEventListener('hashchange', function () { var k = hashSite(); if (k >= 0 && k !== state.i) { state.i = k; state.use = null; draw(); } });
   draw();
 })();
 </script>

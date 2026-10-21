@@ -43,16 +43,11 @@
             'The games page from the Webstarts section is still online. It lists the games I made in GameMaker and posted to YoYo Games, along with Planetary Ballistics, the HD Masters games, and a PowerPoint game made by my friend Harry. The downloads below are the original files. The GameMaker games are Windows programs from around 2008, so they may need compatibility mode or a virtual machine running an older version of Windows to work on a modern computer. Harry’s PowerPoint games play as slide shows.'],
           lists: [
             { h: 'Games I made', items: [
-              ['Sepy', G + 'sepy.exe'], ['Awesome Pac Guy', G + 'Awesome%20pac%20guy.exe'], ['Old Pac Guy', G + 'Old%20pac%20guy.exe'],
-              ['Molten', G + 'Molten.exe'], ['Kitchen Invaders 3D', G + 'Kitchen%20Invaders%203D.exe'], ['Breakout', G + 'Breakout.exe'],
-              ['Mario Kong', G + 'donkey%20kong%20preview.exe'], ['Dodger', G + 'Dodger.exe'], ['Virus', null]
-            ] },
-            { h: 'Unlisted GameMaker games', items: [
-              ['Maze Game', G + 'MAZE%20GAME.exe'], ['Another Molten', G + 'Another.%20Molten.exe'], ['Pac Guy', G + 'pacguy.exe']
+              ['Sepy', G + 'sepy.exe'], ['Awesome Pac Guy', G + 'Awesome%20pac%20guy.exe'], ['Old Pac Guy', G + 'Old%20pac%20guy.exe'], ['Pac Guy', G + 'pacguy.exe'], ['Molten', G + 'Molten.exe'], ['Another Molten', G + 'Another.%20Molten.exe'], ['Maze Game', G + 'MAZE%20GAME.exe'], ['Kitchen Invaders 3D', G + 'Kitchen%20Invaders%203D.exe'], ['Breakout', G + 'Breakout.exe'], ['Breakout 2', G + 'Breakout2.exe'], ['Mario Kong', G + 'donkey%20kong%20preview.exe'], ['Dodger', G + 'Dodger.exe'], ['Virus', null]
             ] },
             { h: 'Games Harry made', items: [
               ['HD Masters 1', G + 'HD%20Masters%201.exe'], ['HD Masters 2', G + 'HD%20Masters%202.exe'], ['Planetary Ballistics', G + 'Planetary_Ballistics.exe'],
-              ['Breakout 2', G + 'Breakout2.exe'], ['Meteor Storm', G + 'Meteor_Storm.exe'], ['Piñatahead', G + 'Pin~atahead.exe'],
+              ['Meteor Storm', G + 'Meteor_Storm.exe'], ['Piñatahead', G + 'Pin~atahead.exe'],
               ['Tails Doll 2', G + 'Tails%20Doll%202.exe'], ['Smiley Surgeon', G + 'smiley%20Surgeon.ppt'], ['Smiley Surgeon, newer copy', G + 'Smiley%20Surgeon.pptx'],
               ['Smiley Dude', G + 'smiley%20dude.ppt'], ['Stress Relief', G + 'Stress%20Relief.ppt'], ['Magnum Simulator v1.0', G + 'Magnum%20Simulator%20v1.0.pps'],
               ['Bumbling Idiot', G + 'bumbling%20idiot.pptx'], ['Button Game 4', G + 'Button%20Game%204.pptx'], ['Combo Lock', G + 'Combo%20Lock.pptx'],
@@ -183,7 +178,7 @@
         {
           h: 'Hack a HOBO’s Hiatus',
           p: [
-            'The hackahobo.info domain expired on June 20, 2015, four years to the day after I started the site. Soon after, browsers started warning that Flash was going away and blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I left it offline. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
+            'For years before it ended, browsers warned that Flash was going away and started blocking it by default, and Adobe finally shut it down at the end of 2020. Many of the other games ran on Shockwave and Java, which browsers dropped too. Since the site relied on all of these technologies that were going away, I let the site die off. In 2024, Flash was just starting to be revived through Ruffle, and I began rebuilding the site to its former glory.',
             'The 2024 Edition made the site modern, so it works in current browsers and on phones, and it brought the games back. The site now runs Flash games with Ruffle, Java games with CheerpJ, and Shockwave games with DirPlayer. Only a handful of the Flash games still aren’t fully working in Ruffle. DirPlayer only took off in the past year, and soon almost every Shockwave game will be fully playable. Previews of its latest GitHub build show near-perfect emulation of the complicated 3D games of the past.',
             'The 2026 Edition was an overhaul to fix design problems that had been on the site for over a decade, which I finally had ideas and fixes for. The first fix was the left sidebar, which now holds a featured game and the navigation tools. The second was game containers on the home page, which let me give the site custom holiday themes. The holidays I most wanted were Halloween and Christmas, and the containers made those themes possible by letting me use more colors in the design. I’ve always wanted snow to collect on the game containers, and I plan to have that working by Christmas 2027.'
           ]
